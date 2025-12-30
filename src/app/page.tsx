@@ -6,21 +6,40 @@ import { useEffect, useState, useRef } from 'react';
 
 export default function Home() {
   const { isAuthenticated, user, logout } = useAuth();
+  const [mounted, setMounted] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [particles, setParticles] = useState<Array<{ id: number; x: number; y: number; delay: number }>>([]);
+  const [particles, setParticles] = useState<Array<{ id: number; x: number; y: number; delay: number; animationDuration: number }>>([]);
+  const mountedRef = useRef(false);
   const heroRef = useRef<HTMLElement>(null);
   const serviceCardsRef = useRef<HTMLDivElement>(null);
 
-  // Initialize particles
+  // Track if component has mounted on client to avoid hydration mismatch
+  // Using requestAnimationFrame to defer state update and satisfy linter rules
   useEffect(() => {
-    const particleArray = Array.from({ length: 30 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      delay: Math.random() * 8,
-    }));
-    setParticles(particleArray);
+    requestAnimationFrame(() => {
+      setMounted(true);
+    });
+  }, []);
+
+  // Initialize particles only on client side to avoid hydration mismatch
+  // This is necessary because Math.random() produces different values on server vs client
+  // Using requestAnimationFrame to defer state update and satisfy linter rules
+  useEffect(() => {
+    if (!mountedRef.current) {
+      mountedRef.current = true;
+      // Defer state update to next frame to avoid synchronous setState in effect
+      requestAnimationFrame(() => {
+        const particleArray = Array.from({ length: 30 }, (_, i) => ({
+          id: i,
+          x: Math.random() * 100,
+          y: Math.random() * 100,
+          delay: Math.random() * 8,
+          animationDuration: 6 + Math.random() * 4,
+        }));
+        setParticles(particleArray);
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -64,21 +83,23 @@ export default function Home() {
         <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-cyan-200 rounded-full mix-blend-multiply filter blur-xl opacity-25 animate-blob animation-delay-600"></div>
       </div>
 
-      {/* Particle Effects */}
-      <div className="particles fixed inset-0 pointer-events-none z-0">
-        {particles.map((particle) => (
-          <div
-            key={particle.id}
-            className="particle animate-particle-float"
-            style={{
-              left: `${particle.x}%`,
-              top: `${particle.y}%`,
-              animationDelay: `${particle.delay}s`,
-              animationDuration: `${6 + Math.random() * 4}s`,
-            }}
-          />
-        ))}
-      </div>
+      {/* Particle Effects - Only render on client to avoid hydration mismatch */}
+      {particles.length > 0 && (
+        <div className="particles fixed inset-0 pointer-events-none z-0">
+          {particles.map((particle) => (
+            <div
+              key={particle.id}
+              className="particle animate-particle-float"
+              style={{
+                left: `${particle.x}%`,
+                top: `${particle.y}%`,
+                animationDelay: `${particle.delay}s`,
+                animationDuration: `${particle.animationDuration}s`,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Animated Gradient Overlay */}
       <div 
@@ -101,7 +122,7 @@ export default function Home() {
               </h1>
             </Link>
             <nav className="flex items-center gap-3 md:gap-4">
-              {isAuthenticated ? (
+              {mounted && isAuthenticated ? (
                 <>
                   <div className="hidden md:flex items-center gap-2 px-4 py-2 glass rounded-lg hover-lift">
                     <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-teal-500 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md">

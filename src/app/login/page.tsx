@@ -58,8 +58,9 @@ export default function LoginPage() {
     try {
       await login(email, password);
       router.push('/');
-    } catch (err: any) {
-      setError(err.message || 'Đăng nhập thất bại');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Đăng nhập thất bại';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

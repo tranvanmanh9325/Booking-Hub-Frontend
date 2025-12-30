@@ -1,6 +1,7 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
+import { AxiosError } from 'axios';
 import { authAPI } from '@/lib/api';
 
 interface User {
@@ -21,19 +22,20 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-
-  useEffect(() => {
+  const [token, setToken] = useState<string | null>(() => {
     if (typeof window !== 'undefined') {
-      const storedToken = localStorage.getItem('token');
-      const storedUser = localStorage.getItem('user');
-      if (storedToken && storedUser) {
-        setToken(storedToken);
-        setUser(JSON.parse(storedUser));
-      }
+      return localStorage.getItem('token');
     }
-  }, []);
+    return null;
+  });
+
+  const [user, setUser] = useState<User | null>(() => {
+    if (typeof window !== 'undefined') {
+      const storedUser = localStorage.getItem('user');
+      return storedUser ? JSON.parse(storedUser) : null;
+    }
+    return null;
+  });
 
   const login = async (email: string, password: string) => {
     try {
@@ -46,8 +48,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       
       localStorage.setItem('token', newToken);
       localStorage.setItem('user', JSON.stringify(userData));
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Login failed');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof AxiosError 
+        ? error.response?.data?.message || 'Login failed'
+        : 'Login failed';
+      throw new Error(errorMessage);
     }
   };
 
@@ -62,8 +67,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       
       localStorage.setItem('token', newToken);
       localStorage.setItem('user', JSON.stringify(userData));
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Registration failed');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof AxiosError 
+        ? error.response?.data?.message || 'Registration failed'
+        : 'Registration failed';
+      throw new Error(errorMessage);
     }
   };
 

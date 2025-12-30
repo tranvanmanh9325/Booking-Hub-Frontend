@@ -124,8 +124,9 @@ export default function RegisterPage() {
     try {
       await register(formData.email, formData.password, formData.fullName, formData.phone || undefined);
       router.push('/');
-    } catch (err: any) {
-      setError(err.message || 'Đăng ký thất bại');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Đăng ký thất bại';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
