@@ -54,5 +54,3 @@ export const authAPI = {
 export const healthAPI = {
   check: () => apiClient.get('/health'),
 };
-
-
