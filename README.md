@@ -4,6 +4,28 @@
 
 Dự án **High-Concurrency-Booking** là một nền tảng du lịch tổng hợp, cho phép người dùng đặt vé xem phim, đặt phòng khách sạn, đặt vé khu vui chơi giải trí, đặt bàn nhà hàng và nhiều dịch vụ du lịch khác trong một hệ thống thống nhất. Hệ thống được thiết kế để xử lý lượng truy cập cao và đảm bảo tính nhất quán dữ liệu trong môi trường đa người dùng.
 
+### 🎯 Trạng Thái Hiện Tại
+
+**✅ Đã Hoàn Thành (MVP):**
+- Hệ thống xác thực người dùng (JWT)
+- Đặt vé xem phim (tìm kiếm, lịch chiếu, chọn ghế, booking)
+- Đặt phòng khách sạn (tìm kiếm, xem phòng, booking)
+- Quản lý thanh toán (payment processing, refund)
+- Quản lý booking (xem lịch sử, hủy booking)
+- Frontend hoàn chỉnh với UI/UX hiện đại
+
+**🔄 Đang Phát Triển:**
+- Restaurant booking service
+- Amusement park booking service
+- Reviews & ratings UI
+- Email/SMS notifications
+
+**📝 Kế Hoạch:**
+- Combo & packages
+- Recommendation engine
+- Mobile apps
+- Advanced caching & optimization
+
 ## 🚀 Quick Start
 
 ### Yêu Cầu Hệ Thống
@@ -29,7 +51,7 @@ CREATE DATABASE booking_db;
 
 #### 2. Cấu hình Backend
 
-Cập nhật thông tin database trong `backend/src/main/resources/application.properties`:
+Cập nhật thông tin database trong `Booking-Hub-Backend/src/main/resources/application.properties`:
 
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/booking_db
@@ -40,7 +62,7 @@ spring.datasource.password=your_password
 #### 3. Chạy Backend
 
 ```bash
-cd backend
+cd Booking-Hub-Backend
 ./mvnw spring-boot:run
 # Hoặc trên Windows: mvnw.cmd spring-boot:run
 ```
@@ -54,7 +76,7 @@ Backend sẽ chạy tại: `http://localhost:8080`
 #### 4. Chạy Frontend
 
 ```bash
-cd frontend
+cd Booking-Hub-Frontend
 npm install
 npm run dev
 ```
@@ -64,31 +86,51 @@ Frontend sẽ chạy tại: `http://localhost:3000`
 ### Cấu Trúc Dự Án Hiện Tại
 
 ```
-High-Concurrency-Booking/
-├── backend/                    # Spring Boot Backend
+Booking Hub/
+├── Booking-Hub-Backend/        # Spring Boot Backend
 │   ├── src/
 │   │   └── main/
 │   │       ├── java/com/example/booking/
-│   │       │   ├── config/     # Security, Redis config
+│   │       │   ├── config/     # Security, Redis, JWT config
 │   │       │   ├── controller/ # REST Controllers
+│   │       │   │   ├── AuthController.java
+│   │       │   │   ├── MovieController.java
+│   │       │   │   ├── HotelController.java
+│   │       │   │   ├── CinemaController.java
+│   │       │   │   ├── PaymentController.java
+│   │       │   │   └── HealthController.java
 │   │       │   ├── dto/        # Data Transfer Objects
-│   │       │   ├── model/      # Entity Models
-│   │       │   ├── repository/ # JPA Repositories
+│   │       │   ├── model/      # Entity Models (14 models)
+│   │       │   ├── repository/ # JPA Repositories (13 repositories)
 │   │       │   ├── service/    # Business Logic
+│   │       │   │   ├── AuthService.java
+│   │       │   │   ├── MovieService.java
+│   │       │   │   ├── HotelService.java
+│   │       │   │   └── PaymentService.java
 │   │       │   └── util/       # JWT Utilities
 │   │       └── resources/
 │   │           └── application.properties
 │   └── pom.xml
 │
-└── frontend/                   # Next.js Frontend
+└── Booking-Hub-Frontend/       # Next.js Frontend
     ├── src/
     │   ├── app/                # Next.js App Router
     │   │   ├── layout.tsx
     │   │   ├── page.tsx        # Home page
     │   │   ├── login/          # Login page
-    │   │   └── register/       # Register page
+    │   │   ├── register/       # Register page
+    │   │   ├── movies/         # Movies pages
+    │   │   │   ├── page.tsx    # Movies list
+    │   │   │   └── [id]/       # Movie detail & booking
+    │   │   ├── hotels/         # Hotels pages
+    │   │   │   ├── page.tsx    # Hotels list
+    │   │   │   └── [id]/       # Hotel detail & booking
+    │   │   ├── bookings/       # Bookings management
+    │   │   │   ├── page.tsx    # Bookings history
+    │   │   │   └── success/    # Booking success page
+    │   │   └── payment/        # Payment page
     │   ├── contexts/          # React Contexts (Auth)
-    │   └── lib/               # API client
+    │   └── lib/               # API client (api.ts)
     └── package.json
 ```
 
@@ -173,44 +215,56 @@ High-Concurrency-Booking/
 
 ## 🎨 Tính Năng Chi Tiết
 
-### 1. Đặt Vé Xem Phim (Movie Booking)
+### 1. Đặt Vé Xem Phim (Movie Booking) ✅
 
-#### Tính năng chính:
-- **Tìm kiếm phim**: Theo tên, thể loại, rạp, ngày chiếu
-- **Xem lịch chiếu**: Lịch chiếu theo rạp, theo phim
-- **Chọn ghế**: Sơ đồ ghế trực quan, chọn nhiều ghế
-- **Giữ chỗ tạm thời**: Giữ ghế trong 5-10 phút khi đang thanh toán
-- **Combo**: Vé + bắp nước, vé + đồ ăn
-- **Đánh giá phim**: Rating và review sau khi xem
+#### Tính năng đã triển khai:
+- ✅ **Tìm kiếm phim**: Theo tên phim
+- ✅ **Lọc phim**: Theo thể loại (genre), phim đang chiếu
+- ✅ **Xem lịch chiếu**: Lịch chiếu theo phim
+- ✅ **Chọn ghế**: Chọn nhiều ghế từ danh sách
+- ✅ **Đặt vé**: Tạo booking với ghế đã chọn
+- ✅ **Quản lý booking**: Xem lịch sử, hủy booking
 
-#### Database Schema:
+#### Tính năng kế hoạch:
+- 📝 **Giữ chỗ tạm thời**: Giữ ghế trong 5-10 phút khi đang thanh toán (Redis distributed lock)
+- 📝 **Sơ đồ ghế trực quan**: UI hiển thị sơ đồ rạp
+- 📝 **Combo**: Vé + bắp nước, vé + đồ ăn
+- 📝 **Đánh giá phim**: Rating và review sau khi xem
+
+#### Database Schema (✅ Đã triển khai):
 ```sql
-- movies (id, title, genre, duration, rating, poster_url, trailer_url)
-- cinemas (id, name, address, city, facilities)
-- screens (id, cinema_id, name, capacity, screen_type)
-- showtimes (id, movie_id, screen_id, start_time, end_time, price)
-- seats (id, screen_id, row, number, seat_type, is_available)
-- movie_bookings (id, user_id, showtime_id, booking_date, status)
-- booking_seats (booking_id, seat_id, price)
+- movies (id, title, description, genre, duration, rating, poster_url, trailer_url, release_date, created_at, updated_at)
+- cinemas (id, name, address, city, facilities, created_at, updated_at)
+- screens (id, cinema_id, name, capacity, screen_type, created_at, updated_at)
+- showtimes (id, movie_id, screen_id, start_time, end_time, price, created_at, updated_at)
+- seats (id, screen_id, row, number, seat_type, is_available, created_at, updated_at)
+- movie_bookings (id, user_id, showtime_id, booking_date, status, total_price, created_at, updated_at)
+- booking_seats (id, booking_id, seat_id, price, created_at, updated_at)
 ```
 
-### 2. Đặt Phòng Khách Sạn (Hotel Booking)
+### 2. Đặt Phòng Khách Sạn (Hotel Booking) ✅
 
-#### Tính năng chính:
-- **Tìm kiếm khách sạn**: Theo địa điểm, ngày check-in/out, số khách
-- **Lọc nâng cao**: Giá, sao, tiện ích (wifi, pool, gym, spa...)
-- **Xem phòng trực quan**: 360° view, ảnh phòng, bản đồ
-- **Chính sách hủy**: Free cancellation, non-refundable
-- **Đánh giá**: Rating, review, ảnh từ khách hàng
-- **Combo**: Phòng + bữa sáng, phòng + tour
+#### Tính năng đã triển khai:
+- ✅ **Tìm kiếm khách sạn**: Theo tên, theo thành phố
+- ✅ **Lọc phòng**: Theo ngày check-in/out, số khách
+- ✅ **Xem danh sách phòng**: Thông tin phòng, giá, tiện ích
+- ✅ **Đặt phòng**: Tạo booking với thông tin check-in/out
+- ✅ **Quản lý booking**: Xem lịch sử, hủy booking
 
-#### Database Schema:
+#### Tính năng kế hoạch:
+- 📝 **Lọc nâng cao**: Giá, sao, tiện ích (wifi, pool, gym, spa...)
+- 📝 **Xem phòng trực quan**: 360° view, ảnh phòng, bản đồ
+- 📝 **Chính sách hủy**: Free cancellation, non-refundable
+- 📝 **Đánh giá**: Rating, review, ảnh từ khách hàng (model đã có)
+- 📝 **Combo**: Phòng + bữa sáng, phòng + tour
+
+#### Database Schema (✅ Đã triển khai):
 ```sql
-- hotels (id, name, address, city, star_rating, description, facilities)
-- rooms (id, hotel_id, room_type, max_guests, price_per_night, amenities)
-- room_images (id, room_id, image_url, is_primary)
-- hotel_bookings (id, user_id, hotel_id, room_id, check_in, check_out, guests, total_price, status)
-- hotel_reviews (id, hotel_id, user_id, rating, comment, created_at)
+- hotels (id, name, address, city, star_rating, description, facilities, phone_number, email, created_at, updated_at)
+- rooms (id, hotel_id, room_type, max_guests, price_per_night, amenities, created_at, updated_at)
+- room_images (id, room_id, image_url, is_primary, created_at, updated_at)
+- hotel_bookings (id, user_id, hotel_id, room_id, check_in, check_out, guests, total_price, status, created_at, updated_at)
+- hotel_reviews (id, hotel_id, user_id, rating, comment, created_at, updated_at)
 ```
 
 ### 3. Đặt Vé Khu Vui Chơi (Amusement Park Booking)
@@ -253,36 +307,39 @@ High-Concurrency-Booking/
 ### 5. Tính Năng Chung
 
 #### User Management
-- **Đăng ký/Đăng nhập**: Email, SĐT, OAuth (Google, Facebook)
-- **Hồ sơ người dùng**: Thông tin cá nhân, sở thích
-- **Lịch sử đặt chỗ**: Xem tất cả booking đã thực hiện
-- **Yêu thích**: Lưu phim, khách sạn, nhà hàng yêu thích
-- **Thông báo**: Email, SMS, Push notification
+- ✅ **Đăng ký/Đăng nhập**: Email, password (JWT authentication)
+- 📝 **Hồ sơ người dùng**: Thông tin cá nhân, sở thích (kế hoạch)
+- ✅ **Lịch sử đặt chỗ**: Xem tất cả booking đã thực hiện (movies & hotels)
+- 📝 **Yêu thích**: Lưu phim, khách sạn, nhà hàng yêu thích (kế hoạch)
+- 📝 **OAuth**: Đăng nhập bằng Google, Facebook (kế hoạch)
+- 📝 **Thông báo**: Email, SMS, Push notification (kế hoạch)
 
 #### Booking Management
-- **Giỏ hàng**: Thêm nhiều dịch vụ vào giỏ
-- **Thanh toán**: Nhiều phương thức (Visa, Mastercard, MoMo, ZaloPay, VNPay)
-- **Xác nhận**: Email/SMS xác nhận booking
-- **Hủy/Đổi**: Chính sách hủy, đổi linh hoạt
-- **Hoàn tiền**: Tự động hoàn tiền khi hủy
+- ✅ **Thanh toán**: Payment service với nhiều phương thức (Visa, Mastercard, MoMo, ZaloPay, VNPay)
+- ✅ **Hủy booking**: Hủy đặt chỗ cho movies & hotels
+- ✅ **Xem booking**: Chi tiết booking, lịch sử booking
+- 📝 **Giỏ hàng**: Thêm nhiều dịch vụ vào giỏ (kế hoạch)
+- 📝 **Xác nhận**: Email/SMS xác nhận booking (kế hoạch)
+- 📝 **Hoàn tiền**: Tự động hoàn tiền khi hủy (kế hoạch)
 
 #### Search & Discovery
-- **Tìm kiếm thông minh**: Full-text search với Elasticsearch
-- **Gợi ý**: AI/ML gợi ý dựa trên lịch sử
-- **Bộ lọc**: Nhiều tiêu chí lọc
-- **Sắp xếp**: Theo giá, rating, phổ biến, mới nhất
+- ✅ **Tìm kiếm cơ bản**: Tìm kiếm phim và khách sạn theo tên
+- 📝 **Tìm kiếm thông minh**: Full-text search với Elasticsearch (kế hoạch)
+- 📝 **Gợi ý**: AI/ML gợi ý dựa trên lịch sử (kế hoạch)
+- 📝 **Bộ lọc nâng cao**: Nhiều tiêu chí lọc (kế hoạch)
+- 📝 **Sắp xếp**: Theo giá, rating, phổ biến, mới nhất (kế hoạch)
 
 #### Combo & Packages
-- **Gói du lịch**: Khách sạn + vé máy bay + tour
-- **Combo tiết kiệm**: Giảm giá khi mua nhiều dịch vụ
-- **Flash sale**: Khuyến mãi giới hạn thời gian
-- **Loyalty program**: Tích điểm, đổi quà
+- 📝 **Gói du lịch**: Khách sạn + vé máy bay + tour (kế hoạch)
+- 📝 **Combo tiết kiệm**: Giảm giá khi mua nhiều dịch vụ (kế hoạch)
+- 📝 **Flash sale**: Khuyến mãi giới hạn thời gian (kế hoạch)
+- 📝 **Loyalty program**: Tích điểm, đổi quà (kế hoạch)
 
 #### Reviews & Ratings
-- **Đánh giá**: Rating 1-5 sao
-- **Review**: Viết review chi tiết, đăng ảnh
-- **Xác thực**: Chỉ khách đã sử dụng mới được review
-- **Phản hồi**: Chủ cửa hàng có thể phản hồi
+- 📝 **Đánh giá**: Rating 1-5 sao (model HotelReview đã có, chưa có UI)
+- 📝 **Review**: Viết review chi tiết, đăng ảnh (kế hoạch)
+- 📝 **Xác thực**: Chỉ khách đã sử dụng mới được review (kế hoạch)
+- 📝 **Phản hồi**: Chủ cửa hàng có thể phản hồi (kế hoạch)
 
 ## 🔒 Xử Lý High Concurrency
 
@@ -347,28 +404,95 @@ users (
     created_at TIMESTAMP,
     updated_at TIMESTAMP
 )
+
+-- Movies & Cinemas
+movies (
+    id, title, description, genre, duration, rating,
+    poster_url, trailer_url, release_date, created_at, updated_at
+)
+cinemas (
+    id, name, address, city, facilities, created_at, updated_at
+)
+screens (
+    id, cinema_id, name, capacity, screen_type, created_at, updated_at
+)
+showtimes (
+    id, movie_id, screen_id, start_time, end_time, price, created_at, updated_at
+)
+seats (
+    id, screen_id, row, number, seat_type, is_available, created_at, updated_at
+)
+movie_bookings (
+    id, user_id, showtime_id, booking_date, status, total_price, created_at, updated_at
+)
+booking_seats (
+    id, booking_id, seat_id, price, created_at, updated_at
+)
+
+-- Hotels
+hotels (
+    id, name, address, city, star_rating, description, facilities,
+    phone_number, email, created_at, updated_at
+)
+rooms (
+    id, hotel_id, room_type, max_guests, price_per_night, amenities, created_at, updated_at
+)
+room_images (
+    id, room_id, image_url, is_primary, created_at, updated_at
+)
+hotel_bookings (
+    id, user_id, hotel_id, room_id, check_in, check_out, guests,
+    total_price, status, created_at, updated_at
+)
+hotel_reviews (
+    id, hotel_id, user_id, rating, comment, created_at, updated_at
+)
+
+-- Payments
+payments (
+    id, booking_id, booking_type, amount, payment_method,
+    transaction_id, status, paid_at, created_at, updated_at
+)
 ```
 
 #### 📝 Kế Hoạch
 
 ```sql
--- Bookings (Polymorphic)
-bookings (
-    id, user_id, booking_type, 
-    service_id, status, total_price, 
-    booking_date, created_at, updated_at
+-- Restaurants
+restaurants (
+    id, name, address, city, cuisine_type, price_range, rating, opening_hours
+)
+restaurant_tables (
+    id, restaurant_id, table_number, capacity, location_type
+)
+restaurant_bookings (
+    id, user_id, restaurant_id, table_id, booking_date, booking_time,
+    guests, special_requests, status
+)
+menus (
+    id, restaurant_id, name, description, price, image_url, category
+)
+restaurant_reviews (
+    id, restaurant_id, user_id, rating, comment, food_rating, service_rating
 )
 
--- Payments
-payments (
-    id, booking_id, amount, payment_method, 
-    transaction_id, status, paid_at, created_at
+-- Amusement Parks
+amusement_parks (
+    id, name, address, city, description, opening_hours
+)
+park_tickets (
+    id, park_id, ticket_type, price, validity_days, includes
+)
+park_bookings (
+    id, user_id, park_id, ticket_id, visit_date, quantity, total_price, status
+)
+park_attractions (
+    id, park_id, name, type, min_height, wait_time
 )
 
 -- Notifications
 notifications (
-    id, user_id, type, title, content, 
-    is_read, created_at
+    id, user_id, type, title, content, is_read, created_at
 )
 ```
 
@@ -392,28 +516,51 @@ notifications (
 ```
 /api/
 ├── auth/
-│   ├── POST /register      ✅ Đăng ký tài khoản mới
-│   └── POST /login         ✅ Đăng nhập
-├── health                  ✅ Health check endpoint
-└── api-docs/               ✅ Swagger API documentation
+│   ├── POST /register              ✅ Đăng ký tài khoản mới
+│   └── POST /login                 ✅ Đăng nhập
+├── health                          ✅ Health check endpoint
+├── api-docs/                       ✅ Swagger API documentation
+│
+├── movies/
+│   ├── GET /movies                 ✅ Lấy danh sách phim
+│   ├── GET /movies/{id}            ✅ Lấy chi tiết phim
+│   ├── GET /movies/search?q={q}    ✅ Tìm kiếm phim
+│   ├── GET /movies/genre/{genre}   ✅ Lấy phim theo thể loại
+│   ├── GET /movies/now-showing     ✅ Lấy phim đang chiếu
+│   ├── GET /movies/{movieId}/showtimes ✅ Lấy lịch chiếu
+│   ├── GET /movies/showtimes/{showtimeId}/seats?screenId={id} ✅ Lấy ghế
+│   ├── POST /movies/book           ✅ Đặt vé phim
+│   ├── GET /movies/bookings        ✅ Lấy lịch sử đặt vé
+│   ├── GET /movies/bookings/{id}   ✅ Lấy chi tiết đặt vé
+│   └── PUT /movies/bookings/{id}/cancel ✅ Hủy đặt vé
+│
+├── cinemas/
+│   ├── GET /cinemas                ✅ Lấy danh sách rạp
+│   └── GET /cinemas/{id}           ✅ Lấy chi tiết rạp
+│
+├── hotels/
+│   ├── GET /hotels                 ✅ Lấy danh sách khách sạn
+│   ├── GET /hotels/{id}            ✅ Lấy chi tiết khách sạn
+│   ├── GET /hotels/search?q={q}     ✅ Tìm kiếm khách sạn
+│   ├── GET /hotels/city/{city}     ✅ Lấy khách sạn theo thành phố
+│   ├── GET /hotels/{hotelId}/rooms ✅ Lấy danh sách phòng
+│   ├── POST /hotels/book           ✅ Đặt phòng khách sạn
+│   ├── GET /hotels/bookings        ✅ Lấy lịch sử đặt phòng
+│   ├── GET /hotels/bookings/{id}   ✅ Lấy chi tiết đặt phòng
+│   └── PUT /hotels/bookings/{id}/cancel ✅ Hủy đặt phòng
+│
+└── payments/
+    ├── POST /payments               ✅ Xử lý thanh toán
+    ├── GET /payments/{id}           ✅ Lấy chi tiết thanh toán
+    ├── GET /payments/transaction/{transactionId} ✅ Lấy theo transaction ID
+    ├── GET /payments/booking/{bookingId}?bookingType={type} ✅ Lấy theo booking
+    └── POST /payments/{id}/refund   ✅ Hoàn tiền
 ```
 
-#### 📝 Đang Phát Triển
+#### 📝 Kế Hoạch Phát Triển
 
 ```
 /api/
-├── movies/
-│   ├── GET /movies
-│   ├── GET /movies/{id}
-│   ├── GET /movies/{id}/showtimes
-│   ├── POST /movies/{id}/book
-│   └── GET /cinemas
-├── hotels/
-│   ├── GET /hotels
-│   ├── GET /hotels/{id}
-│   ├── GET /hotels/{id}/rooms
-│   ├── POST /hotels/{id}/book
-│   └── GET /hotels/{id}/reviews
 ├── restaurants/
 │   ├── GET /restaurants
 │   ├── GET /restaurants/{id}
@@ -425,15 +572,6 @@ notifications (
 │   ├── GET /parks/{id}
 │   ├── GET /parks/{id}/tickets
 │   └── POST /parks/{id}/book
-├── bookings/
-│   ├── GET /bookings
-│   ├── GET /bookings/{id}
-│   ├── PUT /bookings/{id}/cancel
-│   └── GET /bookings/{id}/invoice
-├── payments/
-│   ├── POST /payments
-│   ├── GET /payments/{id}
-│   └── POST /payments/{id}/refund
 └── search/
     └── GET /search?q={query}&type={type}
 ```
@@ -477,37 +615,47 @@ Content-Type: application/json
 
 ## 🚀 Roadmap Phát Triển
 
-### Phase 1: MVP (Minimum Viable Product) - Đang phát triển
+### Phase 1: MVP (Minimum Viable Product) - ✅ Hoàn thành
 - [x] User authentication & authorization ✅
 - [x] JWT token-based authentication ✅
 - [x] User registration & login ✅
 - [x] Basic frontend web app với Next.js ✅
 - [x] API documentation với Swagger ✅
-- [ ] Movie booking service
-- [ ] Hotel booking service
-- [ ] Basic payment integration
+- [x] Movie booking service ✅
+- [x] Hotel booking service ✅
+- [x] Basic payment integration ✅
+- [x] Cinema management ✅
+- [x] Booking history & management ✅
+- [x] Search functionality (movies & hotels) ✅
 
-### Phase 2: Core Features - Kế hoạch
+### Phase 2: Core Features - 🔄 Đang phát triển
 - [ ] Restaurant booking service
 - [ ] Amusement park booking service
-- [ ] Search & filtering
-- [ ] Reviews & ratings
+- [ ] Advanced search & filtering
+- [ ] Reviews & ratings (UI & functionality)
 - [ ] Email/SMS notifications
 - [ ] Mobile responsive design improvements
+- [ ] Image upload & management
+- [ ] User profile management
 
-### Phase 3: Advanced Features - Kế hoạch
+### Phase 3: Advanced Features - 📝 Kế hoạch
 - [ ] Combo & packages
 - [ ] Recommendation engine
 - [ ] Loyalty program
 - [ ] Advanced analytics dashboard
 - [ ] Mobile apps (iOS & Android)
+- [ ] Real-time seat availability updates
+- [ ] Booking confirmation emails
+- [ ] Payment gateway integration (VNPay, MoMo)
 
-### Phase 4: Scale & Optimize - Kế hoạch
+### Phase 4: Scale & Optimize - 📝 Kế hoạch
 - [ ] Performance optimization
 - [ ] Load testing & scaling
-- [ ] Advanced caching strategies
+- [ ] Advanced caching strategies (Redis implementation)
+- [ ] Distributed locking for seat/room reservation
 - [ ] Machine learning recommendations
 - [ ] Multi-language support
+- [ ] Microservices architecture migration
 
 ## 🧪 Testing Strategy
 
@@ -539,16 +687,39 @@ Content-Type: application/json
 - [x] Password encryption (BCrypt)
 - [x] Swagger/OpenAPI documentation
 - [x] Health check endpoint
+- [x] **Movie Service**: CRUD operations, search, showtimes, seat selection, booking
+- [x] **Hotel Service**: CRUD operations, search, room management, booking
+- [x] **Cinema Service**: Cinema & screen management
+- [x] **Payment Service**: Payment processing, refund, transaction tracking
+- [x] **Booking Management**: View, cancel bookings for movies & hotels
+- [x] **14 Entity Models**: User, Movie, Cinema, Screen, Showtime, Seat, MovieBooking, BookingSeat, Hotel, Room, RoomImage, HotelBooking, HotelReview, Payment
+- [x] **13 Repositories**: Full JPA repository support
+- [x] **4 Services**: AuthService, MovieService, HotelService, PaymentService
+- [x] **6 Controllers**: AuthController, MovieController, HotelController, CinemaController, PaymentController, HealthController
 
 ### Frontend ✅
 - [x] Next.js 16 với TypeScript
 - [x] Tailwind CSS styling
 - [x] Authentication context (React Context API)
 - [x] Login & Register pages
-- [x] Home page với UI hiện đại
-- [x] API client với axios
+- [x] Home page với UI hiện đại và animations
+- [x] API client với axios (interceptors, error handling)
 - [x] Token management (localStorage)
 - [x] Responsive design
+- [x] **Movies Pages**: 
+  - Movies list với search
+  - Movie detail page
+  - Movie booking page với seat selection
+- [x] **Hotels Pages**:
+  - Hotels list với search
+  - Hotel detail page
+  - Hotel booking page với room selection
+- [x] **Bookings Page**: 
+  - View all bookings (movies & hotels)
+  - Cancel bookings
+  - Booking status display
+- [x] **Payment Page**: Payment processing interface
+- [x] **Booking Success Page**: Confirmation page after successful booking
 
 ## 📝 Lưu Ý Khi Phát Triển
 
@@ -558,9 +729,10 @@ Content-Type: application/json
 - Redis hiện tại chưa bắt buộc, có thể chạy backend mà không có Redis
 
 ### Frontend
-- API URL được cấu hình trong `.env.local`
+- API URL được cấu hình trong `.env.local` (mặc định: `http://localhost:8080/api`)
 - Token được lưu trong localStorage
 - Cần đảm bảo backend đang chạy trước khi test frontend
+- Tạo file `.env.local` với nội dung: `NEXT_PUBLIC_API_URL=http://localhost:8080/api`
 
 ## 🐛 Troubleshooting
 

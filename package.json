@@ -1,27 +1,40 @@
 {
-  "name": "frontend",
-  "version": "0.1.0",
-  "private": true,
+  "name": "sentimental-apprehensive-rail",
+  "version": "1.0.0",
+  "description": "A next project generated based on a UIDL document",
+  "main": "index.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
   },
+  "author": "TeleportHQ",
+  "license": "MIT",
   "dependencies": {
-    "axios": "^1.13.2",
-    "next": "16.1.1",
-    "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "@teleporthq/react-components": "latest",
+    "next": "^15.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "next-intl": "^2.10.0",
+    "dangerous-html": "0.1.13"
+  },
+  "engines": {
+    "node": ">=18.x"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.1.1",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "@types/node": "^20.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.0.0"
+  },
+  "overrides": {
+    "dangerous-html": {
+      "react": "$react"
+    },
+    "next-intl": {
+      "next": "$next"
+    }
   }
 }

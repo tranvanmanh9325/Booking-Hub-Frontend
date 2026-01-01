@@ -1,22 +1,18 @@
 {
-    "java.configuration.updateBuildConfiguration": "automatic",
-    "java.compile.nullAnalysis.mode": "automatic",
     "cSpell.words": [
+        "apos",
+        "buýt",
         "chơi",
         "chóng",
-        "createdb",
-        "hoạch",
+        "Dưỡng",
+        "Hạng",
         "khách",
-        "Khuyến",
-        "kiệm",
-        "Logback",
-        "Opsgenie",
-        "phối",
-        "psql",
-        "showtimes",
-        "uống",
-        "VARCHAR",
-        "vercel",
-        "XVCJ"
+        "Kiệm",
+        "Lotte",
+        "lượt",
+        "sảnh",
+        "Trộm",
+        "viewbox",
+        "Vincom"
     ]
 }
