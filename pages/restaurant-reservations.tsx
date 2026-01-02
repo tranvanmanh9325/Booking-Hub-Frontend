@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Script from 'dangerous-html/react'
 import Navigation from '../components/navigation'
 import Footer from '../components/footer'
-import { restaurantReservationsStyles, restaurantReservationsScript } from './restaurant-reservations.styles'
+import { restaurantReservationsStyles, restaurantReservationsScript } from '../styles/restaurant-reservations.styles'
 
 const RestaurantReservations: React.FC = () => {
   return (

@@ -5,7 +5,7 @@ import Script from 'dangerous-html/react'
 
 import Navigation from '../components/navigation'
 import Footer from '../components/footer'
-import MovieTicketsSections from './movie-tickets-sections'
+import MovieTicketsSections from '../sections/movie-tickets-sections'
 
 const MovieTickets = (props: any) => {
   return (

@@ -5,7 +5,7 @@ import Script from 'dangerous-html/react'
 import { useTranslations } from 'next-intl'
 
 import Navigation from '../components/navigation'
-import HomeSections from './home-sections'
+import HomeSections from '../sections/home-sections'
 
 const Home: React.FC = () => {
   return (
@@ -435,35 +435,6 @@ section {
           }
           .home-container7 {
             display: contents;
-          }
-          .home-container8 {
-            right: 50px;
-            border: 1px solid #ffffff5c;
-            bottom: 30px;
-            display: flex;
-            z-index: 22;
-            position: fixed;
-            box-shadow: 5px 5px 10px 0px rgba(31, 31, 31, 0.4);
-            min-height: auto;
-            align-items: center;
-            padding-top: 8px;
-            padding-left: 12px;
-            border-radius: 8px;
-            padding-right: 12px;
-            padding-bottom: 8px;
-            backdrop-filter: blur(6px);
-            background-color: rgba(41, 41, 41, 0.41);
-          }
-          .home-icon62 {
-            width: 24px;
-            margin-right: 4px;
-          }
-          .home-text30 {
-            color: white;
-            font-size: 13px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: 24px;
           }
         `}
       </style>

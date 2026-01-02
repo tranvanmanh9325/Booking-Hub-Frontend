@@ -5,7 +5,7 @@ import Script from 'dangerous-html/react'
 import { useTranslations } from 'next-intl'
 
 import Navigation from '../components/navigation'
-import HotelsContent from './hotels-content'
+import HotelsContent from '../sections/hotels-content'
 
 const Hotels: React.FC = () => {
   return (

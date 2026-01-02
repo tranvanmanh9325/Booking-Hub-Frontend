@@ -1,0 +1,436 @@
+.booking-hub-page {
+  color: var(--color-on-surface);
+  overflow-x: hidden;
+  background-color: var(--color-surface);
+}
+
+.movie-tickets-hero-section {
+  display: flex;
+  padding: var(--spacing-4xl) var(--spacing-xl);
+  position: relative;
+  min-height: 100vh;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.showtimes-section {
+  padding: var(--spacing-4xl) var(--spacing-xl);
+}
+
+.seating-section {
+  color: var(--color-surface);
+  padding: var(--spacing-4xl) var(--spacing-xl);
+  background: var(--color-on-surface);
+}
+
+.payment-section {
+  padding: var(--spacing-4xl) var(--spacing-xl);
+  background: var(--color-surface);
+}
+
+.movie-details-section {
+  padding: var(--spacing-4xl) var(--spacing-xl);
+  background: var(--color-surface-elevated);
+}
+
+.movie-tickets-testimonials-section {
+  padding: var(--spacing-4xl) var(--spacing-xl);
+}
+
+.contact-section {
+  padding: var(--spacing-4xl) var(--spacing-xl);
+  background: var(--color-surface-elevated);
+}
+
+.hero-video {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  position: absolute;
+  object-fit: cover;
+}
+
+.hero-content {
+  color: var(--color-surface);
+  width: 100%;
+  z-index: 3;
+  position: relative;
+  max-width: 800px;
+}
+
+.seating-container {
+  margin: 0 auto;
+  max-width: var(--content-max-width);
+}
+
+.payment-container {
+  margin: 0 auto;
+  max-width: var(--content-max-width);
+}
+
+.movie-details-container {
+  gap: var(--spacing-4xl);
+  margin: 0 auto;
+  display: flex;
+  max-width: var(--content-max-width);
+  align-items: center;
+}
+
+.testimonials-container {
+  margin: 0 auto;
+  max-width: var(--content-max-width);
+}
+
+.contact-container {
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.movie-tickets-hero-title {
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  margin-bottom: var(--spacing-lg);
+}
+
+.movie-tickets-hero-subtitle {
+  color: var(--color-surface);
+  opacity: 0.9;
+  margin-bottom: var(--spacing-3xl);
+}
+
+.movie-tickets-hero-search-container {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: var(--spacing-2xl);
+  background: var(--color-backplate);
+  border-radius: var(--border-radius-xl);
+  backdrop-filter: blur(10px);
+}
+
+.seating-spotlight {
+  padding: var(--spacing-3xl) 0;
+  background: radial-gradient(circle at center, rgba(0, 119, 204, 0.1) 0%, transparent 70%);
+}
+
+.payment-grid {
+  gap: var(--spacing-xl);
+  display: grid;
+  margin-top: var(--spacing-3xl);
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.movie-info-side {
+  flex: 4;
+}
+
+.movie-video-side {
+  flex: 6;
+}
+
+.testimonials-carousel {
+  gap: var(--spacing-xl);
+  display: flex;
+  margin-top: var(--spacing-3xl);
+  overflow-x: auto;
+  padding-bottom: var(--spacing-xl);
+  scrollbar-width: none;
+}
+
+.faq-accordion {
+  gap: var(--spacing-md);
+  margin: var(--spacing-3xl) 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-cta {
+  color: var(--color-on-primary);
+  padding: var(--spacing-3xl);
+  background: var(--color-primary);
+  text-align: center;
+  border-radius: var(--border-radius-xl);
+}
+
+.hero-search-form {
+  gap: var(--spacing-md);
+  display: flex;
+  margin-bottom: var(--spacing-lg);
+}
+
+.hero-availability {
+  gap: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.showtimes-list {
+  gap: var(--spacing-xl);
+  display: flex;
+  margin-top: var(--spacing-2xl);
+  flex-direction: column;
+}
+
+.filter-card {
+  top: var(--spacing-xl);
+  border: 1px solid var(--color-border);
+  padding: var(--spacing-xl);
+  position: sticky;
+  background: var(--color-surface-elevated);
+  border-radius: var(--border-radius-card);
+}
+
+.seating-card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 0 auto;
+  padding: var(--spacing-3xl);
+  max-width: 900px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius-xl);
+  backdrop-filter: blur(10px);
+}
+
+.payment-card {
+  gap: var(--spacing-md);
+  border: 1px solid var(--color-border);
+  display: flex;
+  padding: var(--spacing-2xl);
+  background: var(--color-surface-elevated);
+  border-radius: var(--border-radius-card);
+  flex-direction: column;
+}
+
+
+.movie-synopsis {
+  color: var(--color-on-surface-secondary);
+  margin: var(--spacing-xl) 0;
+}
+
+.movie-cast {
+  margin-bottom: var(--spacing-xl);
+}
+
+.video-wrapper {
+  overflow: hidden;
+  position: relative;
+  box-shadow: var(--shadow-level-2);
+  aspect-ratio: 16 / 9;
+  border-radius: var(--border-radius-xl);
+}
+
+.movie-tickets-testimonial-card {
+  gap: var(--spacing-lg);
+  flex: 0 0 350px;
+  border: 1px solid var(--color-border);
+  display: flex;
+  padding: var(--spacing-2xl);
+  background: var(--color-surface-elevated);
+  border-radius: var(--border-radius-card);
+  flex-direction: column;
+}
+
+.faq-item {
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  background: var(--color-surface);
+  border-radius: var(--border-radius-md);
+}
+
+.contact-buttons {
+  gap: var(--spacing-md);
+  display: flex;
+  margin-top: var(--spacing-xl);
+  justify-content: center;
+}
+
+.search-group {
+  flex: 1;
+}
+
+.availability-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-accent);
+  box-shadow: 0 0 10px var(--color-accent);
+  border-radius: 50%;
+}
+
+.showtime-card {
+  gap: var(--spacing-xl);
+  border: 1px solid var(--color-border);
+  display: flex;
+  padding: var(--spacing-xl);
+  background: var(--color-surface-elevated);
+  transition: transform 0.3s ease;
+  align-items: center;
+  border-radius: var(--border-radius-card);
+  justify-content: space-between;
+}
+
+.filter-header {
+  gap: var(--spacing-sm);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.filter-group {
+  margin-bottom: var(--spacing-xl);
+}
+
+.seating-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing-3xl);
+  justify-content: space-between;
+}
+
+.cinema-screen {
+  color: var(--color-outline);
+  width: 80%;
+  height: 8px;
+  margin: 0 auto var(--spacing-4xl);
+  font-size: var(--font-size-xs);
+  background: var(--color-outline);
+  box-shadow: 0 10px 30px rgba(0, 119, 204, 0.5);
+  text-align: center;
+  line-height: 40px;
+  border-radius: 4px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.seat-grid {
+  gap: var(--spacing-md);
+  display: flex;
+  margin-bottom: var(--spacing-3xl);
+  flex-direction: column;
+}
+
+.seating-legend {
+  gap: var(--spacing-xl);
+  display: flex;
+  margin-bottom: var(--spacing-3xl);
+  justify-content: center;
+}
+
+.seating-footer {
+  display: flex;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  align-items: center;
+  padding-top: var(--spacing-xl);
+  justify-content: space-between;
+}
+
+.payment-icon-box {
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.promo-form {
+  gap: var(--spacing-sm);
+  display: flex;
+}
+
+.security-badges {
+  gap: var(--spacing-md);
+  display: flex;
+}
+
+.payment-methods {
+  gap: var(--spacing-md);
+  display: flex;
+}
+
+.rating-badge {
+  color: var(--color-on-accent);
+  padding: 2px var(--spacing-sm);
+  background: var(--color-accent);
+  font-weight: bold;
+  margin-right: var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+}
+
+.video-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.play-button {
+  top: 50%;
+  left: 50%;
+  width: 80px;
+  border: none;
+  cursor: pointer;
+  height: 80px;
+  display: flex;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: var(--color-primary);
+  transition: transform 0.3s ease;
+  align-items: center;
+  border-radius: 50%;
+  justify-content: center;
+}
+
+.movie-tickets-testimonial-rating {
+  gap: 2px;
+  display: flex;
+}
+
+.movie-tickets-testimonial-user {
+  display: flex;
+  margin-top: auto;
+  flex-direction: column;
+}
+
+.faq-content {
+  color: var(--color-on-surface-secondary);
+  padding: 0 var(--spacing-lg) var(--spacing-lg);
+}
+
+.search-input-wrapper {
+  gap: var(--spacing-sm);
+  height: 56px;
+  display: flex;
+  padding: 0 var(--spacing-md);
+  background: var(--color-surface);
+  align-items: center;
+  border-radius: var(--border-radius-control);
+}
+
+.showtime-info {
+  flex: 1;
+}
+
+.showtime-slots {
+  gap: var(--spacing-sm);
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 300px;
+  justify-content: flex-end;
+}
+
+.filter-options {
+  gap: var(--spacing-xs);
+  display: flex;
+  flex-direction: column;
+}
+
+.price-labels {
+  color: var(--color-on-surface-secondary);
+  display: flex;
+  font-size: var(--font-size-xs);
+  justify-content: space-between;
+}
+
+.booking-timer {
+  gap: var(--spacing-sm);
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  font-weight: var(--font-weight-medium);
+}

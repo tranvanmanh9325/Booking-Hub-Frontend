@@ -1,0 +1,503 @@
+@media(max-width: 991px) {
+  .thq-grid-4 {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .navigation-container {
+    padding: var(--spacing-md) var(--spacing-lg);
+  }
+  .navigation-links-list {
+    gap: var(--spacing-sm);
+  }
+  .navigation-link {
+    font-size: var(--font-size-sm);
+  }
+  .footer-main-grid {
+    gap: var(--spacing-3xl);
+  }
+  .footer-brand-column {
+    flex: 1 1 100%;
+    margin-bottom: var(--spacing-xl);
+  }
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .gallery-masonry {
+    columns: unset;
+  }
+  .cta-split-container {
+    flex-direction: column;
+  }
+  .cta-visual-column {
+    width: 100%;
+    min-height: 400px;
+  }
+  .movie-details-container {
+    flex-direction: column;
+  }
+  .movie-info-side {
+    width: 100%;
+  }
+  .movie-video-side {
+    width: 100%;
+  }
+  .showtime-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .showtime-slots {
+    justify-content: flex-start;
+  }
+  .hotels-search-input-group {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .location-split-container {
+    flex-direction: column;
+  }
+  .cta-alert-container {
+    gap: var(--spacing-lg);
+    text-align: center;
+    flex-direction: column;
+  }
+  .cta-summary {
+    gap: var(--spacing-lg);
+  }
+  .hotels-payment-methods {
+    display: none;
+  }
+}
+ 
+@media(max-width: 767px) {
+  .thq-section-padding {
+    padding: var(--dl-layout-space-threeunits);
+  }
+  .thq-flex-column {
+    gap: var(--dl-layout-space-oneandhalfunits);
+  }
+  .thq-flex-row {
+    gap: var(--dl-layout-space-oneandhalfunits);
+  }
+  .thq-grid-6 {
+    grid-gap: var(--dl-layout-space-oneandhalfunits);
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .thq-grid-5 {
+    grid-gap: var(--dl-layout-space-oneandhalfunits);
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .thq-card {
+    padding: var(--dl-layout-space-oneandhalfunits);
+  }
+  .thq-grid-3 {
+    grid-gap: var(--dl-layout-space-oneandhalfunits);
+    grid-template-columns: 1fr 1fr;
+  }
+  .thq-grid-4 {
+    grid-gap: var(--dl-layout-space-oneandhalfunits);
+    flex-direction: row;
+    grid-template-columns: 1fr 1fr;
+  }
+  .thq-grid-2 {
+    grid-gap: var(--dl-layout-space-oneandhalfunits);
+    grid-template-columns: 1fr;
+  }
+  .thq-img-scale {
+    width: 100%;
+  }
+  .navigation-desktop-menu {
+    display: none;
+  }
+  .navigation-mobile-toggle {
+    display: block;
+  }
+  .navigation-brand-name {
+    font-size: var(--font-size-lg);
+  }
+  .footer-main-grid {
+    gap: var(--spacing-2xl);
+    flex-direction: column;
+  }
+  .footer-bottom {
+    gap: var(--spacing-lg);
+    text-align: center;
+    flex-direction: column;
+  }
+  .footer-column {
+    min-width: 100%;
+  }
+  .hero-search-container {
+    padding: var(--spacing-lg);
+  }
+  .search-input-group {
+    flex-direction: column;
+  }
+  .search-input-group  .btn {
+    width: 100%;
+  }
+  .search-field {
+    width: 100%;
+  }
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  .showcase-card {
+    width: 300px;
+  }
+  .stats-grid {
+    gap: var(--spacing-lg);
+  }
+  .testimonial-card {
+    width: 300px;
+  }
+  .gallery-masonry {
+    columns: unset;
+  }
+  .payment-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-search-form {
+    flex-direction: column;
+  }
+  .seating-legend {
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+  }
+  .seating-footer {
+    gap: var(--spacing-lg);
+    text-align: center;
+    flex-direction: column;
+  }
+  .search-input-wrapper {
+    height: 48px;
+  }
+  .seat-row {
+    gap: var(--spacing-sm);
+  }
+  .seat {
+    width: 20px;
+    height: 20px;
+  }
+  .seat-gap {
+    width: 10px;
+  }
+  .gallery-bento-grid {
+    height: auto;
+    grid-template-columns: 1fr;
+  }
+  .gallery-info-bar {
+    gap: var(--spacing-lg);
+    flex-direction: column;
+  }
+  .main-cell {
+    height: 300px;
+  }
+  .side-cell-1 {
+    height: 200px;
+  }
+  .side-cell-2 {
+    height: 200px;
+  }
+  .hotels-testimonial-card {
+    min-width: 280px;
+  }
+}
+ 
+@media(max-width: 479px) {
+  .thq-section-padding {
+    padding: var(--dl-layout-space-oneandhalfunits);
+  }
+  .thq-flex-column {
+    gap: var(--dl-layout-space-unit);
+  }
+  .thq-flex-row {
+    gap: var(--dl-layout-space-unit);
+  }
+  .thq-grid-6 {
+    grid-gap: var(--dl-layout-space-unit);
+    grid-template-columns: 1fr 1fr;
+  }
+  .thq-grid-5 {
+    grid-gap: var(--dl-layout-space-unit);
+    grid-template-columns: 1fr 1fr;
+  }
+  .thq-grid-3 {
+    grid-gap: var(--dl-layout-space-unit);
+    align-items: center;
+    grid-template-columns: 1fr;
+  }
+  .thq-grid-4 {
+    grid-gap: var(--dl-layout-space-unit);
+    align-items: center;
+    flex-direction: column;
+    grid-template-columns: 1fr;
+  }
+  .thq-grid-2 {
+    grid-gap: var(--dl-layout-space-unit);
+  }
+  .thq-grid-auto-300 {
+    grid-template-columns: 1fr;
+  }
+  .navigation-container {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+  .footer-root {
+    padding-top: var(--spacing-3xl);
+  }
+  .footer-social-links {
+    justify-content: flex-start;
+  }
+  .hero-cta-group {
+    flex-direction: column;
+  }
+  .stat-value {
+    font-size: var(--font-size-2xl);
+  }
+  .gallery-masonry {
+    columns: unset;
+  }
+  .cta-button-group {
+    flex-direction: column;
+  }
+  .cta-quick-links {
+    gap: var(--spacing-md);
+    flex-direction: column;
+  }
+  .contact-buttons {
+    flex-direction: column;
+  }
+  .hotel-card {
+    width: 280px;
+  }
+}
+
+/* Movie Tickets Page Styles */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.hero-booking {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  background: var(--color-on-surface);
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-media {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  position: absolute;
+}
+
+.hero-content-wrapper {
+  width: 100%;
+  display: flex;
+  padding: var(--spacing-4xl) var(--spacing-xl);
+  z-index: 3;
+  position: relative;
+  max-width: var(--content-max-width);
+  justify-content: flex-start;
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-scrim {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  position: absolute;
+  background: linear-gradient(to right, var(--color-scrim), transparent);
+}
+
+.hero-card {
+  color: var(--color-surface);
+  border: 1px solid color-mix(in srgb, var(--color-surface) 10%, transparent);
+  padding: var(--spacing-3xl);
+  animation: slideIn 0.8s ease-out;
+  max-width: 600px;
+  background: var(--color-backplate);
+  border-radius: var(--border-radius-xl);
+  backdrop-filter: blur(12px);
+}
+
+.movie-tickets-hero-title {
+  color: var(--color-surface);
+  margin-bottom: var(--spacing-lg);
+}
+
+.movie-tickets-hero-subtitle {
+  color: var(--color-surface);
+  opacity: 0.9;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.hero-actions {
+  gap: var(--spacing-md);
+  display: flex;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.hero-badges {
+  gap: var(--spacing-xl);
+  display: flex;
+  border-top: 1px solid color-mix(in srgb, var(--color-surface) 20%, transparent);
+  padding-top: var(--spacing-xl);
+}
+
+.badge-item {
+  gap: var(--spacing-xs);
+  display: flex;
+  font-size: var(--font-size-sm);
+  align-items: center;
+}
+
+.showtimes-tabs {
+  padding: var(--spacing-4xl) 0;
+  background: var(--color-surface);
+}
+
+.showtimes-container {
+  margin: 0 auto;
+  padding: 0 var(--spacing-xl);
+  max-width: var(--content-max-width);
+}
+
+.movie-tickets-thq-section-title-elm1 {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.tabs-header {
+  gap: var(--spacing-md);
+  margin: var(--spacing-2xl) 0;
+  display: flex;
+  border-bottom: var(--divider-value);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.tab-trigger {
+  color: var(--color-on-surface-secondary);
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-md) var(--spacing-xl);
+  position: relative;
+  background: none;
+  transition: color 0.3s ease;
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-medium);
+}
+
+.tab-trigger.active {
+  color: var(--color-primary);
+}
+
+.tab-trigger.active::after {
+  left: 0;
+  width: 100%;
+  bottom: -1px;
+  height: 2px;
+  content: "";
+  position: absolute;
+  background: var(--color-primary);
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+.movie-grid {
+  gap: var(--spacing-2xl);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.movie-card {
+  gap: var(--spacing-xl);
+  display: flex;
+  padding: var(--spacing-lg);
+  background: var(--color-surface-elevated);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border-radius: var(--border-radius-lg);
+}
+
+.movie-poster {
+  flex: 0 0 160px;
+  overflow: hidden;
+  position: relative;
+  border-radius: var(--border-radius-md);
+}
+
+.movie-poster img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+
+.movie-info {
+  flex: 1;
+}
+
+.movie-rating {
+  top: var(--spacing-sm);
+  left: var(--spacing-sm);
+  color: var(--color-on-accent);
+  padding: 2px 8px;
+  position: absolute;
+  font-size: var(--font-size-xs);
+  background: var(--color-accent);
+  font-weight: bold;
+  border-radius: var(--border-radius-sm);
+}
+
+.time-slots {
+  gap: var(--spacing-sm);
+  margin: var(--spacing-md) 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.seat-preview {
+  padding: var(--spacing-md);
+  background: var(--color-surface);
+  margin-top: var(--spacing-lg);
+  border-radius: var(--border-radius-md);
+}
+
+.time-btn {
+  border: 1px solid var(--color-outline);
+  cursor: pointer;
+  padding: 6px 12px;
+  background: var(--color-surface);
+  transition: all 0.2s ease;
+  border-radius: var(--border-radius-sm);
+}
+
+.time-btn.active,
+.time-btn:hover {
+  color: var(--color-on-primary);
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
