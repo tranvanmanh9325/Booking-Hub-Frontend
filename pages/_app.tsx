@@ -1,4 +1,5 @@
 import './style.css'
+import './attractions.css'
 
 import { GlobalProvider } from '../global-context'
 import { NextIntlProvider } from 'next-intl'
