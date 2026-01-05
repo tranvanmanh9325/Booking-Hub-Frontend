@@ -2,7 +2,6 @@ import React from 'react'
 import Head from 'next/head'
 import Script from 'dangerous-html/react'
 import Navigation from '../components/navigation'
-import Footer from '../components/footer'
 import { restaurantReservationsStyles, restaurantReservationsScript } from '../styles/restaurant-reservations.styles'
 
 const RestaurantReservations: React.FC = () => {
@@ -394,8 +393,6 @@ const RestaurantReservations: React.FC = () => {
       <Script
         html={`${restaurantReservationsStyles}${restaurantReservationsScript}`}
       />
-
-      <Footer></Footer>
     </>
   )
 }

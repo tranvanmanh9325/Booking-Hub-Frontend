@@ -19,16 +19,16 @@ const Footer: React.FC<FooterProps> = () => {
                 Nền tảng du lịch tổng hợp hàng đầu Việt Nam. Chúng tôi cung cấp giải pháp đặt vé phim, khách sạn và nhà hàng nhanh chóng, an toàn và chuyên nghiệp nhất.
               </p>
               <div className="footer-social-links">
-                <a href="#" className="footer-social-item" aria-label="Facebook">
+                <a href="https://www.facebook.com/manh090305" target="_blank" rel="noopener noreferrer" className="footer-social-item" aria-label="Facebook">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                 </a>
-                <a href="#" className="footer-social-item" aria-label="Instagram">
+                <a href="https://www.instagram.com/manh090305/" target="_blank" rel="noopener noreferrer" className="footer-social-item" aria-label="Instagram">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8A4 4 0 0 1 16 11.37m1.5-4.87h.01"/></svg>
                 </a>
-                <a href="#" className="footer-social-item" aria-label="Twitter">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6c2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4c-.9-4.2 4-6.6 7-3.8c1.1 0 3-1.2 3-1.2"/></svg>
+                <a href="https://www.linkedin.com/in/mannh090305/" target="_blank" rel="noopener noreferrer" className="footer-social-item" aria-label="LinkedIn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6M2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
                 </a>
-                <a href="#" className="footer-social-item" aria-label="YouTube">
+                <a href="https://www.youtube.com/@tranvanmanhofficial" target="_blank" rel="noopener noreferrer" className="footer-social-item" aria-label="YouTube">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path d="M2.5 17a24.1 24.1 0 0 1 0-10a2 2 0 0 1 1.4-1.4a49.6 49.6 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.1 24.1 0 0 1 0 10a2 2 0 0 1-1.4 1.4a49.6 49.6 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15l5-3l-5-3z"/></svg>
                 </a>
               </div>
@@ -48,11 +48,11 @@ const Footer: React.FC<FooterProps> = () => {
             <div className="footer-column">
               <h3 className="footer-heading section-subtitle">Hỗ Trợ</h3>
               <ul className="footer-links-list">
-                <li className="footer-link-item"><a href="#" className="footer-link">Trung Tâm Trợ Giúp</a></li>
-                <li className="footer-link-item"><a href="#" className="footer-link">Chính Sách Bảo Mật</a></li>
-                <li className="footer-link-item"><a href="#" className="footer-link">Điều Khoản Sử Dụng</a></li>
+                <li className="footer-link-item"><a href="/help-center" className="footer-link">Trung Tâm Trợ Giúp</a></li>
+                <li className="footer-link-item"><a href="/privacy" className="footer-link">Chính Sách Bảo Mật</a></li>
+                <li className="footer-link-item"><a href="/terms" className="footer-link">Điều Khoản Sử Dụng</a></li>
                 <li className="footer-link-item"><a href="#" className="footer-link">Hướng Dẫn Đặt Chỗ</a></li>
-                <li className="footer-link-item"><a href="#" className="footer-link">Liên Hệ Hợp Tác</a></li>
+                <li className="footer-link-item"><a href="/partnership" className="footer-link">Liên Hệ Hợp Tác</a></li>
               </ul>
             </div>
 
@@ -63,19 +63,19 @@ const Footer: React.FC<FooterProps> = () => {
                   <div className="footer-contact-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
                   </div>
-                  <span className="footer-contact-text section-content">Số 1 Đại Cồ Việt, Hai Bà Trưng, Hà Nội</span>
+                  <span className="footer-contact-text section-content">Mộ Lao, Hà Đông, Hà Nội</span>
                 </div>
                 <div className="footer-contact-item">
                   <div className="footer-contact-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233a14 14 0 0 0 6.392 6.384"/></svg>
                   </div>
-                  <span className="footer-contact-text section-content">+84 123 456 789</span>
+                  <span className="footer-contact-text section-content">+84389891942</span>
                 </div>
                 <div className="footer-contact-item">
                   <div className="footer-contact-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path d="m22 7l-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect width="20" height="16" x="2" y="4" rx="2"/></svg>
                   </div>
-                  <span className="footer-contact-text section-content">support@bookinghub.vn</span>
+                  <span className="footer-contact-text section-content">manhtrana1k45tl@gmail.com</span>
                 </div>
               </div>
             </div>
@@ -86,9 +86,9 @@ const Footer: React.FC<FooterProps> = () => {
               <span className="section-content">© 2025 Booking Hub. Tất cả quyền được bảo lưu.</span>
             </div>
             <div className="footer-bottom-links">
-              <a href="#" className="footer-bottom-link section-content">Bảo mật</a>
-              <a href="#" className="footer-bottom-link section-content">Điều khoản</a>
-              <a href="#" className="footer-bottom-link section-content">Sitemap</a>
+              <a href="/privacy" className="footer-bottom-link section-content">Bảo mật</a>
+              <a href="/terms" className="footer-bottom-link section-content">Điều khoản</a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Mộ+Lao,+Hà+Đông,+Hà+Nội" target="_blank" rel="noopener noreferrer" className="footer-bottom-link section-content">Sitemap</a>
             </div>
           </div>
         </div>

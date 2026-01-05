@@ -1,6 +1,5 @@
 import React from 'react'
 import Script from 'dangerous-html/react'
-import Footer from '../components/footer'
 
 const HomeSections: React.FC = () => {
   return (
@@ -493,7 +492,6 @@ const HomeSections: React.FC = () => {
           ></Script>
         </div>
       </div>
-      <Footer></Footer>
     </>
   )
 }

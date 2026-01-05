@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import Head from 'next/head'
 import Navigation from '../components/navigation'
-import Footer from '../components/footer'
 
 const Attractions: React.FC = () => {
   useEffect(() => {
@@ -450,8 +449,6 @@ const Attractions: React.FC = () => {
             </div>
           </div>
         </section>
-
-        <Footer />
       </div>
       <style jsx>
         {`
