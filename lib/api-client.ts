@@ -1,85 +1,118 @@
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { API_CONFIG } from '../config/api';
 
-interface RequestOptions extends RequestInit {
-    headers?: Record<string, string>;
-}
-
 class ApiClient {
-    private baseURL: string;
+    private instance: AxiosInstance;
+    private isRefreshing = false;
+    private failedQueue: any[] = [];
 
     constructor() {
-        this.baseURL = API_CONFIG.BASE_URL;
-    }
-
-    private getHeaders(options?: RequestOptions): HeadersInit {
-        const headers: Record<string, string> = {
-            'Content-Type': 'application/json',
-            ...options?.headers,
-        };
-
-        if (typeof window !== 'undefined') {
-            const token = localStorage.getItem('token');
-            if (token) {
-                headers['Authorization'] = `Bearer ${token}`;
-            }
-        }
-
-        return headers;
-    }
-
-    private async request<T>(endpoint: string, options?: RequestOptions): Promise<T> {
-        // Ensure endpoint starts with / if not provided, allowing flexible usage
-        const url = `${this.baseURL}${endpoint.startsWith('/') ? '' : '/'}${endpoint}`;
-
-        const response = await fetch(url, {
-            ...options,
-            headers: this.getHeaders(options),
+        this.instance = axios.create({
+            baseURL: API_CONFIG.BASE_URL,
+            headers: {
+                'Content-Type': 'application/json',
+            },
         });
 
-        if (!response.ok) {
-            // Handle 401 Unauthorized globally if needed (e.g., clear token)
-            if (response.status === 401) {
-                if (typeof window !== 'undefined') {
-                    localStorage.removeItem('token');
-                    // Optional: Redirect to login
-                    // window.location.href = '/auth/login';
+        this.setupInterceptors();
+    }
+
+    private processQueue(error: any, token: string | null = null) {
+        this.failedQueue.forEach(prom => {
+            if (error) {
+                prom.reject(error);
+            } else {
+                prom.resolve(token);
+            }
+        });
+        this.failedQueue = [];
+    }
+
+    private setupInterceptors() {
+        // Request Interceptor
+        this.instance.interceptors.request.use(
+            (config) => {
+                const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+                if (token) {
+                    config.headers.Authorization = `Bearer ${token}`;
                 }
+                return config;
+            },
+            (error) => Promise.reject(error)
+        );
+
+        // Response Interceptor
+        this.instance.interceptors.response.use(
+            (response) => response,
+            async (error: AxiosError) => {
+                const originalRequest = error.config as any;
+
+                if (error.response?.status === 401 && !originalRequest._retry) {
+                    if (this.isRefreshing) {
+                        return new Promise((resolve, reject) => {
+                            this.failedQueue.push({ resolve, reject });
+                        }).then((token) => {
+                            originalRequest.headers.Authorization = `Bearer ${token}`;
+                            return this.instance(originalRequest);
+                        }).catch((err) => Promise.reject(err));
+                    }
+
+                    originalRequest._retry = true;
+                    this.isRefreshing = true;
+
+                    try {
+                        const refreshToken = localStorage.getItem('refreshToken');
+                        if (!refreshToken) {
+                            throw new Error('No refresh token available');
+                        }
+
+                        const response = await axios.post(`${API_CONFIG.BASE_URL}/api/auth/refresh`, {
+                            refreshToken
+                        });
+
+                        const { token, refreshToken: newRefreshToken } = response.data;
+
+                        localStorage.setItem('token', token);
+                        // Backend might return a new refresh token (rotation) or the same one
+                        if (newRefreshToken) {
+                            localStorage.setItem('refreshToken', newRefreshToken);
+                        }
+
+                        this.processQueue(null, token);
+
+                        originalRequest.headers.Authorization = `Bearer ${token}`;
+                        return this.instance(originalRequest);
+                    } catch (refreshError) {
+                        this.processQueue(refreshError, null);
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('refreshToken');
+                        localStorage.removeItem('user');
+                        window.location.href = '/auth/login';
+                        return Promise.reject(refreshError);
+                    } finally {
+                        this.isRefreshing = false;
+                    }
+                }
+
+                return Promise.reject(error);
             }
-
-            const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.message || `API Error: ${response.statusText}`);
-        }
-
-        // Handle empty responses (e.g. 204 No Content)
-        if (response.status === 204) {
-            return {} as T;
-        }
-
-        return response.json();
+        );
     }
 
-    public get<T>(endpoint: string, options?: RequestOptions): Promise<T> {
-        return this.request<T>(endpoint, { ...options, method: 'GET' });
+    public get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
+        return this.instance.get<T>(url, config).then(res => res.data);
     }
 
-    public post<T>(endpoint: string, body: any, options?: RequestOptions): Promise<T> {
-        return this.request<T>(endpoint, {
-            ...options,
-            method: 'POST',
-            body: JSON.stringify(body),
-        });
+    public post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
+        return this.instance.post<T>(url, data, config).then(res => res.data);
     }
 
-    public put<T>(endpoint: string, body: any, options?: RequestOptions): Promise<T> {
-        return this.request<T>(endpoint, {
-            ...options,
-            method: 'PUT',
-            body: JSON.stringify(body),
-        });
+    public put<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
+        return this.instance.put<T>(url, data, config).then(res => res.data);
     }
 
-    public delete<T>(endpoint: string, options?: RequestOptions): Promise<T> {
-        return this.request<T>(endpoint, { ...options, method: 'DELETE' });
+    public delete<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
+        return this.instance.delete<T>(url, config).then(res => res.data);
     }
 }
 

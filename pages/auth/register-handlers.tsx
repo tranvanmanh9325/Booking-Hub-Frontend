@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import { apiClient } from '../../lib/api-client'
+import { useAuth } from '../../contexts/AuthContext'
 
 export interface RegisterFormData {
   email: string
@@ -28,6 +29,7 @@ export const useRegisterHandlers = (
   agreeToTerms: boolean
 ) => {
   const router = useRouter()
+  const { login } = useAuth()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -97,8 +99,12 @@ export const useRegisterHandlers = (
 
       // Store token if available
       if (data.token) {
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('user', JSON.stringify(data.user || {}))
+        login(data.token, data.refreshToken, {
+          id: data.id || data.userId,
+          email: data.email,
+          fullName: data.fullName,
+          avatarUrl: data.avatarUrl
+        })
       }
 
       // Redirect to home page
@@ -142,12 +148,12 @@ export const useRegisterHandlers = (
 
       // Store token if available
       if (data && data.token) {
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('user', JSON.stringify({
-          id: data.userId,
+        login(data.token, data.refreshToken, {
+          id: data.id || data.userId,
           email: data.email,
-          fullName: data.fullName
-        }))
+          fullName: data.fullName,
+          avatarUrl: data.avatarUrl
+        })
       }
 
       // Redirect to home page
