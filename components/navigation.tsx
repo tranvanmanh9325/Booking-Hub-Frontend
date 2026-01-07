@@ -304,9 +304,21 @@ const Navigation: React.FC<NavigationProps> = () => {
 }
 </style>
 <script defer data-name="navigation-logic">
+  (function() {
   const toggleBtn = document.getElementById('mobile-menu-toggle');
   const closeBtn = document.getElementById('mobile-menu-close');
   const overlay = document.getElementById('mobile-menu-overlay');
+    
+    if (!toggleBtn || !closeBtn || !overlay) {
+      return;
+    }
+
+    // Check if already initialized by checking data attribute
+    if (toggleBtn.dataset.navInitialized === 'true') {
+      return;
+    }
+    toggleBtn.dataset.navInitialized = 'true';
+
   const body = document.body;
 
   const openMenu = () => {
@@ -321,30 +333,31 @@ const Navigation: React.FC<NavigationProps> = () => {
     body.style.overflow = '';
   };
 
-  if (toggleBtn) toggleBtn.addEventListener('click', openMenu);
-  if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    toggleBtn.addEventListener('click', openMenu);
+    closeBtn.addEventListener('click', closeMenu);
 
   // Close menu on link click
-  if (overlay) {
     const mobileLinks = overlay.querySelectorAll('.navigation-mobile-link');
     mobileLinks.forEach(link => {
       link.addEventListener('click', closeMenu);
     });
-  }
 
   // Handle ESC key
-  document.addEventListener('keydown', (e) => {
+    const handleEscKey = (e) => {
     if (e.key === 'Escape' && overlay && overlay.classList.contains('is-active')) {
       closeMenu();
     }
-  });
+    };
+    document.addEventListener('keydown', handleEscKey);
 
   // Handle window resize
-  window.addEventListener('resize', () => {
+    const handleResize = () => {
     if (window.innerWidth > 767 && overlay && overlay.classList.contains('is-active')) {
       closeMenu();
     }
-  });
+    };
+    window.addEventListener('resize', handleResize);
+  })();
 </script>`}
       />
     </>
