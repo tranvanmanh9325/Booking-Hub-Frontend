@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import { apiClient } from '../../lib/api-client'
 
 export interface RegisterFormData {
   email: string
@@ -87,26 +88,12 @@ export const useRegisterHandlers = (
     setErrors({})
 
     try {
-      const response = await fetch('http://localhost:8080/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-          fullName: formData.fullName,
-          phone: formData.phone || undefined,
-        }),
+      const data = await apiClient.post<any>('/api/auth/register', {
+        email: formData.email,
+        password: formData.password,
+        fullName: formData.fullName,
+        phone: formData.phone || undefined,
       })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        setErrors({ general: data.message || 'Đăng ký thất bại. Vui lòng thử lại.' })
-        setIsLoading(false)
-        return
-      }
 
       // Store token if available
       if (data.token) {
@@ -116,9 +103,9 @@ export const useRegisterHandlers = (
 
       // Redirect to home page
       router.push('/')
-    } catch (error) {
+    } catch (error: any) {
       console.error('Register error:', error)
-      setErrors({ general: 'Có lỗi xảy ra. Vui lòng thử lại sau.' })
+      setErrors({ general: error.message || 'Có lỗi xảy ra. Vui lòng thử lại sau.' })
     } finally {
       setIsLoading(false)
     }
@@ -146,58 +133,12 @@ export const useRegisterHandlers = (
       const userInfo = await userInfoResponse.json()
 
       // Send user info to backend
-      const backendResponse = await fetch('http://localhost:8080/api/auth/google', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: userInfo.email,
-          name: userInfo.name,
-          picture: userInfo.picture,
-          googleId: userInfo.id,
-        }),
+      const data = await apiClient.post<any>('/api/auth/google', {
+        email: userInfo.email,
+        name: userInfo.name,
+        picture: userInfo.picture,
+        googleId: userInfo.id,
       })
-
-      // Check if response is ok and has content
-      if (!backendResponse.ok) {
-        let errorMessage = 'Đăng ký với Google thất bại.'
-        try {
-          const errorData = await backendResponse.json()
-          errorMessage = errorData.message || errorMessage
-        } catch (e) {
-          // If response is not JSON, use status text
-          errorMessage = backendResponse.statusText || errorMessage
-        }
-        setErrors({ general: errorMessage })
-        setIsGoogleLoading(false)
-        return
-      }
-
-      // Parse JSON response
-      let data
-      const contentType = backendResponse.headers.get('content-type')
-      if (contentType && contentType.includes('application/json')) {
-        const text = await backendResponse.text()
-        if (text) {
-          try {
-            data = JSON.parse(text)
-          } catch (e) {
-            console.error('Failed to parse JSON:', e)
-            setErrors({ general: 'Phản hồi từ server không hợp lệ.' })
-            setIsGoogleLoading(false)
-            return
-          }
-        } else {
-          setErrors({ general: 'Phản hồi từ server trống.' })
-          setIsGoogleLoading(false)
-          return
-        }
-      } else {
-        setErrors({ general: 'Phản hồi từ server không đúng định dạng.' })
-        setIsGoogleLoading(false)
-        return
-      }
 
       // Store token if available
       if (data && data.token) {
@@ -211,9 +152,9 @@ export const useRegisterHandlers = (
 
       // Redirect to home page
       router.push('/')
-    } catch (error) {
+    } catch (error: any) {
       console.error('Google token response error:', error)
-      setErrors({ general: 'Có lỗi xảy ra khi xử lý đăng ký Google. Vui lòng thử lại.' })
+      setErrors({ general: error.message || 'Có lỗi xảy ra khi xử lý đăng ký Google. Vui lòng thử lại.' })
       setIsGoogleLoading(false)
     }
   }
@@ -224,7 +165,7 @@ export const useRegisterHandlers = (
 
     try {
       const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
-      
+
       if (!clientId) {
         setErrors({ general: 'Google Client ID chưa được cấu hình. Vui lòng liên hệ quản trị viên.' })
         setIsGoogleLoading(false)
@@ -234,7 +175,7 @@ export const useRegisterHandlers = (
       // Wait for Google Identity Services to load (with timeout)
       let attempts = 0
       const maxAttempts = 50 // 5 seconds max wait
-      
+
       while (typeof window !== 'undefined' && !(window as any).google && attempts < maxAttempts) {
         await new Promise(resolve => setTimeout(resolve, 100))
         attempts++
@@ -242,7 +183,7 @@ export const useRegisterHandlers = (
 
       if (typeof window !== 'undefined' && (window as any).google) {
         const google = (window as any).google
-        
+
         // Use OAuth 2.0 flow with popup
         const client = google.accounts.oauth2.initTokenClient({
           client_id: clientId,
@@ -257,7 +198,7 @@ export const useRegisterHandlers = (
         const scope = 'email profile'
         const responseType = 'code'
         const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=${responseType}&scope=${encodeURIComponent(scope)}&access_type=offline&prompt=consent`
-        
+
         window.location.href = googleAuthUrl
       }
     } catch (error) {

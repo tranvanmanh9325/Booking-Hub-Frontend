@@ -1,3 +1,11 @@
+/* Import additional style modules */
+@import url("./style-navigation-footer.css");
+@import url("./style-components.css");
+@import url("./style-layout.css");
+@import url("./style-layout-part2.css");
+@import url("./style-utilities-part1.css");
+@import url("./style-utilities-part2.css");
+
 :root {
   --spacing-lg: 1rem;
   --spacing-md: 0.75rem;
@@ -518,11 +526,3 @@
 .thq-mask-image-vertical {
   mask-image: linear-gradient(to bottom, transparent, black 1%, black 99%, transparent);
 }
-
-/* Import additional style modules */
-@import url("./style-navigation-footer.css");
-@import url("./style-components.css");
-@import url("./style-layout.css");
-@import url("./style-layout-part2.css");
-@import url("./style-utilities-part1.css");
-@import url("./style-utilities-part2.css");

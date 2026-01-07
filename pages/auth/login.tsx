@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 
 import Navigation from '../../components/navigation'
 import { LoginStyles } from './login-styles'
+import { apiClient } from '../../lib/api-client'
 
 const Login: React.FC = () => {
   const router = useRouter()
@@ -56,24 +57,10 @@ const Login: React.FC = () => {
     setErrors({})
 
     try {
-      const response = await fetch('http://localhost:8080/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
+      const data = await apiClient.post<any>('/api/auth/login', {
+        email: formData.email,
+        password: formData.password,
       })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        setErrors({ general: data.message || 'Đăng nhập thất bại. Vui lòng thử lại.' })
-        setIsLoading(false)
-        return
-      }
 
       // Store token if available
       if (data.token) {
@@ -83,9 +70,9 @@ const Login: React.FC = () => {
 
       // Redirect to home page
       router.push('/')
-    } catch (error) {
+    } catch (error: any) {
       console.error('Login error:', error)
-      setErrors({ general: 'Có lỗi xảy ra. Vui lòng thử lại sau.' })
+      setErrors({ general: error.message || 'Có lỗi xảy ra. Vui lòng thử lại sau.' })
     } finally {
       setIsLoading(false)
     }
@@ -97,7 +84,7 @@ const Login: React.FC = () => {
 
     try {
       const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
-      
+
       if (!clientId) {
         setErrors({ general: 'Google Client ID chưa được cấu hình. Vui lòng liên hệ quản trị viên.' })
         setIsGoogleLoading(false)
@@ -107,7 +94,7 @@ const Login: React.FC = () => {
       // Wait for Google Identity Services to load (with timeout)
       let attempts = 0
       const maxAttempts = 50 // 5 seconds max wait
-      
+
       while (typeof window !== 'undefined' && !(window as any).google && attempts < maxAttempts) {
         await new Promise(resolve => setTimeout(resolve, 100))
         attempts++
@@ -115,7 +102,7 @@ const Login: React.FC = () => {
 
       if (typeof window !== 'undefined' && (window as any).google) {
         const google = (window as any).google
-        
+
         // Use OAuth 2.0 flow with popup
         const client = google.accounts.oauth2.initTokenClient({
           client_id: clientId,
@@ -130,7 +117,7 @@ const Login: React.FC = () => {
         const scope = 'email profile'
         const responseType = 'code'
         const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=${responseType}&scope=${encodeURIComponent(scope)}&access_type=offline&prompt=consent`
-        
+
         window.location.href = googleAuthUrl
       }
     } catch (error) {
@@ -162,58 +149,12 @@ const Login: React.FC = () => {
       const userInfo = await userInfoResponse.json()
 
       // Send user info to backend
-      const backendResponse = await fetch('http://localhost:8080/api/auth/google', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: userInfo.email,
-          name: userInfo.name,
-          picture: userInfo.picture,
-          googleId: userInfo.id,
-        }),
+      const data = await apiClient.post<any>('/api/auth/google', {
+        email: userInfo.email,
+        name: userInfo.name,
+        picture: userInfo.picture,
+        googleId: userInfo.id,
       })
-
-      // Check if response is ok and has content
-      if (!backendResponse.ok) {
-        let errorMessage = 'Đăng nhập với Google thất bại.'
-        try {
-          const errorData = await backendResponse.json()
-          errorMessage = errorData.message || errorMessage
-        } catch (e) {
-          // If response is not JSON, use status text
-          errorMessage = backendResponse.statusText || errorMessage
-        }
-        setErrors({ general: errorMessage })
-        setIsGoogleLoading(false)
-        return
-      }
-
-      // Parse JSON response
-      let data
-      const contentType = backendResponse.headers.get('content-type')
-      if (contentType && contentType.includes('application/json')) {
-        const text = await backendResponse.text()
-        if (text) {
-          try {
-            data = JSON.parse(text)
-          } catch (e) {
-            console.error('Failed to parse JSON:', e)
-            setErrors({ general: 'Phản hồi từ server không hợp lệ.' })
-            setIsGoogleLoading(false)
-            return
-          }
-        } else {
-          setErrors({ general: 'Phản hồi từ server trống.' })
-          setIsGoogleLoading(false)
-          return
-        }
-      } else {
-        setErrors({ general: 'Phản hồi từ server không đúng định dạng.' })
-        setIsGoogleLoading(false)
-        return
-      }
 
       // Store token if available
       if (data && data.token) {
@@ -227,9 +168,9 @@ const Login: React.FC = () => {
 
       // Redirect to home page
       router.push('/')
-    } catch (error) {
+    } catch (error: any) {
       console.error('Google token response error:', error)
-      setErrors({ general: 'Có lỗi xảy ra khi xử lý đăng nhập Google. Vui lòng thử lại.' })
+      setErrors({ general: error.message || 'Có lỗi xảy ra khi xử lý đăng nhập Google. Vui lòng thử lại.' })
       setIsGoogleLoading(false)
     }
   }
@@ -463,8 +404,8 @@ const Login: React.FC = () => {
               </div>
 
               <div className="login-social-buttons">
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="login-social-btn login-social-google"
                   onClick={handleGoogleSignIn}
                   disabled={isGoogleLoading || isLoading}
@@ -491,10 +432,10 @@ const Login: React.FC = () => {
                     <>
                       <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <g fill="none" fillRule="evenodd">
-                          <path d="M20.66 12.693c0-.603-.054-1.182-.155-1.738H12v3.287h4.844a3.91 3.91 0 0 1-1.697 2.566v2.133h2.747c1.608-1.48 2.535-3.65 2.535-6.24z" fill="#4285F4"/>
-                          <path d="M12 21c2.295 0 4.22-.76 5.625-2.06l-2.747-2.132c-.76.51-1.734.81-2.878.81-2.214 0-4.088-1.494-4.756-3.503H4.577v2.202A8.997 8.997 0 0 0 12 21z" fill="#34A853"/>
-                          <path d="M7.244 13.115c-.17-.51-.267-1.055-.267-1.615s.097-1.105.267-1.615V7.683H4.577A8.996 8.996 0 0 0 3 12c0 1.452.348 2.827.577 4.317l2.667-2.202z" fill="#FBBC05"/>
-                          <path d="M12 7.38c1.248 0 2.368.428 3.25 1.27l2.438-2.438C16.22 4.558 14.295 3.75 12 3.75a8.997 8.997 0 0 0-7.423 3.933l2.667 2.202C7.912 8.874 9.786 7.38 12 7.38z" fill="#EA4335"/>
+                          <path d="M20.66 12.693c0-.603-.054-1.182-.155-1.738H12v3.287h4.844a3.91 3.91 0 0 1-1.697 2.566v2.133h2.747c1.608-1.48 2.535-3.65 2.535-6.24z" fill="#4285F4" />
+                          <path d="M12 21c2.295 0 4.22-.76 5.625-2.06l-2.747-2.132c-.76.51-1.734.81-2.878.81-2.214 0-4.088-1.494-4.756-3.503H4.577v2.202A8.997 8.997 0 0 0 12 21z" fill="#34A853" />
+                          <path d="M7.244 13.115c-.17-.51-.267-1.055-.267-1.615s.097-1.105.267-1.615V7.683H4.577A8.996 8.996 0 0 0 3 12c0 1.452.348 2.827.577 4.317l2.667-2.202z" fill="#FBBC05" />
+                          <path d="M12 7.38c1.248 0 2.368.428 3.25 1.27l2.438-2.438C16.22 4.558 14.295 3.75 12 3.75a8.997 8.997 0 0 0-7.423 3.933l2.667 2.202C7.912 8.874 9.786 7.38 12 7.38z" fill="#EA4335" />
                         </g>
                       </svg>
                       <span>Tiếp tục với Google</span>
@@ -503,7 +444,7 @@ const Login: React.FC = () => {
                 </button>
                 <button type="button" className="login-social-btn login-social-facebook">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="#1877F2"/>
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="#1877F2" />
                   </svg>
                   <span>Tiếp tục với Facebook</span>
                 </button>
