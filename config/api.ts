@@ -1,5 +1,6 @@
+const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 export const API_CONFIG = {
-    BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080',
+    BASE_URL: rawBaseUrl.endsWith('/api') ? rawBaseUrl.slice(0, -4) : rawBaseUrl,
 };
 
 export const getApiUrl = (endpoint: string) => {
