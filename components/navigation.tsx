@@ -19,22 +19,22 @@ const Navigation: React.FC<NavigationProps> = () => {
 
           <div className="navigation-links-desktop">
             <div className="navigation-nav-item">
-              <a href="/movie-tickets" className="navigation-link">Phim Ảnh</a>
+              <a href="/booking/movie-tickets" className="navigation-link">Phim Ảnh</a>
             </div>
             <div className="navigation-nav-item">
-              <a href="/hotels" className="navigation-link">Khách Sạn</a>
+              <a href="/booking/hotels" className="navigation-link">Khách Sạn</a>
             </div>
             <div className="navigation-nav-item">
-              <a href="/restaurant-reservations" className="navigation-link">Nhà Hàng</a>
+              <a href="/booking/restaurant-reservations" className="navigation-link">Nhà Hàng</a>
             </div>
             <div className="navigation-nav-item">
-              <a href="/attractions" className="navigation-link">Giải Trí</a>
+              <a href="/booking/attractions" className="navigation-link">Giải Trí</a>
             </div>
           </div>
 
           <div className="navigation-actions-desktop">
-            <a href="/login" className="btn btn-outline btn-sm">Đăng Nhập</a>
-            <a href="/register" className="btn btn-primary btn-sm">Đăng Ký</a>
+            <a href="/auth/login" className="btn btn-outline btn-sm">Đăng Nhập</a>
+            <a href="/auth/register" className="btn btn-primary btn-sm">Đăng Ký</a>
           </div>
 
           <button id="mobile-menu-toggle" className="navigation-mobile-toggle" aria-label="Mở menu" aria-expanded="false">
@@ -58,15 +58,15 @@ const Navigation: React.FC<NavigationProps> = () => {
 
         <div className="navigation-mobile-content">
           <ul className="navigation-mobile-list">
-            <li className="navigation-mobile-item"><a href="/movie-tickets" className="navigation-mobile-link">Phim Ảnh</a></li>
-            <li className="navigation-mobile-item"><a href="/hotels" className="navigation-mobile-link">Khách Sạn</a></li>
-            <li className="navigation-mobile-item"><a href="/restaurant-reservations" className="navigation-mobile-link">Nhà Hàng</a></li>
-            <li className="navigation-mobile-item"><a href="/attractions" className="navigation-mobile-link">Giải Trí</a></li>
+            <li className="navigation-mobile-item"><a href="/booking/movie-tickets" className="navigation-mobile-link">Phim Ảnh</a></li>
+            <li className="navigation-mobile-item"><a href="/booking/hotels" className="navigation-mobile-link">Khách Sạn</a></li>
+            <li className="navigation-mobile-item"><a href="/booking/restaurant-reservations" className="navigation-mobile-link">Nhà Hàng</a></li>
+            <li className="navigation-mobile-item"><a href="/booking/attractions" className="navigation-mobile-link">Giải Trí</a></li>
           </ul>
 
           <div className="navigation-mobile-actions">
-            <a href="/login" className="btn btn-outline btn-lg">Đăng Nhập</a>
-            <a href="/register" className="btn btn-primary btn-lg">Đăng Ký</a>
+            <a href="/auth/login" className="btn btn-outline btn-lg">Đăng Nhập</a>
+            <a href="/auth/register" className="btn btn-primary btn-lg">Đăng Ký</a>
           </div>
         </div>
       </div>

@@ -1,8 +1,8 @@
 import React from 'react'
 import Head from 'next/head'
 import Script from 'dangerous-html/react'
-import Navigation from '../components/navigation'
-import { restaurantReservationsStyles, restaurantReservationsScript } from '../styles/restaurant-reservations.styles'
+import Navigation from '../../components/navigation'
+import { restaurantReservationsStyles, restaurantReservationsScript } from '../../styles/restaurant-reservations.styles'
 
 const RestaurantReservations: React.FC = () => {
   return (

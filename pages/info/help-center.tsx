@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
-import Navigation from '../components/navigation'
+import Navigation from '../../components/navigation'
 import { renderCategoryIcon, categories, allFaqs, getPopularFaqs, type FAQ } from './help-center-data'
 import HelpCenterStyles from './help-center-styles'
 

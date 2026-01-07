@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
-import Navigation from '../components/navigation'
+import Navigation from '../../components/navigation'
 import PartnershipStyles from './partnership-styles'
 
 const Partnership: React.FC = () => {

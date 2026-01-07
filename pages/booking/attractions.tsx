@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Head from 'next/head'
-import Navigation from '../components/navigation'
+import Navigation from '../../components/navigation'
 
 const Attractions: React.FC = () => {
   useEffect(() => {

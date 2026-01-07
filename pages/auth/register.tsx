@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Head from 'next/head'
 import Script from 'next/script'
 
-import Navigation from '../components/navigation'
+import Navigation from '../../components/navigation'
 import { RegisterStyles } from './register-styles'
 import { useRegisterHandlers, RegisterFormData, RegisterErrors } from './register-handlers'
 
@@ -376,11 +376,11 @@ const Register: React.FC = () => {
                     />
                     <span className="register-checkbox-label">
                       Tôi đồng ý với{' '}
-                      <a href="/terms" target="_blank" className="register-link">
+                      <a href="/info/terms" target="_blank" className="register-link">
                         Điều khoản sử dụng
                       </a>{' '}
                       và{' '}
-                      <a href="/privacy" target="_blank" className="register-link">
+                      <a href="/info/privacy" target="_blank" className="register-link">
                         Chính sách bảo mật
                       </a>
                     </span>
@@ -470,7 +470,7 @@ const Register: React.FC = () => {
               <div className="register-footer">
                 <span className="register-footer-text">
                   Đã có tài khoản?{' '}
-                  <a href="/login" className="register-footer-link">
+                  <a href="/auth/login" className="register-footer-link">
                     Đăng nhập ngay
                   </a>
                 </span>

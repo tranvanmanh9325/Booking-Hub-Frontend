@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Head from 'next/head'
-import Navigation from '../components/navigation'
-import TermsSectionsPart1 from './terms-sections-part1'
-import TermsSectionsPart2 from './terms-sections-part2'
+import Navigation from '../../components/navigation'
+import PrivacySectionsPart1 from './privacy-sections-part1'
+import PrivacySectionsPart2 from './privacy-sections-part2'
 
-const Terms: React.FC = () => {
+const Privacy: React.FC = () => {
   const [activeSection, setActiveSection] = useState('section-1')
   const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({})
 
@@ -44,36 +44,32 @@ const Terms: React.FC = () => {
   }
 
   const sections = [
-    { id: 'section-1', title: 'Chấp Nhận Điều Khoản', number: '1' },
-    { id: 'section-2', title: 'Mô Tả Dịch Vụ', number: '2' },
-    { id: 'section-3', title: 'Đăng Ký Tài Khoản', number: '3' },
-    { id: 'section-4', title: 'Thanh Toán', number: '4' },
-    { id: 'section-5', title: 'Hủy và Hoàn Tiền', number: '5' },
-    { id: 'section-6', title: 'Quyền Sở Hữu Trí Tuệ', number: '6' },
-    { id: 'section-7', title: 'Bảo Mật Thông Tin', number: '7' },
-    { id: 'section-8', title: 'Hành Vi Người Dùng', number: '8' },
-    { id: 'section-9', title: 'Giới Hạn Trách Nhiệm', number: '9' },
-    { id: 'section-10', title: 'Bồi Thường', number: '10' },
-    { id: 'section-11', title: 'Giải Quyết Tranh Chấp', number: '11' },
-    { id: 'section-12', title: 'Thay Đổi Điều Khoản', number: '12' },
-    { id: 'section-13', title: 'Luật Áp Dụng', number: '13' },
-    { id: 'section-14', title: 'Liên Hệ', number: '14' },
+    { id: 'section-1', title: 'Giới Thiệu', number: '1' },
+    { id: 'section-2', title: 'Thông Tin Chúng Tôi Thu Thập', number: '2' },
+    { id: 'section-3', title: 'Cách Chúng Tôi Sử Dụng Thông Tin', number: '3' },
+    { id: 'section-4', title: 'Chia Sẻ Thông Tin', number: '4' },
+    { id: 'section-5', title: 'Bảo Mật Thông Tin', number: '5' },
+    { id: 'section-6', title: 'Quyền Của Bạn', number: '6' },
+    { id: 'section-7', title: 'Cookie và Công Nghệ Theo Dõi', number: '7' },
+    { id: 'section-8', title: 'Bảo Vệ Trẻ Em', number: '8' },
+    { id: 'section-9', title: 'Thay Đổi Chính Sách', number: '9' },
+    { id: 'section-10', title: 'Liên Hệ', number: '10' },
   ]
 
   return (
     <>
-      <div className="terms-container">
+      <div className="privacy-container">
         <Head>
-          <title>Điều Khoản Sử Dụng - Booking Hub</title>
+          <title>Chính Sách Bảo Mật - Booking Hub</title>
           <meta
             property="og:title"
-            content="Điều Khoản Sử Dụng - Booking Hub"
+            content="Chính Sách Bảo Mật - Booking Hub"
           />
         </Head>
         <Navigation />
-        <div className="terms-layout">
+        <div className="privacy-layout">
           {/* Sidebar */}
-          <aside className="terms-sidebar">
+          <aside className="privacy-sidebar">
             <div className="sidebar-sticky">
               <h3 className="sidebar-title">Mục Lục</h3>
               <nav className="sidebar-nav">
@@ -96,27 +92,27 @@ const Terms: React.FC = () => {
           </aside>
 
           {/* Main Content */}
-          <main className="terms-content">
-            <div className="terms-wrapper">
-              <h1 className="terms-title">Điều Khoản Sử Dụng</h1>
-              <p className="terms-intro">
-                Cảm ơn bạn đã sử dụng dịch vụ của Booking Hub. Vui lòng đọc kỹ các điều khoản và điều kiện dưới đây trước khi sử dụng dịch vụ của chúng tôi.
+          <main className="privacy-content">
+            <div className="privacy-wrapper">
+              <h1 className="privacy-title">Chính Sách Bảo Mật</h1>
+              <p className="privacy-intro">
+                Chúng tôi cam kết bảo vệ quyền riêng tư và thông tin cá nhân của bạn. Chính sách bảo mật này giải thích cách chúng tôi thu thập, sử dụng, lưu trữ, và bảo vệ thông tin của bạn khi sử dụng dịch vụ Booking Hub.
               </p>
 
-              <TermsSectionsPart1 sectionRefs={sectionRefs} />
+              <PrivacySectionsPart1 sectionRefs={sectionRefs} />
 
-              <TermsSectionsPart2 sectionRefs={sectionRefs} />
+              <PrivacySectionsPart2 sectionRefs={sectionRefs} />
 
-              <div className="terms-footer">
-                <p className="terms-updated">
+              <div className="privacy-footer">
+                <p className="privacy-updated">
                   <strong>Cập nhật lần cuối:</strong> {new Date().toLocaleDateString('vi-VN', { 
                     year: 'numeric', 
                     month: 'long', 
                     day: 'numeric' 
                   })}
                 </p>
-                <p className="terms-note">
-                  Bằng việc sử dụng dịch vụ của Booking Hub, bạn xác nhận rằng bạn đã đọc và hiểu các điều khoản này và đồng ý tuân thủ chúng.
+                <p className="privacy-note">
+                  Bằng việc sử dụng dịch vụ của Booking Hub, bạn xác nhận rằng bạn đã đọc và hiểu chính sách bảo mật này và đồng ý với việc thu thập, sử dụng, và chia sẻ thông tin của bạn theo chính sách này.
                 </p>
               </div>
             </div>
@@ -124,19 +120,19 @@ const Terms: React.FC = () => {
         </div>
       </div>
       <style jsx>{`
-        .terms-container {
+        .privacy-container {
           min-height: 100vh;
           background-color: var(--color-surface, #f5f5f5);
         }
 
-        .terms-layout {
+        .privacy-layout {
           display: flex;
           width: 100%;
           min-height: calc(100vh - 72px);
         }
 
         /* Sidebar */
-        .terms-sidebar {
+        .privacy-sidebar {
           width: 280px;
           flex-shrink: 0;
           padding: 0;
@@ -211,13 +207,13 @@ const Terms: React.FC = () => {
         }
 
         /* Main Content */
-        .terms-content {
+        .privacy-content {
           flex: 1;
           padding: var(--spacing-4xl, 80px) var(--spacing-xl, 24px) var(--spacing-4xl, 80px);
           padding-top: calc(80px + var(--spacing-4xl, 80px));
         }
 
-        .terms-wrapper {
+        .privacy-wrapper {
           background-color: var(--color-surface, #ffffff);
           border-radius: var(--border-radius-lg, 12px);
           padding: var(--spacing-4xl, 80px);
@@ -225,7 +221,7 @@ const Terms: React.FC = () => {
           width: 100%;
         }
 
-        .terms-title {
+        .privacy-title {
           font-family: var(--font-family-heading, 'Inter', sans-serif);
           font-size: var(--font-size-3xl, 36px);
           font-weight: var(--font-weight-heading, 700);
@@ -236,7 +232,7 @@ const Terms: React.FC = () => {
           padding-bottom: var(--spacing-lg, 16px);
         }
 
-        .terms-intro {
+        .privacy-intro {
           font-size: var(--font-size-lg, 18px);
           line-height: 1.8;
           color: var(--color-on-surface-secondary, #666666);
@@ -245,12 +241,12 @@ const Terms: React.FC = () => {
           font-style: italic;
         }
 
-        .terms-section {
+        .privacy-section {
           margin-bottom: var(--spacing-4xl, 64px);
           scroll-margin-top: 100px;
         }
 
-        .terms-section-title {
+        .privacy-section-title {
           font-family: var(--font-family-heading, 'Inter', sans-serif);
           font-size: var(--font-size-2xl, 24px);
           font-weight: var(--font-weight-semibold, 600);
@@ -260,7 +256,7 @@ const Terms: React.FC = () => {
           border-bottom: 2px solid var(--color-border, #e5e5e5);
         }
 
-        .terms-subtitle {
+        .privacy-subtitle {
           font-family: var(--font-family-heading, 'Inter', sans-serif);
           font-size: var(--font-size-lg, 18px);
           font-weight: var(--font-weight-semibold, 600);
@@ -269,20 +265,20 @@ const Terms: React.FC = () => {
           margin-bottom: var(--spacing-md, 12px);
         }
 
-        .terms-text {
+        .privacy-text {
           font-size: var(--font-size-base, 16px);
           line-height: 1.8;
           color: var(--color-on-surface-secondary, #666666);
           margin-bottom: var(--spacing-md, 12px);
         }
 
-        .terms-list {
+        .privacy-list {
           margin: var(--spacing-lg, 16px) 0;
           padding-left: var(--spacing-2xl, 32px);
           color: var(--color-on-surface-secondary, #666666);
         }
 
-        .terms-list li {
+        .privacy-list li {
           margin-bottom: var(--spacing-md, 12px);
           line-height: 1.8;
           font-size: var(--font-size-base, 16px);
@@ -296,20 +292,20 @@ const Terms: React.FC = () => {
           border-left: 4px solid var(--color-primary, #3b82f6);
         }
 
-        .terms-footer {
+        .privacy-footer {
           margin-top: var(--spacing-4xl, 64px);
           padding-top: var(--spacing-xl, 24px);
           border-top: 2px solid var(--color-border, #e5e5e5);
           text-align: center;
         }
 
-        .terms-updated {
+        .privacy-updated {
           font-size: var(--font-size-base, 16px);
           color: var(--color-on-surface-secondary, #666666);
           margin-bottom: var(--spacing-md, 12px);
         }
 
-        .terms-note {
+        .privacy-note {
           font-size: var(--font-size-sm, 14px);
           color: var(--color-on-surface-secondary, #999999);
           font-style: italic;
@@ -318,12 +314,12 @@ const Terms: React.FC = () => {
 
         /* Responsive */
         @media (max-width: 1024px) {
-          .terms-layout {
+          .privacy-layout {
             flex-direction: column;
             min-height: auto;
           }
 
-          .terms-sidebar {
+          .privacy-sidebar {
             width: 100%;
             padding: var(--spacing-lg, 16px);
           }
@@ -334,22 +330,22 @@ const Terms: React.FC = () => {
             height: auto;
           }
 
-          .terms-content {
+          .privacy-content {
             padding: var(--spacing-2xl, 32px) var(--spacing-lg, 16px);
             padding-top: var(--spacing-2xl, 32px);
           }
         }
 
         @media (max-width: 768px) {
-          .terms-wrapper {
+          .privacy-wrapper {
             padding: var(--spacing-2xl, 32px);
           }
 
-          .terms-title {
+          .privacy-title {
             font-size: var(--font-size-2xl, 28px);
           }
 
-          .terms-section-title {
+          .privacy-section-title {
             font-size: var(--font-size-xl, 20px);
           }
 
@@ -370,4 +366,4 @@ const Terms: React.FC = () => {
   )
 }
 
-export default Terms
+export default Privacy

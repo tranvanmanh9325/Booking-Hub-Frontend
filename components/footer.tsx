@@ -37,10 +37,10 @@ const Footer: React.FC<FooterProps> = () => {
             <div className="footer-column">
               <h3 className="footer-heading section-subtitle">Dịch Vụ</h3>
               <ul className="footer-links-list">
-                <li className="footer-link-item"><a href="/movie-tickets" className="footer-link">Đặt Vé Xem Phim</a></li>
-                <li className="footer-link-item"><a href="/hotels" className="footer-link">Đặt Phòng Khách Sạn</a></li>
-                <li className="footer-link-item"><a href="/restaurant-reservations" className="footer-link">Đặt Bàn Nhà Hàng</a></li>
-                <li className="footer-link-item"><a href="/attractions" className="footer-link">Vé Khu Vui Chơi</a></li>
+                <li className="footer-link-item"><a href="/booking/movie-tickets" className="footer-link">Đặt Vé Xem Phim</a></li>
+                <li className="footer-link-item"><a href="/booking/hotels" className="footer-link">Đặt Phòng Khách Sạn</a></li>
+                <li className="footer-link-item"><a href="/booking/restaurant-reservations" className="footer-link">Đặt Bàn Nhà Hàng</a></li>
+                <li className="footer-link-item"><a href="/booking/attractions" className="footer-link">Vé Khu Vui Chơi</a></li>
                 <li className="footer-link-item"><a href="#" className="footer-link">Ưu Đãi Đặc Biệt</a></li>
               </ul>
             </div>
@@ -48,11 +48,11 @@ const Footer: React.FC<FooterProps> = () => {
             <div className="footer-column">
               <h3 className="footer-heading section-subtitle">Hỗ Trợ</h3>
               <ul className="footer-links-list">
-                <li className="footer-link-item"><a href="/help-center" className="footer-link">Trung Tâm Trợ Giúp</a></li>
-                <li className="footer-link-item"><a href="/privacy" className="footer-link">Chính Sách Bảo Mật</a></li>
-                <li className="footer-link-item"><a href="/terms" className="footer-link">Điều Khoản Sử Dụng</a></li>
-                <li className="footer-link-item"><a href="/booking-guide" className="footer-link">Hướng Dẫn Đặt Chỗ</a></li>
-                <li className="footer-link-item"><a href="/partnership" className="footer-link">Liên Hệ Hợp Tác</a></li>
+                <li className="footer-link-item"><a href="/info/help-center" className="footer-link">Trung Tâm Trợ Giúp</a></li>
+                <li className="footer-link-item"><a href="/info/privacy" className="footer-link">Chính Sách Bảo Mật</a></li>
+                <li className="footer-link-item"><a href="/info/terms" className="footer-link">Điều Khoản Sử Dụng</a></li>
+                <li className="footer-link-item"><a href="/info/booking-guide" className="footer-link">Hướng Dẫn Đặt Chỗ</a></li>
+                <li className="footer-link-item"><a href="/info/partnership" className="footer-link">Liên Hệ Hợp Tác</a></li>
               </ul>
             </div>
 
@@ -86,8 +86,8 @@ const Footer: React.FC<FooterProps> = () => {
               <span className="section-content">© 2025 Booking Hub. Tất cả quyền được bảo lưu.</span>
             </div>
             <div className="footer-bottom-links">
-              <a href="/privacy" className="footer-bottom-link section-content">Bảo mật</a>
-              <a href="/terms" className="footer-bottom-link section-content">Điều khoản</a>
+              <a href="/info/privacy" className="footer-bottom-link section-content">Bảo mật</a>
+              <a href="/info/terms" className="footer-bottom-link section-content">Điều khoản</a>
               <a href="https://www.google.com/maps/search/?api=1&query=Mộ+Lao,+Hà+Đông,+Hà+Nội" target="_blank" rel="noopener noreferrer" className="footer-bottom-link section-content">Sitemap</a>
             </div>
           </div>

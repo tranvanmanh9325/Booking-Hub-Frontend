@@ -3,8 +3,8 @@ import Head from 'next/head'
 
 import Script from 'dangerous-html/react'
 
-import Navigation from '../components/navigation'
-import MovieTicketsSections from '../sections/movie-tickets-sections'
+import Navigation from '../../components/navigation'
+import MovieTicketsSections from '../../sections/movie-tickets-sections'
 
 const MovieTickets = (props: any) => {
   return (
