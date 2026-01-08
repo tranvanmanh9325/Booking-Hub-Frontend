@@ -15,10 +15,26 @@ Dự án **High-Concurrency-Booking** là một nền tảng du lịch tổng h�
 - Frontend hoàn chỉnh với UI/UX hiện đại
 
 **🔄 Đang Phát Triển:**
-- Restaurant booking service
-- Amusement park booking service
-- Reviews & ratings UI
-- Email/SMS notifications
+- Restaurant booking service (UI đã có, backend chưa)
+- Amusement park booking service (UI đã có, backend chưa)
+- Reviews & ratings UI (Model đã có)
+- Email notifications (Email service đã có, cần mở rộng)
+- Password reset functionality
+- Pagination cho list endpoints
+
+**✅ Đã Cải Thiện (So với báo cáo ban đầu):**
+- ✅ Global Exception Handler với ErrorResponse format thống nhất
+- ✅ Custom Exception Classes (9 classes)
+- ✅ Input Validation & Sanitization (XSS protection)
+- ✅ Rate Limiting (Bucket4j với Redis)
+- ✅ JWT Refresh Token mechanism
+- ✅ Logging (SLF4J + Logback)
+- ✅ Transaction Management
+- ✅ API Client Layer (Frontend)
+- ✅ Docker & Docker Compose setup
+- ✅ Database Migrations (Flyway)
+- ✅ Google OAuth authentication
+- ✅ Partnership request feature
 
 **📝 Kế Hoạch:**
 - Combo & packages
@@ -208,10 +224,11 @@ Booking Hub/
 - **Mobile**: React Native / Flutter (planned)
 
 #### DevOps & Infrastructure
-- **Containerization**: Docker, Docker Compose
-- **Orchestration**: Kubernetes (cho production)
-- **CI/CD**: Jenkins / GitLab CI / GitHub Actions
-- **Cloud**: AWS / Azure / GCP
+- **Containerization**: ✅ Docker, Docker Compose (đã có)
+- **Orchestration**: Kubernetes (cho production - kế hoạch)
+- **CI/CD**: Jenkins / GitLab CI / GitHub Actions (kế hoạch)
+- **Cloud**: AWS / Azure / GCP (kế hoạch)
+- **Database Migrations**: ✅ Flyway (đã có)
 
 ## 🎨 Tính Năng Chi Tiết
 
@@ -617,7 +634,8 @@ Content-Type: application/json
 
 ### Phase 1: MVP (Minimum Viable Product) - ✅ Hoàn thành
 - [x] User authentication & authorization ✅
-- [x] JWT token-based authentication ✅
+- [x] JWT token-based authentication với refresh token ✅
+- [x] Google OAuth authentication ✅
 - [x] User registration & login ✅
 - [x] Basic frontend web app với Next.js ✅
 - [x] API documentation với Swagger ✅
@@ -627,16 +645,25 @@ Content-Type: application/json
 - [x] Cinema management ✅
 - [x] Booking history & management ✅
 - [x] Search functionality (movies & hotels) ✅
+- [x] Global exception handling ✅
+- [x] Input validation & sanitization ✅
+- [x] Rate limiting ✅
+- [x] Logging ✅
+- [x] Docker setup ✅
+- [x] Database migrations với Flyway ✅
+- [x] Partnership request feature ✅
 
 ### Phase 2: Core Features - 🔄 Đang phát triển
-- [ ] Restaurant booking service
-- [ ] Amusement park booking service
+- [ ] Restaurant booking service (UI đã có, backend chưa)
+- [ ] Amusement park booking service (UI đã có, backend chưa)
 - [ ] Advanced search & filtering
-- [ ] Reviews & ratings (UI & functionality)
-- [ ] Email/SMS notifications
+- [ ] Reviews & ratings (UI & functionality) - Model đã có
+- [ ] Email notifications (Email service đã có, cần mở rộng)
+- [ ] Password reset functionality
 - [ ] Mobile responsive design improvements
 - [ ] Image upload & management
 - [ ] User profile management
+- [ ] Pagination cho list endpoints
 
 ### Phase 3: Advanced Features - 📝 Kế hoạch
 - [ ] Combo & packages
@@ -659,11 +686,18 @@ Content-Type: application/json
 
 ## 🧪 Testing Strategy
 
-- **Unit Tests**: JUnit, Mockito cho business logic
-- **Integration Tests**: Spring Boot Test, TestContainers
+**Trạng thái hiện tại:**
+- ✅ Backend: Đã có `AuthControllerTest` với MockMvc
+- ✅ Frontend: Jest setup với React Testing Library
+- ⚠️ Cần mở rộng test coverage
+
+**Kế hoạch:**
+- **Unit Tests**: JUnit 5, Mockito cho business logic (Backend)
+- **Integration Tests**: Spring Boot Test, TestContainers (Backend)
+- **Component Tests**: React Testing Library (Frontend)
 - **API Tests**: REST Assured, Postman
 - **Load Tests**: JMeter, Gatling
-- **E2E Tests**: Selenium, Cypress
+- **E2E Tests**: Playwright, Cypress
 - **Coverage**: Aim for >80% code coverage
 
 ## 📈 Monitoring & Logging
@@ -680,31 +714,47 @@ Content-Type: application/json
 ### Backend ✅
 - [x] Spring Boot 4.0.1 với Java 21
 - [x] PostgreSQL database integration
-- [x] Redis caching configuration
+- [x] Redis caching configuration (được sử dụng cho rate limiting)
 - [x] JWT authentication & authorization
+- [x] JWT Refresh Token mechanism
 - [x] Spring Security với CORS support
 - [x] User registration & login API
+- [x] Google OAuth authentication
 - [x] Password encryption (BCrypt)
 - [x] Swagger/OpenAPI documentation
 - [x] Health check endpoint
+- [x] **Global Exception Handler** với ErrorResponse format thống nhất
+- [x] **Custom Exception Classes**: ResourceNotFoundException, ValidationException, BadRequestException, ConflictException, ForbiddenException, UnauthorizedException, TokenRefreshException
+- [x] **Input Validation**: @Valid và @Validated đã được sử dụng
+- [x] **Input Sanitization**: XSS protection với Jsoup
+- [x] **Rate Limiting**: Bucket4j với Redis cho auth endpoints
+- [x] **Logging**: SLF4J + Logback với structured logging
+- [x] **Transaction Management**: @Transactional cho write operations
+- [x] **Database Migrations**: Flyway với versioned migrations
 - [x] **Movie Service**: CRUD operations, search, showtimes, seat selection, booking
 - [x] **Hotel Service**: CRUD operations, search, room management, booking
 - [x] **Cinema Service**: Cinema & screen management
 - [x] **Payment Service**: Payment processing, refund, transaction tracking
+- [x] **Partnership Service**: Partnership request với email notification
+- [x] **Email Service**: Email sending với Spring Mail
 - [x] **Booking Management**: View, cancel bookings for movies & hotels
-- [x] **14 Entity Models**: User, Movie, Cinema, Screen, Showtime, Seat, MovieBooking, BookingSeat, Hotel, Room, RoomImage, HotelBooking, HotelReview, Payment
-- [x] **13 Repositories**: Full JPA repository support
-- [x] **4 Services**: AuthService, MovieService, HotelService, PaymentService
-- [x] **6 Controllers**: AuthController, MovieController, HotelController, CinemaController, PaymentController, HealthController
+- [x] **15 Entity Models**: User, Movie, Cinema, Screen, Showtime, Seat, MovieBooking, BookingSeat, Hotel, Room, RoomImage, HotelBooking, HotelReview, Payment, RefreshToken
+- [x] **14 Repositories**: Full JPA repository support
+- [x] **8 Services**: AuthService, MovieService, HotelService, PaymentService, EmailService, RefreshTokenService, RateLimitingService, XssSanitizerService
+- [x] **7 Controllers**: AuthController, MovieController, HotelController, CinemaController, PaymentController, PartnershipController, HealthController
 
 ### Frontend ✅
 - [x] Next.js 16 với TypeScript
 - [x] Tailwind CSS styling
-- [x] Authentication context (React Context API)
+- [x] **Authentication context** (React Context API) với useAuth hook
+- [x] **API Client Layer**: Centralized API client với axios
+  - Auto token injection
+  - Auto token refresh khi 401
+  - Centralized error handling
+- [x] **API Configuration**: Environment-based API URLs (không còn hardcoded)
 - [x] Login & Register pages
 - [x] Home page với UI hiện đại và animations
-- [x] API client với axios (interceptors, error handling)
-- [x] Token management (localStorage)
+- [x] Token management (localStorage) với refresh token support
 - [x] Responsive design
 - [x] **Movies Pages**: 
   - Movies list với search
@@ -714,25 +764,41 @@ Content-Type: application/json
   - Hotels list với search
   - Hotel detail page
   - Hotel booking page với room selection
-- [x] **Bookings Page**: 
-  - View all bookings (movies & hotels)
-  - Cancel bookings
-  - Booking status display
+- [x] **Bookings Pages**:
+  - Movie tickets booking page
+  - Hotels booking page
+  - Restaurant reservations page
+  - Attractions booking page
+- [x] **Info Pages**:
+  - Booking guide
+  - Help center
+  - Partnership page
+  - Privacy policy
+  - Terms of service
 - [x] **Payment Page**: Payment processing interface
 - [x] **Booking Success Page**: Confirmation page after successful booking
+- [x] **Error Boundary**: ErrorBoundary component cho error handling
+- [x] **Jest Setup**: Testing framework đã được cấu hình
 
 ## 📝 Lưu Ý Khi Phát Triển
 
 ### Backend
-- JWT secret key trong `application.properties` cần được thay đổi trong production
-- Database sẽ tự động tạo tables khi chạy lần đầu (ddl-auto=update)
-- Redis hiện tại chưa bắt buộc, có thể chạy backend mà không có Redis
+- JWT secret key trong `application.properties` cần được thay đổi trong production (sử dụng environment variables)
+- Database migrations được quản lý bởi Flyway (không còn auto-create)
+- Redis được sử dụng cho rate limiting (bắt buộc cho auth endpoints)
+- Environment variables cần thiết:
+  - `DB_PASSWORD`: PostgreSQL password
+  - `JWT_SECRET`: JWT secret key
+  - `REDIS_PASSWORD`: Redis password (optional)
+  - `MAIL_USERNAME`, `MAIL_PASSWORD`: Email credentials
+  - `PARTNERSHIP_RECIPIENT_EMAIL`: Email nhận partnership requests
 
 ### Frontend
-- API URL được cấu hình trong `.env.local` (mặc định: `http://localhost:8080/api`)
-- Token được lưu trong localStorage
+- API URL được cấu hình trong `.env.local` (mặc định: `http://localhost:8080`)
+- Token và refresh token được lưu trong localStorage
+- API client tự động thêm token và refresh khi cần
 - Cần đảm bảo backend đang chạy trước khi test frontend
-- Tạo file `.env.local` với nội dung: `NEXT_PUBLIC_API_URL=http://localhost:8080/api`
+- Tạo file `.env.local` với nội dung: `NEXT_PUBLIC_API_URL=http://localhost:8080`
 
 ## 🐛 Troubleshooting
 
@@ -747,8 +813,10 @@ Content-Type: application/json
 - Kiểm tra CORS configuration trong backend
 
 ### Redis connection error
-- Kiểm tra Redis đã chạy chưa (hoặc có thể bỏ qua nếu chưa cần)
+- Redis bắt buộc cho rate limiting (auth endpoints)
+- Kiểm tra Redis đã chạy chưa
 - Kiểm tra port 6379 có bị chiếm không
+- Có thể dùng Docker Compose để chạy Redis tự động
 
 ## 🤝 Contributing
 
