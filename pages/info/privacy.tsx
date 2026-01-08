@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Head from 'next/head'
 import Navigation from '../../components/navigation'
-import PrivacySectionsPart1 from './privacy-sections-part1'
-import PrivacySectionsPart2 from './privacy-sections-part2'
+import PrivacySectionsPart1 from '../../components/info/privacy-sections-part1'
+import PrivacySectionsPart2 from '../../components/info/privacy-sections-part2'
 
 const Privacy: React.FC = () => {
   const [activeSection, setActiveSection] = useState('section-1')
@@ -105,10 +105,10 @@ const Privacy: React.FC = () => {
 
               <div className="privacy-footer">
                 <p className="privacy-updated">
-                  <strong>Cập nhật lần cuối:</strong> {new Date().toLocaleDateString('vi-VN', { 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
+                  <strong>Cập nhật lần cuối:</strong> {new Date().toLocaleDateString('vi-VN', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
                   })}
                 </p>
                 <p className="privacy-note">

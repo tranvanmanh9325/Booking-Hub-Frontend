@@ -2,7 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import Navigation from '../../components/navigation'
-import BookingGuideStyles from './booking-guide-styles'
+import BookingGuideStyles from '../../components/info/booking-guide-styles'
 
 const BookingGuide: React.FC = () => {
     return (

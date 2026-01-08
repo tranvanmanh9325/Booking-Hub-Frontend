@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Navigation from '../../components/navigation'
-import { renderCategoryIcon, categories, allFaqs, getPopularFaqs, type FAQ } from './help-center-data'
-import HelpCenterStyles from './help-center-styles'
+import { renderCategoryIcon, categories, allFaqs, getPopularFaqs, type FAQ } from '../../components/info/help-center-data'
+import HelpCenterStyles from '../../components/info/help-center-styles'
 
 const HelpCenter: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -45,13 +45,13 @@ const HelpCenter: React.FC = () => {
         <meta name="description" content="Tìm câu trả lời cho các câu hỏi thường gặp về Booking Hub. Hướng dẫn đặt chỗ, thanh toán, tài khoản và nhiều hơn nữa." />
       </Head>
       <Navigation />
-      
+
       <div className="help-center-wrapper">
         <div className="help-center-hero">
           <div className="help-center-container">
             <h1 className="help-center-title">Chúng tôi có thể giúp gì cho bạn?</h1>
             <p className="help-center-subtitle">Tìm câu trả lời nhanh chóng hoặc liên hệ với đội ngũ hỗ trợ của chúng tôi</p>
-            
+
             <div className="help-center-search">
               <div className="search-input-wrapper">
                 <svg className="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -149,7 +149,7 @@ const HelpCenter: React.FC = () => {
               {filteredFaqs.length > 0 ? (
                 <>
                   <h2 className="help-section-title">
-                    {activeCategory !== 'all' 
+                    {activeCategory !== 'all'
                       ? `${categories.find(c => c.id === activeCategory)?.name} - ${filteredFaqs.length} câu hỏi`
                       : `${filteredFaqs.length} câu hỏi được tìm thấy`}
                   </h2>
@@ -181,9 +181,9 @@ const HelpCenter: React.FC = () => {
                         </button>
                         {expandedFaq === faq.id && (
                           <div className="faq-item-answer">
-                          {faq.answer.split('\n').map((line: string, idx: number) => (
-                            <p key={idx}>{line || '\u00A0'}</p>
-                          ))}
+                            {faq.answer.split('\n').map((line: string, idx: number) => (
+                              <p key={idx}>{line || '\u00A0'}</p>
+                            ))}
                           </div>
                         )}
                       </div>
@@ -209,8 +209,8 @@ const HelpCenter: React.FC = () => {
                 Đội ngũ hỗ trợ của chúng tôi luôn sẵn sàng giúp đỡ bạn 24/7
               </p>
               <div className="contact-options">
-                <a 
-                  href="https://mail.google.com/mail/?view=cm&fs=1&to=manhtrana1k45tl@gmail.com&su=Yêu cầu hỗ trợ từ Booking Hub&body=Xin chào,%0D%0A%0D%0ATôi cần hỗ trợ về:%0D%0A%0D%0A%0D%0A%0D%0AThông tin liên hệ:%0D%0A- Họ tên:%0D%0A- Số điện thoại:%0D%0A- Email:%0D%0A%0D%0ACảm ơn bạn!" 
+                <a
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=manhtrana1k45tl@gmail.com&su=Yêu cầu hỗ trợ từ Booking Hub&body=Xin chào,%0D%0A%0D%0ATôi cần hỗ trợ về:%0D%0A%0D%0A%0D%0A%0D%0AThông tin liên hệ:%0D%0A- Họ tên:%0D%0A- Số điện thoại:%0D%0A- Email:%0D%0A%0D%0ACảm ơn bạn!"
                   className="contact-card"
                   target="_blank"
                   rel="noopener noreferrer"

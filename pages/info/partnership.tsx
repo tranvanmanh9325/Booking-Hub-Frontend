@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
 import Navigation from '../../components/navigation'
-import PartnershipStyles from './partnership-styles'
+import PartnershipStyles from '../../components/info/partnership-styles'
 import { apiClient } from '../../lib/api-client'
 
 const Partnership: React.FC = () => {

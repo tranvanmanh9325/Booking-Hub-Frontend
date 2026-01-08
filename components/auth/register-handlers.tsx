@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import { toast } from 'react-toastify';
 import { apiClient } from '../../lib/api-client'
 import { useAuth } from '../../contexts/AuthContext'
 
@@ -111,7 +112,9 @@ export const useRegisterHandlers = (
       router.push('/')
     } catch (error: any) {
       console.error('Register error:', error)
-      setErrors({ general: error.message || 'Có lỗi xảy ra. Vui lòng thử lại sau.' })
+      const errorMessage = error.response?.data?.message || error.message || 'Có lỗi xảy ra. Vui lòng thử lại sau.';
+      setErrors({ general: errorMessage })
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false)
     }

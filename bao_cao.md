@@ -64,103 +64,6 @@
 4. **API Documentation**: Có Swagger/OpenAPI
 5. **Validation**: Sử dụng Jakarta Validation
 
-### 2.2. ⚠️ Vấn đề cần cải thiện
-
-#### 2.2.2. **✅ Pagination** (ĐÃ HOÀN THÀNH)
-
-**Trạng thái:** ✅ Đã triển khai hoàn chỉnh
-
-**Đã cải thiện:**
-
-- ✅ Cập nhật `getAllHotels` và `getAllMovies` để hỗ trợ **Pagination**.
-- ✅ API nhận tham số `page` (default 0) và `size` (default 10).
-- ✅ Service trả về `Page<DTO>` giúp tối ưu bandwidth và db load.
-
-**Ưu tiên:** ✅ HOÀN THÀNH
-
----
-
-#### 2.2.3. **✅ CORS Configuration** (ĐÃ HOÀN THÀNH)
-
-**Trạng thái:** ✅ Đã triển khai hoàn chỉnh
-
-**Đã cải thiện:**
-
-- ✅ Chuyển cấu hình `allowedOrigins` sang `application.properties`.
-- ✅ Key: `app.cors.allowed-origins`.
-- ✅ Hỗ trợ multiple origins (e.g., development vs production).
-
-**Ưu tiên:** ✅ HOÀN THÀNH
-
----
-
-#### 2.2.4. **✅ Password Reset** (ĐÃ HOÀN THÀNH)
-
-**Trạng thái:** ✅ Đã triển khai hoàn chỉnh
-
-**Đã cải thiện:**
-
-- ✅ Backend: Thêm fields `resetPasswordToken` vào User entity và migration database.
-- ✅ Backend: Implement APIs `forgot-password` và `reset-password`.
-- ✅ Backend: Tích hợp EmailService gửi link reset.
-- ✅ Frontend: Đã tạo trang `Forgot Password` và `Reset Password` hoàn chỉnh.
-
-**Ưu tiên:** ✅ HOÀN THÀNH
-
----
-
-#### 2.2.5. **✅ Email Service mở rộng** (ĐÃ HOÀN THÀNH)
-
-**Trạng thái:** ✅ Đã triển khai hoàn chỉnh
-
-**Đã cải thiện:**
-
-- ✅ **HTML Templates**: Đã tích hợp Thymeleaf và tạo 4 template (đăng ký, booking, hủy, nhắc nhở).
-- ✅ **Welcome Email**: Gửi tự động khi đăng ký (cả Form và Google OAuth).
-- ✅ **Booking Email**: Gửi xác nhận đặt phòng/vé phim chuyên nghiệp.
-- ✅ **Reminder System**: Service chạy ngầm 9:00 sáng hàng ngày để nhắc check-in.
-- ✅ **Map Integration**: Tích hợp link Google Maps động trong email nhắc nhở.
-
-**Ưu tiên:** ✅ HOÀN THÀNH
-
----
-
-#### 2.2.6. **Database Connection Pool** (CẦN KIỂM TRA)
-
-**Trạng thái:** ⚠️ Cần kiểm tra cấu hình
-
-**Ghi chú:**
-
-- Spring Boot mặc định sử dụng HikariCP
-- Cần kiểm tra và tối ưu cấu hình nếu cần
-
-**Đề xuất:**
-
-- Cấu hình HikariCP trong `application.properties`
-- Set max pool size, connection timeout
-
-**Ưu tiên:** 🟢 LOW
-
----
-
-#### 2.2.7. **API Versioning** (CHƯA CÓ)
-
-**Trạng thái:** ⚠️ Chưa triển khai
-
-**Vấn đề:**
-
-- API không có versioning
-- Khó maintain backward compatibility
-
-**Đề xuất:**
-
-- `/api/v1/hotels`
-- `/api/v2/hotels` (khi cần breaking changes)
-
-**Ưu tiên:** 🟢 LOW
-
----
-
 ## 3. ĐÁNH GIÁ FRONTEND (NEXT.JS)
 
 ### 3.1. ✅ Điểm mạnh
@@ -172,44 +75,23 @@
 
 ### 3.2. ⚠️ Vấn đề cần cải thiện
 
-#### 3.2.1. **✅ Error Handling** (ĐÃ CẢI THIỆN)
+#### 3.2.1. **✅ Error Handling** (HOÀN THÀNH)
 
-**Trạng thái:** ✅ Đã có một phần
+**Trạng thái:** ✅ Đã hoàn thành toàn diện
 
 **Đã cải thiện:**
 
 - ✅ **Error Boundary**: `ErrorBoundary.tsx` component đã được tạo
-- ✅ **Centralized error handling** trong API client.
+- ✅ **Centralized error handling**: Tích hợp trong `api-client.ts`
+- ✅ **Toast Notifications**: Đã tích hợp `react-toastify` cho thông báo lỗi đẹp mắt (Global & Component level)
+- ✅ **User-friendly messages**: Đã có `utils/error-mapping.ts` chuyển đổi mã lỗi sang tiếng Việt thân thiện
+- ✅ **Component handling**: Đã cập nhật `Login` và `Register` components để hiển thị lỗi chi tiết và Toast
 
-**Còn cần cải thiện:**
-
-- ⚠️ Toast notifications cho errors (chưa có)
-- ⚠️ User-friendly error messages
-- ⚠️ Error handling trong các components cụ thể
-
-**Ưu tiên:** 🟡 MEDIUM (đã cải thiện)
+**Ưu tiên:** 🟢 LOW (Đã hoàn thành)
 
 ---
 
-#### 3.2.2. **✅ Authentication State Management** (ĐÃ CẢI THIỆN)
-
-**Trạng thái:** ✅ Đã triển khai
-
-**Đã cải thiện:**
-
-- ✅ `contexts/AuthContext.tsx` với React Context API
-- ✅ Auto-refresh token trong API client.
-
-**Còn cần cải thiện:**
-
-- ⚠️ Check token expiration trước khi gọi API
-- ⚠️ Protected routes với middleware/HOC
-
-**Ưu tiên:** 🟡 MEDIUM (đã cải thiện đáng kể)
-
----
-
-#### 3.2.3. **Thiếu Loading States** (MEDIUM)
+#### 3.2.2. **Thiếu Loading States** (MEDIUM)
 
 **Vấn đề:**
 
@@ -226,7 +108,7 @@
 
 ---
 
-#### 3.2.4. **Form Validation** (MEDIUM)
+#### 3.2.3. **Form Validation** (MEDIUM)
 
 **Vấn đề:**
 
@@ -244,7 +126,7 @@
 
 ---
 
-#### 3.2.5. **SEO và Meta Tags** (MEDIUM)
+#### 3.2.4. **SEO và Meta Tags** (MEDIUM)
 
 **Vấn đề:**
 
@@ -263,7 +145,7 @@
 
 ---
 
-#### 3.2.6. **Image Optimization** (MEDIUM)
+#### 3.2.5. **Image Optimization** (MEDIUM)
 
 **Vấn đề:**
 
@@ -282,7 +164,7 @@
 
 ---
 
-#### 3.2.7. **Code Splitting** (LOW)
+#### 3.2.6. **Code Splitting** (LOW)
 
 **Vấn đề:**
 
@@ -299,7 +181,7 @@
 
 ---
 
-#### 3.2.8. **Environment Variables** (MEDIUM)
+#### 3.2.7. **Environment Variables** (MEDIUM)
 
 **Vấn đề:**
 
@@ -316,7 +198,7 @@
 
 ---
 
-#### 3.2.9. **Accessibility (a11y)** (MEDIUM)
+#### 3.2.8. **Accessibility (a11y)** (MEDIUM)
 
 **Vấn đề:**
 
@@ -335,7 +217,7 @@
 
 ---
 
-#### 3.2.10. **Type Safety** (MEDIUM)
+#### 3.2.9. **Type Safety** (MEDIUM)
 
 **Vấn đề:**
 
@@ -420,12 +302,6 @@
 - ⚠️ Cần review và optimize thêm
 
 **Ưu tiên:** 🟡 MEDIUM (đã cải thiện đáng kể)
-
----
-
-#### 5.1.2. **Pagination** (MEDIUM)
-
-**Đã đề cập ở phần 2.2.2**
 
 ---
 
@@ -727,30 +603,25 @@ booking.setStatus("PENDING"); // Nên dùng enum hoặc constant
 
 1. **Error Response Format** - Backend (Còn cần cải thiện)
 
-2. **Pagination** - Backend
-3. **Email Service mở rộng** - Backend
-4. **Loading States** - Frontend
-5. **Form Validation** - Frontend
-6. **SEO và Meta Tags** - Frontend
-7. **Image Optimization** - Frontend
-8. **Security Headers** - Security
-9. **API Calls Optimization** - Frontend
-10. **Component Reusability** - Frontend
-11. **State Management** - Frontend
-12. **Monitoring và Logging** - DevOps
-13. **API Documentation** - Documentation
+2. **Loading States** - Frontend
+3. **Form Validation** - Frontend
+4. **SEO và Meta Tags** - Frontend
+5. **Image Optimization** - Frontend
+6. **Security Headers** - Security
+7. **API Calls Optimization** - Frontend
+8. **Component Reusability** - Frontend
+9. **State Management** - Frontend
+10. **Monitoring và Logging** - DevOps
+11. **API Documentation** - Documentation
 
 ### 🟢 LOW (Nice to have)
 
-1. **CORS Configuration** - Backend
-2. **API Versioning** - Backend
-3. **Connection Pool** - Backend
-4. **Code Splitting** - Frontend
-5. **Bundle Size** - Frontend
-6. **Service Layer Refactoring** - Backend
-7. **DTO Mapping** - Backend
-8. **Constants** - Backend
-9. **Code Documentation** - Documentation
+1. **Code Splitting** - Frontend
+2. **Bundle Size** - Frontend
+3. **Service Layer Refactoring** - Backend
+4. **DTO Mapping** - Backend
+5. **Constants** - Backend
+6. **Code Documentation** - Documentation
 
 ---
 

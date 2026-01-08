@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
+import { toast } from 'react-toastify';
 import Script from 'next/script'
 import { useRouter } from 'next/router'
 
 import Navigation from '../../components/navigation'
-import { LoginStyles } from './login-styles'
+import { LoginStyles } from '../../components/auth/login-styles'
 import { apiClient } from '../../lib/api-client'
 import { useAuth } from '../../contexts/AuthContext'
 
@@ -78,7 +79,9 @@ const Login: React.FC = () => {
       router.push('/')
     } catch (error: any) {
       console.error('Login error:', error)
-      setErrors({ general: error.message || 'Có lỗi xảy ra. Vui lòng thử lại sau.' })
+      const errorMessage = error.response?.data?.message || error.message || 'Có lỗi xảy ra. Vui lòng thử lại sau.';
+      setErrors({ general: errorMessage })
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false)
     }

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Head from 'next/head'
 import Navigation from '../../components/navigation'
-import TermsSectionsPart1 from './terms-sections-part1'
-import TermsSectionsPart2 from './terms-sections-part2'
+import TermsSectionsPart1 from '../../components/info/terms-sections-part1'
+import TermsSectionsPart2 from '../../components/info/terms-sections-part2'
 
 const Terms: React.FC = () => {
   const [activeSection, setActiveSection] = useState('section-1')
@@ -109,10 +109,10 @@ const Terms: React.FC = () => {
 
               <div className="terms-footer">
                 <p className="terms-updated">
-                  <strong>Cập nhật lần cuối:</strong> {new Date().toLocaleDateString('vi-VN', { 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
+                  <strong>Cập nhật lần cuối:</strong> {new Date().toLocaleDateString('vi-VN', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
                   })}
                 </p>
                 <p className="terms-note">

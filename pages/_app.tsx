@@ -1,5 +1,6 @@
 import '../styles/style.css'
 import '../styles/attractions.css'
+import 'react-toastify/dist/ReactToastify.css';
 
 import { GlobalProvider } from '../global-context'
 import { AuthProvider } from '../contexts/AuthContext'
@@ -7,6 +8,7 @@ import ErrorBoundary from '../components/ErrorBoundary'
 import { NextIntlClientProvider } from 'next-intl'
 import type { AppProps } from 'next/app'
 import Footer from '../components/footer'
+import { ToastContainer } from 'react-toastify'
 
 export default function MyApp({ Component, pageProps }: AppProps<{ messages?: Record<string, any> }>) {
   return (
@@ -15,6 +17,18 @@ export default function MyApp({ Component, pageProps }: AppProps<{ messages?: Re
         <ErrorBoundary>
           <AuthProvider>
             <Component {...pageProps} />
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
             <Footer />
           </AuthProvider>
         </ErrorBoundary>

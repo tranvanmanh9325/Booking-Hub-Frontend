@@ -7,6 +7,8 @@ import { useTranslations } from 'next-intl'
 import Navigation from '../../components/navigation'
 import HotelsContent from '../../sections/hotels-content'
 
+import { withAuth } from '../../components/withAuth'
+
 const Hotels: React.FC = () => {
   return (
     <>
@@ -505,4 +507,4 @@ details[open] .chevron {
   )
 }
 
-export default Hotels
+export default withAuth(Hotels)
