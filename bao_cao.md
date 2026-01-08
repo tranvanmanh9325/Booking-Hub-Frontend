@@ -66,82 +66,62 @@
 
 ### 2.2. ⚠️ Vấn đề cần cải thiện
 
-#### 2.2.2. **Pagination thiếu** (MEDIUM)
+#### 2.2.2. **✅ Pagination** (ĐÃ HOÀN THÀNH)
 
-**Vấn đề:**
+**Trạng thái:** ✅ Đã triển khai hoàn chỉnh
 
-- `getAllHotels()`, `getAllMovies()` trả về toàn bộ records
-- Có thể gây performance issues với large datasets
+**Đã cải thiện:**
 
-**Đề xuất:**
+- ✅ Cập nhật `getAllHotels` và `getAllMovies` để hỗ trợ **Pagination**.
+- ✅ API nhận tham số `page` (default 0) và `size` (default 10).
+- ✅ Service trả về `Page<DTO>` giúp tối ưu bandwidth và db load.
 
-```java
-@GetMapping
-public ResponseEntity<Page<HotelDTO>> getAllHotels(
-    @RequestParam(defaultValue = "0") int page,
-    @RequestParam(defaultValue = "20") int size
-) {
-    return ResponseEntity.ok(hotelService.getAllHotels(page, size));
-}
-```
-
-**Ưu tiên:** 🟡 MEDIUM
+**Ưu tiên:** ✅ HOÀN THÀNH
 
 ---
 
-#### 2.2.3. **CORS Configuration cứng** (LOW)
+#### 2.2.3. **✅ CORS Configuration** (ĐÃ HOÀN THÀNH)
 
-**Vấn đề:**
+**Trạng thái:** ✅ Đã triển khai hoàn chỉnh
 
-```java
-// SecurityConfig.java - line 50
-configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:3001"));
-```
+**Đã cải thiện:**
 
-**Đề xuất:**
+- ✅ Chuyển cấu hình `allowedOrigins` sang `application.properties`.
+- ✅ Key: `app.cors.allowed-origins`.
+- ✅ Hỗ trợ multiple origins (e.g., development vs production).
 
-- Đọc từ environment variables
-- Hỗ trợ multiple environments
-
-**Ưu tiên:** 🟢 LOW
+**Ưu tiên:** ✅ HOÀN THÀNH
 
 ---
 
-#### 2.2.4. **Password Reset** (CHƯA CÓ)
+#### 2.2.4. **✅ Password Reset** (ĐÃ HOÀN THÀNH)
 
-**Trạng thái:** ⚠️ Chưa triển khai
+**Trạng thái:** ✅ Đã triển khai hoàn chỉnh
 
-**Vấn đề:**
+**Đã cải thiện:**
 
-- Frontend có link "Quên mật khẩu?" nhưng backend chưa implement
+- ✅ Backend: Thêm fields `resetPasswordToken` vào User entity và migration database.
+- ✅ Backend: Implement APIs `forgot-password` và `reset-password`.
+- ✅ Backend: Tích hợp EmailService gửi link reset.
+- ✅ Frontend: Đã tạo trang `Forgot Password` và `Reset Password` hoàn chỉnh.
 
-**Đề xuất:**
-
-- Endpoint `/api/auth/forgot-password`
-- Endpoint `/api/auth/reset-password`
-- Email với reset token
-- Token expiration (1 giờ)
-
-**Ưu tiên:** 🟡 MEDIUM
+**Ưu tiên:** ✅ HOÀN THÀNH
 
 ---
 
-#### 2.2.5. **Email Service chưa được sử dụng đầy đủ** (MEDIUM)
+#### 2.2.5. **✅ Email Service mở rộng** (ĐÃ HOÀN THÀNH)
 
-**Vấn đề:**
+**Trạng thái:** ✅ Đã triển khai hoàn chỉnh
 
-- Có EmailService nhưng chỉ dùng cho partnership
-- Chưa gửi email xác nhận booking
-- Chưa gửi email welcome
+**Đã cải thiện:**
 
-**Đề xuất:**
+- ✅ **HTML Templates**: Đã tích hợp Thymeleaf và tạo 4 template (đăng ký, booking, hủy, nhắc nhở).
+- ✅ **Welcome Email**: Gửi tự động khi đăng ký (cả Form và Google OAuth).
+- ✅ **Booking Email**: Gửi xác nhận đặt phòng/vé phim chuyên nghiệp.
+- ✅ **Reminder System**: Service chạy ngầm 9:00 sáng hàng ngày để nhắc check-in.
+- ✅ **Map Integration**: Tích hợp link Google Maps động trong email nhắc nhở.
 
-- Email xác nhận đăng ký
-- Email xác nhận booking
-- Email thông báo hủy booking
-- Email nhắc nhở check-in
-
-**Ưu tiên:** 🟡 MEDIUM
+**Ưu tiên:** ✅ HOÀN THÀNH
 
 ---
 
@@ -749,17 +729,16 @@ booking.setStatus("PENDING"); // Nên dùng enum hoặc constant
 
 2. **Pagination** - Backend
 3. **Email Service mở rộng** - Backend
-4. **Password Reset** - Backend
-5. **Loading States** - Frontend
-6. **Form Validation** - Frontend
-7. **SEO và Meta Tags** - Frontend
-8. **Image Optimization** - Frontend
-9. **Security Headers** - Security
-10. **API Calls Optimization** - Frontend
-11. **Component Reusability** - Frontend
-12. **State Management** - Frontend
-13. **Monitoring và Logging** - DevOps
-14. **API Documentation** - Documentation
+4. **Loading States** - Frontend
+5. **Form Validation** - Frontend
+6. **SEO và Meta Tags** - Frontend
+7. **Image Optimization** - Frontend
+8. **Security Headers** - Security
+9. **API Calls Optimization** - Frontend
+10. **Component Reusability** - Frontend
+11. **State Management** - Frontend
+12. **Monitoring và Logging** - DevOps
+13. **API Documentation** - Documentation
 
 ### 🟢 LOW (Nice to have)
 

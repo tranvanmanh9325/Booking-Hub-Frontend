@@ -371,7 +371,7 @@ const Login: React.FC = () => {
                     <input type="checkbox" className="login-checkbox" />
                     <span className="login-checkbox-label">Ghi nhớ đăng nhập</span>
                   </label>
-                  <a href="/forgot-password" className="login-forgot-link">
+                  <a href="/auth/forgot-password" className="login-forgot-link">
                     Quên mật khẩu?
                   </a>
                 </div>
