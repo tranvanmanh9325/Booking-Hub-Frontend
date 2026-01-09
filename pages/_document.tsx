@@ -3,7 +3,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 class CustomDocument extends Document {
   render() {
     return (
-      <Html data-scroll-behavior="smooth">
+      <Html data-scroll-behavior="smooth" lang="vi">
         <Head>
           <meta
             name="viewport"

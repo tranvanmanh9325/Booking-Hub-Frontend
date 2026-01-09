@@ -3,9 +3,10 @@ import Head from 'next/head'
 import Navigation from '../../components/navigation'
 import PartnershipStyles from '../../components/info/partnership-styles'
 import { apiClient } from '../../lib/api-client'
+import { PartnershipRequest, PartnershipResponse } from '../../types/partnership'
 
 const Partnership: React.FC = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<PartnershipRequest>({
     name: '',
     email: '',
     phone: '',
@@ -184,7 +185,7 @@ const Partnership: React.FC = () => {
     setSubmitStatus('idle')
 
     try {
-      const data = await apiClient.post<any>('/api/partnership/submit', formData)
+      const data = await apiClient.post<PartnershipResponse, PartnershipRequest>('/api/partnership/submit', formData)
 
       if (data.success) {
         setSubmitStatus('success')

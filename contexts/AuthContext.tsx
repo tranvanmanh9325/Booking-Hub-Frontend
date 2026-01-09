@@ -42,14 +42,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const login = (token: string, refreshToken: string, newUser: User) => {
         localStorage.setItem('token', token);
-        localStorage.setItem('refreshToken', refreshToken);
+        // localStorage.setItem('refreshToken', refreshToken); // Removed: Refresh Token is now in HttpOnly Cookie
         localStorage.setItem('user', JSON.stringify(newUser));
         setUser(newUser);
     };
 
-    const logout = () => {
+    const logout = async () => {
+        try {
+            await apiClient.post('/auth/logout');
+        } catch (error) {
+            console.error("Logout failed", error);
+        }
         localStorage.removeItem('token');
-        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('refreshToken'); // Cleanup legacy if present
         localStorage.removeItem('user');
         setUser(null);
         router.push('/auth/login');

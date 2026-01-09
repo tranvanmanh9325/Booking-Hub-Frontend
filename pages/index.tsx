@@ -61,111 +61,126 @@ section {
             ></Script>
           </div>
         </div>
-        <section className="hero-section">
-          <div className="hero-media-container">
-            <img
-              src="https://images.pexels.com/photos/29870243/pexels-photo-29870243.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
-              alt="Booking Hub Hero"
-              className="hero-bg-image"
-            />
-            <div className="hero-overlay"></div>
-          </div>
-          <div className="hero-content-wrapper">
-            <div className="hero-text-block">
-              <h1 className="home-hero-title hero-title">
-                Trải Nghiệm Đặt Chỗ Hoàn Hảo
-              </h1>
-              <p className="home-hero-subtitle hero-subtitle">
-                Từ những thước phim bom tấn đến những kỳ nghỉ sang trọng, Booking
-                Hub kết nối mọi nhu cầu giải trí của bạn trong một nền tảng duy
-                nhất.
-              </p>
-              <div className="hero-search-container">
-                <div className="search-tabs">
-                  <button
-                    className={`search-tab ${activeTab === 'movie' ? 'active' : ''}`}
-                    onClick={() => handleTabClick('movie')}
-                  >
-                    Phim Ảnh
-                  </button>
-                  <button
-                    className={`search-tab ${activeTab === 'hotel' ? 'active' : ''}`}
-                    onClick={() => handleTabClick('hotel')}
-                  >
-                    Khách Sạn
-                  </button>
-                  <button
-                    className="search-tab disabled"
-                    title="Sắp ra mắt"
-                  >
-                    Nhà Hàng
-                  </button>
-                </div>
-                <form
-                  action="/search"
-                  method="GET"
-                  data-form-id="d7b4f0f9-f90e-48e9-82f5-a79329de5b6e"
-                  className="search-form"
-                >
-                  <div className="search-input-group">
-                    <div className="search-field">
-                      <input
-                        type="text"
-                        placeholder={searchPlaceholder}
-                        required={true}
-                        id="thq_textinput_n_V8"
-                        name="textinput"
-                        data-form-field-id="thq_textinput_n_V8"
-                      />
-                    </div>
-                    <div className="search-field">
-                      <input
-                        type="date"
-                        required={true}
-                        id="thq_textinput_WVzY"
-                        name="textinput"
-                        data-form-field-id="thq_textinput_WVzY"
-                      />
-                    </div>
+        <main id="main-content">
+          <section className="hero-section">
+            <div className="hero-media-container">
+              <img
+                src="https://images.pexels.com/photos/29870243/pexels-photo-29870243.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+                alt="Booking Hub Hero"
+                className="hero-bg-image"
+              />
+              <div className="hero-overlay"></div>
+            </div>
+            <div className="hero-content-wrapper">
+              <div className="hero-text-block">
+                <h1 className="home-hero-title hero-title">
+                  Trải Nghiệm Đặt Chỗ Hoàn Hảo
+                </h1>
+                <p className="home-hero-subtitle hero-subtitle">
+                  Từ những thước phim bom tấn đến những kỳ nghỉ sang trọng, Booking
+                  Hub kết nối mọi nhu cầu giải trí của bạn trong một nền tảng duy
+                  nhất.
+                </p>
+                <div className="hero-search-container">
+                  <div className="search-tabs" role="tablist">
                     <button
-                      type="submit"
-                      id="thq_button_8H9E"
-                      name="button"
-                      data-form-field-id="thq_button_8H9E"
-                      className="btn btn-accent btn-lg"
+                      className={`search-tab ${activeTab === 'movie' ? 'active' : ''}`}
+                      onClick={() => handleTabClick('movie')}
+                      role="tab"
+                      aria-selected={activeTab === 'movie'}
+                      aria-controls="search-panel"
                     >
-                      Tìm Kiếm
+                      Phim Ảnh
+                    </button>
+                    <button
+                      className={`search-tab ${activeTab === 'hotel' ? 'active' : ''}`}
+                      onClick={() => handleTabClick('hotel')}
+                      role="tab"
+                      aria-selected={activeTab === 'hotel'}
+                      aria-controls="search-panel"
+                    >
+                      Khách Sạn
+                    </button>
+                    <button
+                      className="search-tab disabled"
+                      title="Sắp ra mắt"
+                      role="tab"
+                      aria-disabled="true"
+                    >
+                      Nhà Hàng
                     </button>
                   </div>
-                </form>
-                <div className="hero-quick-filters">
-                  <span className="filter-label">Gợi ý:</span>
-                  <button className="filter-chip">Phim hành động</button>
-                  <button className="filter-chip">Resort ven biển</button>
-                  <button className="filter-chip">Phòng Suite</button>
+                  <form
+                    action="/search"
+                    method="GET"
+                    data-form-id="d7b4f0f9-f90e-48e9-82f5-a79329de5b6e"
+                    className="search-form"
+                    id="search-panel"
+                    role="tabpanel"
+                  >
+                    <div className="search-input-group">
+                      <div className="search-field">
+                        <label htmlFor="thq_textinput_n_V8" className="visually-hidden">Tìm kiếm</label>
+                        <input
+                          type="text"
+                          placeholder={searchPlaceholder}
+                          required={true}
+                          id="thq_textinput_n_V8"
+                          name="textinput"
+                          data-form-field-id="thq_textinput_n_V8"
+                          aria-label={searchPlaceholder}
+                        />
+                      </div>
+                      <div className="search-field">
+                        <label htmlFor="thq_textinput_WVzY" className="visually-hidden">Ngày</label>
+                        <input
+                          type="date"
+                          required={true}
+                          id="thq_textinput_WVzY"
+                          name="textinput"
+                          data-form-field-id="thq_textinput_WVzY"
+                          aria-label="Chọn ngày"
+                        />
+                      </div>
+                      <button
+                        type="submit"
+                        id="thq_button_8H9E"
+                        name="button"
+                        data-form-field-id="thq_button_8H9E"
+                        className="btn btn-accent btn-lg"
+                      >
+                        Tìm Kiếm
+                      </button>
+                    </div>
+                  </form>
+                  <div className="hero-quick-filters">
+                    <span className="filter-label">Gợi ý:</span>
+                    <button className="filter-chip">Phim hành động</button>
+                    <button className="filter-chip">Resort ven biển</button>
+                    <button className="filter-chip">Phòng Suite</button>
+                  </div>
+                </div>
+                <div className="hero-cta-group">
+                  <a href="#featured">
+                    <div className="btn btn-primary btn-xl">
+                      <span>Bắt Đầu Đặt Chỗ</span>
+                    </div>
+                  </a>
+                  <a href="#about">
+                    <div className="btn btn-xl btn-outline">
+                      <span>Tìm Hiểu Thêm</span>
+                    </div>
+                  </a>
                 </div>
               </div>
-              <div className="hero-cta-group">
-                <a href="#featured">
-                  <div className="btn btn-primary btn-xl">
-                    <span>Bắt Đầu Đặt Chỗ</span>
-                  </div>
-                </a>
-                <a href="#about">
-                  <div className="btn btn-xl btn-outline">
-                    <span>Tìm Hiểu Thêm</span>
-                  </div>
-                </a>
-              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <FeaturesSection />
-        <ShowcaseSection />
-        <StatsSection />
-        <HomeSections />
-
+          <FeaturesSection />
+          <ShowcaseSection />
+          <StatsSection />
+          <HomeSections />
+        </main>
       </div>
       <style jsx>
         {`

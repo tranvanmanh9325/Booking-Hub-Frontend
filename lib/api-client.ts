@@ -19,6 +19,7 @@ class ApiClient {
             headers: {
                 'Content-Type': 'application/json',
             },
+            withCredentials: true, // Enable cookies
         });
 
         this.setupInterceptors();
@@ -37,22 +38,18 @@ class ApiClient {
 
     private async refreshToken(): Promise<string | null> {
         try {
-            const refreshToken = localStorage.getItem('refreshToken');
-            if (!refreshToken) {
-                return null;
-            }
+            // refreshToken is now in HttpOnly cookie, automatically sent by browser
+            
+             // Avoid infinite loops if we use this.instance
+             const response = await axios.post(`${API_CONFIG.BASE_URL}/api/v1/auth/refresh`, {}, {
+                 withCredentials: true
+             });
 
-            // Avoid infinite loops if we use this.instance
-            const response = await axios.post(`${API_CONFIG.BASE_URL}/api/v1/auth/refresh`, {
-                refreshToken
-            });
-
-            const { token, refreshToken: newRefreshToken } = response.data;
+            const { token } = response.data; // Response might still have refreshToken but we ignore it
 
             localStorage.setItem('token', token);
-            if (newRefreshToken) {
-                localStorage.setItem('refreshToken', newRefreshToken);
-            }
+            // Do not save refreshToken to localStorage
+            
             return token;
         } catch (error) {
             return null;
@@ -130,21 +127,15 @@ class ApiClient {
                     this.isRefreshing = true;
 
                     try {
-                        const refreshToken = localStorage.getItem('refreshToken');
-                        if (!refreshToken) {
-                            throw new Error('No refresh token available');
-                        }
-
-                        const response = await axios.post(`${API_CONFIG.BASE_URL}/api/v1/auth/refresh`, {
-                            refreshToken
+                        // Attempt to refresh using cookie
+                        const response = await axios.post(`${API_CONFIG.BASE_URL}/api/v1/auth/refresh`, {}, {
+                            withCredentials: true
                         });
 
-                        const { token, refreshToken: newRefreshToken } = response.data;
+                        const { token } = response.data;
 
                         localStorage.setItem('token', token);
-                        if (newRefreshToken) {
-                            localStorage.setItem('refreshToken', newRefreshToken);
-                        }
+                        // Do not save refreshToken
 
                         this.processQueue(null, token);
 
@@ -153,7 +144,7 @@ class ApiClient {
                     } catch (refreshError) {
                         this.processQueue(refreshError, null);
                         localStorage.removeItem('token');
-                        localStorage.removeItem('refreshToken');
+                        localStorage.removeItem('refreshToken'); // Just in case it was there
                         localStorage.removeItem('user');
                         window.location.href = '/auth/login';
                         // 401 fail to refresh -> Redirect to login, maybe toast here too?
@@ -181,11 +172,11 @@ class ApiClient {
         return this.instance.get<T>(url, config).then(res => res.data);
     }
 
-    public post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
+    public post<T, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig): Promise<T> {
         return this.instance.post<T>(url, data, config).then(res => res.data);
     }
 
-    public put<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
+    public put<T, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig): Promise<T> {
         return this.instance.put<T>(url, data, config).then(res => res.data);
     }
 

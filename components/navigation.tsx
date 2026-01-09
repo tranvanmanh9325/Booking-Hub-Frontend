@@ -8,11 +8,12 @@ interface NavigationProps {
 const Navigation: React.FC<NavigationProps> = () => {
   return (
     <>
+      <a href="#main-content" className="skip-to-content">Skip to content</a>
       <nav className="navigation-wrapper">
         <div className="navigation-container">
           <a href="/" className="navigation-logo-link" aria-label="Booking Hub Trang chủ">
             <div className="navigation-logo-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path d="m16.24 7.76l-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/><circle cx="12" cy="12" r="10"/></g></svg>
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path d="m16.24 7.76l-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z" /><circle cx="12" cy="12" r="10" /></g></svg>
             </div>
             <span className="section-title navigation-brand-name">Booking Hub</span>
           </a>
@@ -37,8 +38,8 @@ const Navigation: React.FC<NavigationProps> = () => {
             <a href="/auth/register" className="btn btn-primary btn-sm">Đăng Ký</a>
           </div>
 
-          <button id="mobile-menu-toggle" className="navigation-mobile-toggle" aria-label="Mở menu" aria-expanded="false">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <button id="mobile-menu-toggle" className="navigation-mobile-toggle" aria-label="Mở menu" aria-expanded="false" aria-controls="mobile-menu-overlay">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
           </button>
         </div>
       </nav>
@@ -47,12 +48,12 @@ const Navigation: React.FC<NavigationProps> = () => {
         <div className="navigation-mobile-header">
           <a href="/" className="navigation-logo-link" aria-label="Booking Hub Trang chủ">
             <div className="navigation-logo-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path d="m16.24 7.76l-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/><circle cx="12" cy="12" r="10"/></g></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path d="m16.24 7.76l-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z" /><circle cx="12" cy="12" r="10" /></g></svg>
             </div>
             <span className="section-title navigation-brand-name">Booking Hub</span>
           </a>
           <button id="mobile-menu-close" className="navigation-mobile-close" aria-label="Đóng menu">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 16l3-3l3 3"/></g></svg>
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M3 9h18M9 16l3-3l3 3" /></g></svg>
           </button>
         </div>
 
@@ -84,6 +85,23 @@ const Navigation: React.FC<NavigationProps> = () => {
   padding: var(--spacing-md) 0;
   transition: all 0.3s ease-in-out;
 }
+
+.skip-to-content {
+  position: absolute;
+  top: -9999px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-primary);
+  color: white;
+  padding: 10px 20px;
+  z-index: 9999;
+  border-radius: 4px;
+}
+
+.skip-to-content:focus {
+  top: 10px;
+}
+
 
 .navigation-container {
   display: flex;

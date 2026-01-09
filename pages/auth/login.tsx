@@ -12,6 +12,7 @@ import { apiClient } from '../../lib/api-client'
 import { useAuth } from '../../contexts/AuthContext'
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner'
 import { loginSchema, LoginValues } from '../../lib/validations/auth-schemas';
+import { AuthResponse, LoginRequest, GoogleAuthRequest } from '../../types/auth';
 
 const Login: React.FC = () => {
   const router = useRouter()
@@ -38,7 +39,7 @@ const Login: React.FC = () => {
     setIsLoading(true)
 
     try {
-      const response = await apiClient.post<any>('/api/auth/login', {
+      const response = await apiClient.post<AuthResponse, LoginRequest>('/api/auth/login', {
         email: data.email,
         password: data.password,
       })
@@ -46,7 +47,7 @@ const Login: React.FC = () => {
       // Store token if available
       if (response.token) {
         login(response.token, response.refreshToken, {
-          id: response.id || response.userId,
+          id: response.id ?? response.userId ?? 0,
           email: response.email,
           fullName: response.fullName,
           avatarUrl: response.avatarUrl
@@ -138,7 +139,7 @@ const Login: React.FC = () => {
       const userInfo = await userInfoResponse.json()
 
       // Send user info to backend
-      const data = await apiClient.post<any>('/api/auth/google', {
+      const data = await apiClient.post<AuthResponse, GoogleAuthRequest>('/api/auth/google', {
         email: userInfo.email,
         name: userInfo.name,
         picture: userInfo.picture,
@@ -148,7 +149,7 @@ const Login: React.FC = () => {
       // Store token if available
       if (data && data.token) {
         login(data.token, data.refreshToken, {
-          id: data.id || data.userId,
+          id: data.id ?? data.userId ?? 0,
           email: data.email,
           fullName: data.fullName,
           avatarUrl: data.avatarUrl

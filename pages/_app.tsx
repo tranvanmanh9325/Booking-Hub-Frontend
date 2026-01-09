@@ -13,7 +13,14 @@ import { ToastContainer } from 'react-toastify'
 import { DefaultSeo } from 'next-seo'
 import SEO from '../next-seo.config'
 
+import { initAxe } from '../lib/axe'
+import { useEffect } from 'react'
+
 export default function MyApp({ Component, pageProps }: AppProps<{ messages?: Record<string, any> }>) {
+  useEffect(() => {
+    initAxe()
+  }, [])
+
   return (
     <NextIntlClientProvider locale="en" messages={pageProps?.messages || {}}>
       <GlobalProvider>

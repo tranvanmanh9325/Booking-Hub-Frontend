@@ -1,8 +1,8 @@
 # BÁO CÁO ĐÁNH GIÁ VÀ ĐỀ XUẤT CẢI THIỆN DỰ ÁN BOOKING HUB
 
-**Ngày đánh giá:** $(date)  
+**Ngày đánh giá:** 09/01/2026  
 **Người đánh giá:** Senior Fullstack Developer  
-**Phiên bản:** 1.1
+**Phiên bản:** 1.2
 
 ---
 
@@ -75,117 +75,6 @@
 
 ### 3.2. ⚠️ Vấn đề cần cải thiện
 
-#### 3.2.1. **Image Optimization** (MEDIUM)
-
-**Vấn đề:**
-
-- Dùng `<img>` thay vì Next.js `Image`
-- Không optimize images
-- Hardcoded external URLs
-
-**Đề xuất:**
-
-- Sử dụng `next/image`
-- Image optimization
-- Lazy loading
-- Responsive images
-
-**Trạng thái:** 🟢 Hoàn thành
-
-**Chi tiết thực hiện:**
-
-- Đã cấu hình `next.config.js` cho các domain `images.pexels.com`, `api.iconify.design`.
-- Refactor toàn bộ `<img>` sang `next/image` tại `hotels-sections`, `home-sections`, `movie-tickets-sections`.
-- Áp dụng `fill` và `responsive` sizing cho thư viện ảnh.
-
-**Ưu tiên:** 🟡 MEDIUM
-
----
-
-#### 3.2.2. **Code Splitting** (LOW)
-
-**Vấn đề:**
-
-- Có thể optimize bundle size
-- Lazy load components không cần thiết
-
-**Đề xuất:**
-
-- Dynamic imports
-- Route-based code splitting
-- Component lazy loading
-
-**Trạng thái:** 🟢 Hoàn thành
-
-**Chi tiết thực hiện:**
-
-- Đã tách `FeaturesSection`, `ShowcaseSection` (kèm logic), `StatsSection` (kèm logic) và `HomeSections` thành các components riêng biệt.
-- Sử dụng `next/dynamic` trong `pages/index.tsx` để lazy load các components này.
-- Refactor logic Search Tabs, Carousel, và Animation stats sang React style.
-- Định cấu hình `@next/bundle-analyzer` trong `next.config.js`.
-
-**Ưu tiên:** 🟢 LOW
-
----
-
-#### 3.2.3. **Environment Variables** (MEDIUM)
-
-**Vấn đề:**
-
-- Thiếu `.env.example`
-- Không document required env vars
-
-**Đề xuất:**
-
-- `.env.example` file
-- Document trong README
-- Validate env vars on startup
-
-**Trạng thái:** 🟢 Hoàn thành
-
-**Chi tiết thực hiện:**
-
-- Đã tạo file `.env.example` với `NEXT_PUBLIC_API_URL`.
-- Đã update `.gitignore` để tracking `.env.example`.
-
-**Ưu tiên:** 🟡 MEDIUM
-
----
-
-#### 3.2.4. **Accessibility (a11y)** (MEDIUM)
-
-**Vấn đề:**
-
-- Chưa kiểm tra accessibility
-- Có thể thiếu ARIA labels
-- Keyboard navigation
-
-**Đề xuất:**
-
-- Audit với axe-core
-- Add ARIA labels
-- Keyboard navigation support
-- Screen reader testing
-
-**Ưu tiên:** 🟡 MEDIUM
-
----
-
-#### 3.2.5. **Type Safety** (MEDIUM)
-
-**Vấn đề:**
-
-- Một số `any` types
-- Không có types cho API responses
-
-**Đề xuất:**
-
-- Generate types từ OpenAPI schema
-- Hoặc định nghĩa types manually
-- Strict TypeScript config
-
-**Ưu tiên:** 🟡 MEDIUM
-
 ---
 
 ## 4. BẢO MẬT
@@ -201,67 +90,11 @@
 
 ### 4.2. ⚠️ Cần cải thiện
 
-#### 4.2.1. **CSRF Protection** (MEDIUM)
-
-**Vấn đề:**
-
-- CSRF disabled (`AbstractHttpConfigurer::disable`)
-- Có thể OK cho stateless JWT, nhưng nên document
-
-**Đề xuất:**
-
-- Nếu dùng JWT stateless, có thể giữ disable
-- Nhưng nên thêm CSRF token cho state-changing operations
-- Hoặc dùng SameSite cookies
-
-**Ưu tiên:** 🟡 MEDIUM
-
----
-
-#### 4.2.2. **Security Headers** (MEDIUM)
-
-**Vấn đề:**
-
-- Chưa thấy security headers
-
-**Đề xuất:**
-
-- Content-Security-Policy
-- X-Frame-Options
-- X-Content-Type-Options
-- Strict-Transport-Security (HTTPS)
-- Referrer-Policy
-
-**Ưu tiên:** 🟡 MEDIUM
-
----
-
 ## 5. HIỆU NĂNG VÀ TỐI ƯU HÓA
 
-### 5.1. Backend
+### 5.1. Frontend
 
-#### 5.1.1. **✅ Database Queries** (ĐÃ CẢI THIỆN)
-
-**Trạng thái:** ✅ Đã có một số tối ưu
-
-**Đã cải thiện:**
-
-- ✅ **JOIN FETCH** đã được sử dụng.
-- ✅ **Custom Queries** với `@Query` annotations.
-
-**Còn cần cải thiện:**
-
-- ⚠️ Có thể còn một số N+1 queries trong các service methods khác
-- ⚠️ Có thể sử dụng `@EntityGraph` cho các queries khác
-- ⚠️ Cần review và optimize thêm
-
-**Ưu tiên:** 🟡 MEDIUM (đã cải thiện đáng kể)
-
----
-
-### 5.2. Frontend
-
-#### 5.2.1. **API Calls Optimization** (MEDIUM)
+#### 5.1.1. **API Calls Optimization** (MEDIUM)
 
 **Vấn đề:**
 
@@ -279,7 +112,7 @@
 
 ---
 
-#### 5.2.2. **Bundle Size** (LOW)
+#### 5.1.2. **Bundle Size** (LOW)
 
 **Vấn đề:**
 
@@ -557,22 +390,19 @@ booking.setStatus("PENDING"); // Nên dùng enum hoặc constant
 
 1. **Error Response Format** - Backend (Còn cần cải thiện)
 
-2. **Image Optimization** - Frontend
-3. **Security Headers** - Security
-4. **API Calls Optimization** - Frontend
-5. **Component Reusability** - Frontend
-6. **State Management** - Frontend
-7. **Monitoring và Logging** - DevOps
-8. **API Documentation** - Documentation
+2. **API Calls Optimization** - Frontend
+3. **Component Reusability** - Frontend
+4. **State Management** - Frontend
+5. **Monitoring và Logging** - DevOps
+6. **API Documentation** - Documentation
 
 ### 🟢 LOW (Nice to have)
 
-1. **Code Splitting** - Frontend
-2. **Bundle Size** - Frontend
-3. **Service Layer Refactoring** - Backend
-4. **DTO Mapping** - Backend
-5. **Constants** - Backend
-6. **Code Documentation** - Documentation
+1. **Bundle Size** - Frontend
+2. **Service Layer Refactoring** - Backend
+3. **DTO Mapping** - Backend
+4. **Constants** - Backend
+5. **Code Documentation** - Documentation
 
 ---
 

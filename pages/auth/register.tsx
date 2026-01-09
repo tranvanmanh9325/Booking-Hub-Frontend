@@ -12,6 +12,7 @@ import { LoadingSpinner } from '../../components/ui/LoadingSpinner'
 import { apiClient } from '../../lib/api-client'
 import { useAuth } from '../../contexts/AuthContext'
 import { registerSchema, RegisterValues } from '../../lib/validations/auth-schemas'
+import { AuthResponse, RegisterRequest, GoogleAuthRequest } from '../../types/auth'
 
 const Register: React.FC = () => {
   const router = useRouter()
@@ -41,7 +42,7 @@ const Register: React.FC = () => {
   const onSubmit = async (data: RegisterValues) => {
     setIsLoading(true)
     try {
-      const response = await apiClient.post<any>('/api/auth/register', {
+      const response = await apiClient.post<AuthResponse, RegisterRequest>('/api/auth/register', {
         email: data.email,
         password: data.password,
         fullName: data.fullName,
@@ -51,7 +52,7 @@ const Register: React.FC = () => {
       // Store token if available
       if (response.token) {
         login(response.token, response.refreshToken, {
-          id: response.id || response.userId,
+          id: response.id ?? response.userId ?? 0,
           email: response.email,
           fullName: response.fullName,
           avatarUrl: response.avatarUrl
@@ -141,7 +142,7 @@ const Register: React.FC = () => {
       const userInfo = await userInfoResponse.json()
 
       // Send user info to backend
-      const data = await apiClient.post<any>('/api/auth/google', {
+      const data = await apiClient.post<AuthResponse, GoogleAuthRequest>('/api/auth/google', {
         email: userInfo.email,
         name: userInfo.name,
         picture: userInfo.picture,
@@ -151,7 +152,7 @@ const Register: React.FC = () => {
       // Store token if available
       if (data && data.token) {
         login(data.token, data.refreshToken, {
-          id: data.id || data.userId,
+          id: data.id ?? data.userId ?? 0,
           email: data.email,
           fullName: data.fullName,
           avatarUrl: data.avatarUrl
