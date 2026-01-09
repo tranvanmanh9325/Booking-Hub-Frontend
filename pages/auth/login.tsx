@@ -3,75 +3,53 @@ import Head from 'next/head'
 import { toast } from 'react-toastify';
 import Script from 'next/script'
 import { useRouter } from 'next/router'
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import Navigation from '../../components/navigation'
 import { LoginStyles } from '../../components/auth/login-styles'
 import { apiClient } from '../../lib/api-client'
 import { useAuth } from '../../contexts/AuthContext'
+import { LoadingSpinner } from '../../components/ui/LoadingSpinner'
+import { loginSchema, LoginValues } from '../../lib/validations/auth-schemas';
 
 const Login: React.FC = () => {
   const router = useRouter()
   const { login } = useAuth()
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  })
-  const [errors, setErrors] = useState<{ email?: string; password?: string; general?: string }>({})
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-    // Clear error when user starts typing
-    if (errors[name as keyof typeof errors]) {
-      setErrors((prev) => ({ ...prev, [name]: undefined }))
-    }
-  }
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<LoginValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    },
+  });
 
-  const validateForm = () => {
-    const newErrors: typeof errors = {}
-
-    if (!formData.email) {
-      newErrors.email = 'Email là bắt buộc'
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Email không hợp lệ'
-    }
-
-    if (!formData.password) {
-      newErrors.password = 'Mật khẩu là bắt buộc'
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Mật khẩu phải có ít nhất 6 ký tự'
-    }
-
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    if (!validateForm()) {
-      return
-    }
-
+  const onSubmit = async (data: LoginValues) => {
     setIsLoading(true)
-    setErrors({})
 
     try {
-      const data = await apiClient.post<any>('/api/auth/login', {
-        email: formData.email,
-        password: formData.password,
+      const response = await apiClient.post<any>('/api/auth/login', {
+        email: data.email,
+        password: data.password,
       })
 
       // Store token if available
-      if (data.token) {
-        login(data.token, data.refreshToken, {
-          id: data.id || data.userId,
-          email: data.email,
-          fullName: data.fullName,
-          avatarUrl: data.avatarUrl
+      if (response.token) {
+        login(response.token, response.refreshToken, {
+          id: response.id || response.userId,
+          email: response.email,
+          fullName: response.fullName,
+          avatarUrl: response.avatarUrl
         })
       }
 
@@ -80,7 +58,7 @@ const Login: React.FC = () => {
     } catch (error: any) {
       console.error('Login error:', error)
       const errorMessage = error.response?.data?.message || error.message || 'Có lỗi xảy ra. Vui lòng thử lại sau.';
-      setErrors({ general: errorMessage })
+      setError('root', { message: errorMessage });
       toast.error(errorMessage);
     } finally {
       setIsLoading(false)
@@ -89,13 +67,15 @@ const Login: React.FC = () => {
 
   const handleGoogleSignIn = async () => {
     setIsGoogleLoading(true)
-    setErrors({})
+    // Clear root errors if any
+    setError('root', { message: undefined });
 
     try {
       const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
 
       if (!clientId) {
-        setErrors({ general: 'Google Client ID chưa được cấu hình. Vui lòng liên hệ quản trị viên.' })
+        const msg = 'Google Client ID chưa được cấu hình. Vui lòng liên hệ quản trị viên.';
+        setError('root', { message: msg });
         setIsGoogleLoading(false)
         return
       }
@@ -131,7 +111,7 @@ const Login: React.FC = () => {
       }
     } catch (error) {
       console.error('Google Sign-In error:', error)
-      setErrors({ general: 'Có lỗi xảy ra khi đăng nhập với Google. Vui lòng thử lại.' })
+      setError('root', { message: 'Có lỗi xảy ra khi đăng nhập với Google. Vui lòng thử lại.' });
       setIsGoogleLoading(false)
     }
   }
@@ -139,7 +119,7 @@ const Login: React.FC = () => {
   const handleGoogleTokenResponse = async (tokenResponse: any) => {
     try {
       if (!tokenResponse || !tokenResponse.access_token) {
-        setErrors({ general: 'Không thể lấy token từ Google.' })
+        setError('root', { message: 'Không thể lấy token từ Google.' });
         setIsGoogleLoading(false)
         return
       }
@@ -179,7 +159,7 @@ const Login: React.FC = () => {
       router.push('/')
     } catch (error: any) {
       console.error('Google token response error:', error)
-      setErrors({ general: error.message || 'Có lỗi xảy ra khi xử lý đăng nhập Google. Vui lòng thử lại.' })
+      setError('root', { message: error.message || 'Có lỗi xảy ra khi xử lý đăng nhập Google. Vui lòng thử lại.' });
       setIsGoogleLoading(false)
     }
   }
@@ -234,7 +214,7 @@ const Login: React.FC = () => {
                 </p>
               </div>
 
-              {errors.general && (
+              {errors.root && (
                 <div className="login-error-message">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -251,11 +231,11 @@ const Login: React.FC = () => {
                     <path d="m12 8v4"></path>
                     <path d="m12 16h.01"></path>
                   </svg>
-                  <span>{errors.general}</span>
+                  <span>{errors.root.message}</span>
                 </div>
               )}
 
-              <form onSubmit={handleSubmit} className="login-form">
+              <form onSubmit={handleSubmit(onSubmit)} className="login-form">
                 <div className="login-form-group">
                   <label htmlFor="email" className="login-label">
                     Email
@@ -280,16 +260,14 @@ const Login: React.FC = () => {
                     <input
                       type="email"
                       id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
                       className={`login-input ${errors.email ? 'login-input-error' : ''}`}
                       placeholder="Nhập email của bạn"
                       autoComplete="email"
+                      {...register('email')}
                     />
                   </div>
                   {errors.email && (
-                    <span className="login-field-error">{errors.email}</span>
+                    <span className="login-field-error">{errors.email.message}</span>
                   )}
                 </div>
 
@@ -317,12 +295,10 @@ const Login: React.FC = () => {
                     <input
                       type={showPassword ? 'text' : 'password'}
                       id="password"
-                      name="password"
-                      value={formData.password}
-                      onChange={handleChange}
                       className={`login-input ${errors.password ? 'login-input-error' : ''}`}
                       placeholder="Nhập mật khẩu của bạn"
                       autoComplete="current-password"
+                      {...register('password')}
                     />
                     <button
                       type="button"
@@ -365,13 +341,17 @@ const Login: React.FC = () => {
                     </button>
                   </div>
                   {errors.password && (
-                    <span className="login-field-error">{errors.password}</span>
+                    <span className="login-field-error">{errors.password.message}</span>
                   )}
                 </div>
 
                 <div className="login-form-options">
                   <label className="login-checkbox-wrapper">
-                    <input type="checkbox" className="login-checkbox" />
+                    <input
+                      type="checkbox"
+                      className="login-checkbox"
+                      {...register('rememberMe')}
+                    />
                     <span className="login-checkbox-label">Ghi nhớ đăng nhập</span>
                   </label>
                   <a href="/auth/forgot-password" className="login-forgot-link">
@@ -386,20 +366,7 @@ const Login: React.FC = () => {
                 >
                   {isLoading ? (
                     <>
-                      <svg
-                        className="login-spinner"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                      >
-                        <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
-                      </svg>
+                      <LoadingSpinner size={20} />
                       <span>Đang đăng nhập...</span>
                     </>
                   ) : (
@@ -421,20 +388,7 @@ const Login: React.FC = () => {
                 >
                   {isGoogleLoading ? (
                     <>
-                      <svg
-                        className="login-spinner"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                      >
-                        <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
-                      </svg>
+                      <LoadingSpinner size={20} />
                       <span>Đang xử lý...</span>
                     </>
                   ) : (

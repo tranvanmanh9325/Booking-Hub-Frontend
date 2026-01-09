@@ -1,5 +1,6 @@
 import '../styles/style.css'
 import '../styles/attractions.css'
+import '../styles/loading-styles.css'
 import 'react-toastify/dist/ReactToastify.css';
 
 import { GlobalProvider } from '../global-context'

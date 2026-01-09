@@ -1,35 +1,171 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
 import Script from 'next/script'
+import { useRouter } from 'next/router'
+import { toast } from 'react-toastify'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import Navigation from '../../components/navigation'
 import { RegisterStyles } from '../../components/auth/register-styles'
-import { useRegisterHandlers, RegisterFormData, RegisterErrors } from '../../components/auth/register-handlers'
+import { LoadingSpinner } from '../../components/ui/LoadingSpinner'
+import { apiClient } from '../../lib/api-client'
+import { useAuth } from '../../contexts/AuthContext'
+import { registerSchema, RegisterValues } from '../../lib/validations/auth-schemas'
 
 const Register: React.FC = () => {
-  const [formData, setFormData] = useState<RegisterFormData>({
-    email: '',
-    password: '',
-    confirmPassword: '',
-    fullName: '',
-    phone: '',
-  })
-  const [errors, setErrors] = useState<RegisterErrors>({})
+  const router = useRouter()
+  const { login } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [agreeToTerms, setAgreeToTerms] = useState(false)
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
 
-  const { handleChange, handleSubmit, handleGoogleSignIn } = useRegisterHandlers(
-    formData,
-    setFormData,
-    errors,
-    setErrors,
-    setIsLoading,
-    setIsGoogleLoading,
-    agreeToTerms
-  )
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<RegisterValues>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      fullName: '',
+      email: '',
+      phone: '',
+      password: '',
+      confirmPassword: '',
+      agreeToTerms: false,
+    },
+  })
+
+  const onSubmit = async (data: RegisterValues) => {
+    setIsLoading(true)
+    try {
+      const response = await apiClient.post<any>('/api/auth/register', {
+        email: data.email,
+        password: data.password,
+        fullName: data.fullName,
+        phone: data.phone || undefined,
+      })
+
+      // Store token if available
+      if (response.token) {
+        login(response.token, response.refreshToken, {
+          id: response.id || response.userId,
+          email: response.email,
+          fullName: response.fullName,
+          avatarUrl: response.avatarUrl
+        })
+      }
+
+      // Redirect to home page
+      router.push('/')
+    } catch (error: any) {
+      console.error('Register error:', error)
+      const errorMessage = error.response?.data?.message || error.message || 'Có lỗi xảy ra. Vui lòng thử lại sau.';
+      setError('root', { message: errorMessage })
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleGoogleSignIn = async () => {
+    setIsGoogleLoading(true)
+    setError('root', { message: undefined })
+
+    try {
+      const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
+
+      if (!clientId) {
+        setError('root', { message: 'Google Client ID chưa được cấu hình. Vui lòng liên hệ quản trị viên.' })
+        setIsGoogleLoading(false)
+        return
+      }
+
+      // Wait for Google Identity Services to load (with timeout)
+      let attempts = 0
+      const maxAttempts = 50 // 5 seconds max wait
+
+      while (typeof window !== 'undefined' && !(window as any).google && attempts < maxAttempts) {
+        await new Promise(resolve => setTimeout(resolve, 100))
+        attempts++
+      }
+
+      if (typeof window !== 'undefined' && (window as any).google) {
+        const google = (window as any).google
+
+        // Use OAuth 2.0 flow with popup
+        const client = google.accounts.oauth2.initTokenClient({
+          client_id: clientId,
+          scope: 'email profile',
+          callback: handleGoogleTokenResponse,
+        })
+
+        client.requestAccessToken()
+      } else {
+        // Fallback: redirect to Google OAuth if script didn't load
+        const redirectUri = `${window.location.origin}/auth/google/callback`
+        const scope = 'email profile'
+        const responseType = 'code'
+        const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=${responseType}&scope=${encodeURIComponent(scope)}&access_type=offline&prompt=consent`
+
+        window.location.href = googleAuthUrl
+      }
+    } catch (error) {
+      console.error('Google Sign-In error:', error)
+      setError('root', { message: 'Có lỗi xảy ra khi đăng ký với Google. Vui lòng thử lại.' })
+      setIsGoogleLoading(false)
+    }
+  }
+
+  const handleGoogleTokenResponse = async (tokenResponse: any) => {
+    try {
+      if (!tokenResponse || !tokenResponse.access_token) {
+        setError('root', { message: 'Không thể lấy token từ Google.' })
+        setIsGoogleLoading(false)
+        return
+      }
+
+      // Get user info from Google
+      const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+        headers: {
+          Authorization: `Bearer ${tokenResponse.access_token}`,
+        },
+      })
+
+      if (!userInfoResponse.ok) {
+        throw new Error('Không thể lấy thông tin người dùng từ Google.')
+      }
+
+      const userInfo = await userInfoResponse.json()
+
+      // Send user info to backend
+      const data = await apiClient.post<any>('/api/auth/google', {
+        email: userInfo.email,
+        name: userInfo.name,
+        picture: userInfo.picture,
+        googleId: userInfo.id,
+      })
+
+      // Store token if available
+      if (data && data.token) {
+        login(data.token, data.refreshToken, {
+          id: data.id || data.userId,
+          email: data.email,
+          fullName: data.fullName,
+          avatarUrl: data.avatarUrl
+        })
+      }
+
+      // Redirect to home page
+      router.push('/')
+    } catch (error: any) {
+      console.error('Google token response error:', error)
+      setError('root', { message: error.message || 'Có lỗi xảy ra khi xử lý đăng ký Google. Vui lòng thử lại.' })
+      setIsGoogleLoading(false)
+    }
+  }
 
   return (
     <>
@@ -82,7 +218,7 @@ const Register: React.FC = () => {
                 </p>
               </div>
 
-              {errors.general && (
+              {errors.root && (
                 <div className="register-error-message">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -99,11 +235,11 @@ const Register: React.FC = () => {
                     <path d="m12 8v4"></path>
                     <path d="m12 16h.01"></path>
                   </svg>
-                  <span>{errors.general}</span>
+                  <span>{errors.root.message}</span>
                 </div>
               )}
 
-              <form onSubmit={handleSubmit} className="register-form">
+              <form onSubmit={handleSubmit(onSubmit)} className="register-form">
                 <div className="register-form-group">
                   <label htmlFor="fullName" className="register-label">
                     Họ và Tên
@@ -128,16 +264,14 @@ const Register: React.FC = () => {
                     <input
                       type="text"
                       id="fullName"
-                      name="fullName"
-                      value={formData.fullName}
-                      onChange={handleChange}
                       className={`register-input ${errors.fullName ? 'register-input-error' : ''}`}
                       placeholder="Nhập họ và tên của bạn"
                       autoComplete="name"
+                      {...register('fullName')}
                     />
                   </div>
                   {errors.fullName && (
-                    <span className="register-field-error">{errors.fullName}</span>
+                    <span className="register-field-error">{errors.fullName.message}</span>
                   )}
                 </div>
 
@@ -165,16 +299,14 @@ const Register: React.FC = () => {
                     <input
                       type="email"
                       id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
                       className={`register-input ${errors.email ? 'register-input-error' : ''}`}
                       placeholder="Nhập email của bạn"
                       autoComplete="email"
+                      {...register('email')}
                     />
                   </div>
                   {errors.email && (
-                    <span className="register-field-error">{errors.email}</span>
+                    <span className="register-field-error">{errors.email.message}</span>
                   )}
                 </div>
 
@@ -201,16 +333,14 @@ const Register: React.FC = () => {
                     <input
                       type="tel"
                       id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
                       className={`register-input ${errors.phone ? 'register-input-error' : ''}`}
                       placeholder="Nhập số điện thoại (10-11 số)"
                       autoComplete="tel"
+                      {...register('phone')}
                     />
                   </div>
                   {errors.phone && (
-                    <span className="register-field-error">{errors.phone}</span>
+                    <span className="register-field-error">{errors.phone.message}</span>
                   )}
                 </div>
 
@@ -238,12 +368,10 @@ const Register: React.FC = () => {
                     <input
                       type={showPassword ? 'text' : 'password'}
                       id="password"
-                      name="password"
-                      value={formData.password}
-                      onChange={handleChange}
                       className={`register-input ${errors.password ? 'register-input-error' : ''}`}
                       placeholder="Nhập mật khẩu (tối thiểu 6 ký tự)"
                       autoComplete="new-password"
+                      {...register('password')}
                     />
                     <button
                       type="button"
@@ -286,7 +414,7 @@ const Register: React.FC = () => {
                     </button>
                   </div>
                   {errors.password && (
-                    <span className="register-field-error">{errors.password}</span>
+                    <span className="register-field-error">{errors.password.message}</span>
                   )}
                 </div>
 
@@ -314,12 +442,10 @@ const Register: React.FC = () => {
                     <input
                       type={showConfirmPassword ? 'text' : 'password'}
                       id="confirmPassword"
-                      name="confirmPassword"
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
                       className={`register-input ${errors.confirmPassword ? 'register-input-error' : ''}`}
                       placeholder="Nhập lại mật khẩu"
                       autoComplete="new-password"
+                      {...register('confirmPassword')}
                     />
                     <button
                       type="button"
@@ -362,7 +488,7 @@ const Register: React.FC = () => {
                     </button>
                   </div>
                   {errors.confirmPassword && (
-                    <span className="register-field-error">{errors.confirmPassword}</span>
+                    <span className="register-field-error">{errors.confirmPassword.message}</span>
                   )}
                 </div>
 
@@ -371,8 +497,7 @@ const Register: React.FC = () => {
                     <input
                       type="checkbox"
                       className="register-checkbox"
-                      checked={agreeToTerms}
-                      onChange={(e) => setAgreeToTerms(e.target.checked)}
+                      {...register('agreeToTerms')}
                     />
                     <span className="register-checkbox-label">
                       Tôi đồng ý với{' '}
@@ -385,6 +510,11 @@ const Register: React.FC = () => {
                       </a>
                     </span>
                   </label>
+                  {errors.agreeToTerms && (
+                    <span className="register-field-error" style={{ display: 'block', marginTop: '0.5rem' }}>
+                      {errors.agreeToTerms.message}
+                    </span>
+                  )}
                 </div>
 
                 <button
@@ -394,20 +524,7 @@ const Register: React.FC = () => {
                 >
                   {isLoading ? (
                     <>
-                      <svg
-                        className="register-spinner"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                      >
-                        <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
-                      </svg>
+                      <LoadingSpinner size={20} />
                       <span>Đang đăng ký...</span>
                     </>
                   ) : (
@@ -429,20 +546,7 @@ const Register: React.FC = () => {
                 >
                   {isGoogleLoading ? (
                     <>
-                      <svg
-                        className="register-spinner"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                      >
-                        <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
-                      </svg>
+                      <LoadingSpinner size={20} />
                       <span>Đang xử lý...</span>
                     </>
                   ) : (
