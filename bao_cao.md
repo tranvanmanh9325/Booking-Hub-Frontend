@@ -75,75 +75,7 @@
 
 ### 3.2. ⚠️ Vấn đề cần cải thiện
 
-#### 3.2.1. **✅ Error Handling** (HOÀN THÀNH)
-
-**Trạng thái:** ✅ Đã hoàn thành toàn diện
-
-**Đã cải thiện:**
-
-- ✅ **Error Boundary**: `ErrorBoundary.tsx` component đã được tạo
-- ✅ **Centralized error handling**: Tích hợp trong `api-client.ts`
-- ✅ **Toast Notifications**: Đã tích hợp `react-toastify` cho thông báo lỗi đẹp mắt (Global & Component level)
-- ✅ **User-friendly messages**: Đã có `utils/error-mapping.ts` chuyển đổi mã lỗi sang tiếng Việt thân thiện
-- ✅ **Component handling**: Đã cập nhật `Login` và `Register` components để hiển thị lỗi chi tiết và Toast
-
-**Ưu tiên:** 🟢 LOW (Đã hoàn thành)
-
----
-
-#### 3.2.2. **✅ Thiếu Loading States** (HOÀN THÀNH)
-
-**Trạng thái:** ✅ Đã hoàn thành toàn diện
-
-**Đã cải thiện:**
-
-- ✅ **UI Components**: Đã tạo `LoadingSpinner` (SVG + animation) và `Skeleton` components tái sử dụng
-- ✅ **Authentication Pages**: Đã cập nhật Login/Register pages để sử dụng LoadingSpinner chuẩn
-- ✅ **Styles**: Đã thêm `loading-styles.css` cho các hiệu ứng animation mượt mà
-- ✅ **User Experience**: Buttons được disable trong quá trình xử lý, hiển thị spinner rõ ràng
-
-**Ưu tiên:** 🟢 LOW (Đã hoàn thành)
-
----
-
-#### 3.2.3. **Form Validation** (MEDIUM)
-
-**Vấn đề:**
-
-- Validation chỉ ở client-side
-- Không có library như react-hook-form, zod
-- Code validation lặp lại
-
-**Đề xuất:**
-
-- Sử dụng react-hook-form + zod
-- Reusable validation schemas
-- Better error messages
-
-**Ưu tiên:** 🟡 MEDIUM
-
----
-
-#### 3.2.4. **SEO và Meta Tags** (MEDIUM)
-
-**Vấn đề:**
-
-- Một số pages thiếu meta tags
-- Không có Open Graph tags đầy đủ
-- Không có structured data
-
-**Đề xuất:**
-
-- next-seo library
-- Dynamic meta tags
-- Open Graph, Twitter Cards
-- JSON-LD structured data
-
-**Ưu tiên:** 🟡 MEDIUM
-
----
-
-#### 3.2.5. **Image Optimization** (MEDIUM)
+#### 3.2.1. **Image Optimization** (MEDIUM)
 
 **Vấn đề:**
 
@@ -158,11 +90,19 @@
 - Lazy loading
 - Responsive images
 
+**Trạng thái:** 🟢 Hoàn thành
+
+**Chi tiết thực hiện:**
+
+- Đã cấu hình `next.config.js` cho các domain `images.pexels.com`, `api.iconify.design`.
+- Refactor toàn bộ `<img>` sang `next/image` tại `hotels-sections`, `home-sections`, `movie-tickets-sections`.
+- Áp dụng `fill` và `responsive` sizing cho thư viện ảnh.
+
 **Ưu tiên:** 🟡 MEDIUM
 
 ---
 
-#### 3.2.6. **Code Splitting** (LOW)
+#### 3.2.2. **Code Splitting** (LOW)
 
 **Vấn đề:**
 
@@ -175,11 +115,20 @@
 - Route-based code splitting
 - Component lazy loading
 
+**Trạng thái:** 🟢 Hoàn thành
+
+**Chi tiết thực hiện:**
+
+- Đã tách `FeaturesSection`, `ShowcaseSection` (kèm logic), `StatsSection` (kèm logic) và `HomeSections` thành các components riêng biệt.
+- Sử dụng `next/dynamic` trong `pages/index.tsx` để lazy load các components này.
+- Refactor logic Search Tabs, Carousel, và Animation stats sang React style.
+- Định cấu hình `@next/bundle-analyzer` trong `next.config.js`.
+
 **Ưu tiên:** 🟢 LOW
 
 ---
 
-#### 3.2.7. **Environment Variables** (MEDIUM)
+#### 3.2.3. **Environment Variables** (MEDIUM)
 
 **Vấn đề:**
 
@@ -192,11 +141,18 @@
 - Document trong README
 - Validate env vars on startup
 
+**Trạng thái:** 🟢 Hoàn thành
+
+**Chi tiết thực hiện:**
+
+- Đã tạo file `.env.example` với `NEXT_PUBLIC_API_URL`.
+- Đã update `.gitignore` để tracking `.env.example`.
+
 **Ưu tiên:** 🟡 MEDIUM
 
 ---
 
-#### 3.2.8. **Accessibility (a11y)** (MEDIUM)
+#### 3.2.4. **Accessibility (a11y)** (MEDIUM)
 
 **Vấn đề:**
 
@@ -215,7 +171,7 @@
 
 ---
 
-#### 3.2.9. **Type Safety** (MEDIUM)
+#### 3.2.5. **Type Safety** (MEDIUM)
 
 **Vấn đề:**
 
@@ -601,16 +557,13 @@ booking.setStatus("PENDING"); // Nên dùng enum hoặc constant
 
 1. **Error Response Format** - Backend (Còn cần cải thiện)
 
-2. **Loading States** - Frontend
-3. **Form Validation** - Frontend
-4. **SEO và Meta Tags** - Frontend
-5. **Image Optimization** - Frontend
-6. **Security Headers** - Security
-7. **API Calls Optimization** - Frontend
-8. **Component Reusability** - Frontend
-9. **State Management** - Frontend
-10. **Monitoring và Logging** - DevOps
-11. **API Documentation** - Documentation
+2. **Image Optimization** - Frontend
+3. **Security Headers** - Security
+4. **API Calls Optimization** - Frontend
+5. **Component Reusability** - Frontend
+6. **State Management** - Frontend
+7. **Monitoring và Logging** - DevOps
+8. **API Documentation** - Documentation
 
 ### 🟢 LOW (Nice to have)
 

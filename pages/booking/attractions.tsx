@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import Head from 'next/head'
+import { NextSeo } from 'next-seo'
 import Navigation from '../../components/navigation'
 
 const Attractions: React.FC = () => {
@@ -11,11 +11,11 @@ const Attractions: React.FC = () => {
     tabTriggers.forEach(trigger => {
       trigger.addEventListener('click', () => {
         const targetTab = trigger.getAttribute('data-tab')
-        
+
         // Remove active classes
         tabTriggers.forEach(t => t.classList.remove('active'))
         tabContents.forEach(c => c.classList.remove('active'))
-        
+
         // Add active classes
         trigger.classList.add('active')
         if (targetTab) {
@@ -78,7 +78,7 @@ const Attractions: React.FC = () => {
         if ((item as HTMLDetailsElement).open) {
           faqItems.forEach(otherItem => {
             if (otherItem !== item) {
-              ;(otherItem as HTMLDetailsElement).open = false
+              ; (otherItem as HTMLDetailsElement).open = false
             }
           })
         }
@@ -89,17 +89,25 @@ const Attractions: React.FC = () => {
   return (
     <>
       <div className="attractions-container">
-        <Head>
-          <title>Giải Trí - Booking Hub</title>
-          <meta
-            property="og:title"
-            content="Giải Trí - Booking Hub"
-          />
-          <link
-            rel="canonical"
-            href="https://bookinghub.vn/attractions"
-          />
-        </Head>
+        <NextSeo
+          title="Giải Trí & Attractions"
+          description="Khám phá các hoạt động giải trí, tour du lịch và điểm đến hấp dẫn cùng Booking Hub."
+          canonical="https://bookinghub.com/booking/attractions"
+          openGraph={{
+            url: 'https://bookinghub.com/booking/attractions',
+            title: 'Giải Trí - Booking Hub',
+            description: 'Vé tham quan, tour du lịch trọn gói giá tốt.',
+            images: [
+              {
+                url: 'https://images.pexels.com/videos/5705254/pictures/preview-0.jpeg',
+                width: 800,
+                height: 600,
+                alt: 'Attractions Hero',
+              },
+            ],
+            site_name: 'Booking Hub',
+          }}
+        />
         <Navigation />
 
         {/* SECTION 1: HERO */}
@@ -192,42 +200,42 @@ const Attractions: React.FC = () => {
             <div className="about-grid">
               <div className="about-item">
                 <div className="icon-wrapper">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 3v7h6l-8 11v-7H5z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 3v7h6l-8 11v-7H5z" /></svg>
                 </div>
                 <h3>Hiệu Năng Cao</h3>
                 <p>Hệ thống xử lý hàng ngàn giao dịch đồng thời mà không gặp gián đoạn.</p>
               </div>
               <div className="about-item">
                 <div className="icon-wrapper">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12l2 2l4-4"/></g></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="m9 12l2 2l4-4" /></g></svg>
                 </div>
                 <h3>Bảo Mật Tuyệt Đối</h3>
                 <p>Thông tin thanh toán và cá nhân của bạn được mã hóa theo tiêu chuẩn quốc tế.</p>
               </div>
               <div className="about-item">
                 <div className="icon-wrapper">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 5v2m0 4v2m0 4v2M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7a2 2 0 0 1 2-2"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 5v2m0 4v2m0 4v2M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4V7a2 2 0 0 1 2-2" /></svg>
                 </div>
                 <h3>Thanh Toán Liền Mạch</h3>
                 <p>Một tài khoản duy nhất cho tất cả các loại hình dịch vụ từ phim ảnh đến khách sạn.</p>
               </div>
               <div className="about-item">
                 <div className="icon-wrapper">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path d="M8 2v4m8-4v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></g></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path d="M8 2v4m8-4v4" /><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M3 10h18" /></g></svg>
                 </div>
                 <h3>Xác Nhận Tức Thì</h3>
                 <p>Nhận vé điện tử ngay lập tức qua email và ứng dụng sau khi thanh toán.</p>
               </div>
               <div className="about-item">
                 <div className="icon-wrapper">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></g></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /><circle cx="12" cy="10" r="3" /></g></svg>
                 </div>
                 <h3>Hỗ Trợ 24/7</h3>
                 <p>Đội ngũ chăm sóc khách hàng luôn sẵn sàng giải đáp mọi thắc mắc của bạn.</p>
               </div>
               <div className="about-item">
                 <div className="icon-wrapper">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></g></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><rect width="20" height="14" x="2" y="5" rx="2" /><path d="M2 10h20" /></g></svg>
                 </div>
                 <h3>Đa Dạng Phương Thức</h3>
                 <p>Hỗ trợ thẻ quốc tế, ví điện tử và chuyển khoản ngân hàng nội địa.</p>

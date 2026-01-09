@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import Script from 'dangerous-html/react'
 
 const HotelsSections: React.FC = () => {
@@ -7,9 +8,12 @@ const HotelsSections: React.FC = () => {
       <section className="hotels-gallery-section">
         <div className="gallery-bento-grid">
           <div className="bento-cell main-cell">
-            <img
-              src="https://images.pexels.com/photos/2506990/pexels-photo-2506990.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+            <Image
+              src="https://images.pexels.com/photos/2506990/pexels-photo-2506990.jpeg?auto=compress&cs=tinysrgb&w=1500"
               alt="Room Main View"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
             <div className="cell-overlay">
               <h3 className="cell-title">Phòng Executive Suite</h3>
@@ -19,15 +23,21 @@ const HotelsSections: React.FC = () => {
             </div>
           </div>
           <div className="bento-cell side-cell-1">
-            <img
-              src="https://images.pexels.com/photos/2411759/pexels-photo-2411759.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+            <Image
+              src="https://images.pexels.com/photos/2411759/pexels-photo-2411759.jpeg?auto=compress&cs=tinysrgb&w=1500"
               alt="Breakfast"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 50vw, 25vw"
             />
           </div>
           <div className="bento-cell side-cell-2">
-            <img
-              src="https://images.pexels.com/photos/6667462/pexels-photo-6667462.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+            <Image
+              src="https://images.pexels.com/photos/6667462/pexels-photo-6667462.jpeg?auto=compress&cs=tinysrgb&w=1500"
               alt="Pool"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 50vw, 25vw"
             />
             <div className="gallery-more">
               <span>+15 Ảnh</span>
@@ -441,20 +451,23 @@ const HotelsSections: React.FC = () => {
           </div>
           <div className="cta-payment-info">
             <div className="hotels-payment-methods">
-              <img
+              <Image
                 src="https://api.iconify.design/logos:visa.svg"
                 alt="Visa"
-                width="32"
+                width={32}
+                height={32}
               />
-              <img
+              <Image
                 src="https://api.iconify.design/logos:mastercard.svg"
                 alt="Mastercard"
-                width="32"
+                width={32}
+                height={32}
               />
-              <img
+              <Image
                 src="https://api.iconify.design/logos:momo.svg"
                 alt="Momo"
-                width="32"
+                width={32}
+                height={32}
               />
             </div>
             <button className="btn btn-lg btn-accent">

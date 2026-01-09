@@ -1,9 +1,74 @@
-import React from 'react'
-import Script from 'dangerous-html/react'
+import React, { useEffect, useRef } from 'react'
+import Image from 'next/image'
 
 const HomeSections: React.FC = () => {
+  const testimonialRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const carousel = testimonialRef.current
+    if (!carousel) return
+
+    let isDown = false
+    let startX: number
+    let scrollLeft: number
+
+    const handleMouseDown = (e: MouseEvent) => {
+      isDown = true
+      carousel.classList.add('active')
+      startX = e.pageX - carousel.offsetLeft
+      scrollLeft = carousel.scrollLeft
+    }
+
+    const handleMouseLeave = () => {
+      isDown = false
+      carousel.classList.remove('active')
+    }
+
+    const handleMouseUp = () => {
+      isDown = false
+      carousel.classList.remove('active')
+    }
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDown) return
+      e.preventDefault()
+      const x = e.pageX - carousel.offsetLeft
+      const walk = (x - startX) * 2
+      carousel.scrollLeft = scrollLeft - walk
+    }
+
+    carousel.addEventListener('mousedown', handleMouseDown)
+    carousel.addEventListener('mouseleave', handleMouseLeave)
+    carousel.addEventListener('mouseup', handleMouseUp)
+    carousel.addEventListener('mousemove', handleMouseMove)
+
+    return () => {
+      carousel.removeEventListener('mousedown', handleMouseDown)
+      carousel.removeEventListener('mouseleave', handleMouseLeave)
+      carousel.removeEventListener('mouseup', handleMouseUp)
+      carousel.removeEventListener('mousemove', handleMouseMove)
+    }
+  }, [])
+
+  // Inline styles for the grab cursor behavior if not present in global css
+  const styles = `
+   .testimonial-carousel {
+     cursor: grab;
+     overflow-x: auto;
+     scrollbar-width: none; /* Firefox */
+     -ms-overflow-style: none; /* IE 10+ */
+   }
+   .testimonial-carousel::-webkit-scrollbar { 
+     display: none; /* Chrome/Safari */
+   }
+   .testimonial-carousel.active {
+     cursor: grabbing;
+   }
+ `
+
   return (
     <>
+      <style>{styles}</style>
       <section className="testimonials-section">
         <div className="section-header-full">
           <h2 className="section-title">Khách Hàng Nói Gì?</h2>
@@ -11,7 +76,7 @@ const HomeSections: React.FC = () => {
             Sự tin tưởng của bạn là động lực để chúng tôi phát triển.
           </p>
         </div>
-        <div id="testimonialCarousel" className="testimonial-carousel">
+        <div id="testimonialCarousel" className="testimonial-carousel" ref={testimonialRef}>
           <div className="testimonial-track">
             <div className="testimonial-card">
               <div className="testimonial-rating">
@@ -243,51 +308,75 @@ const HomeSections: React.FC = () => {
         </div>
         <div className="gallery-masonry">
           <div className="gallery-item">
-            <img
-              src="https://images.pexels.com/photos/18426842/pexels-photo-18426842.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+            <Image
+              src="https://images.pexels.com/photos/18426842/pexels-photo-18426842.jpeg?auto=compress&cs=tinysrgb&w=1500"
               alt="Gallery 1"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 33vw"
             />
           </div>
           <div className="gallery-item large">
-            <img
-              src="https://images.pexels.com/photos/34940589/pexels-photo-34940589.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+            <Image
+              src="https://images.pexels.com/photos/34940589/pexels-photo-34940589.jpeg?auto=compress&cs=tinysrgb&w=1500"
               alt="Gallery 2"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 66vw"
             />
           </div>
           <div className="gallery-item">
-            <img
-              src="https://images.pexels.com/photos/20653866/pexels-photo-20653866.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+            <Image
+              src="https://images.pexels.com/photos/20653866/pexels-photo-20653866.jpeg?auto=compress&cs=tinysrgb&w=1500"
               alt="Gallery 3"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 33vw"
             />
           </div>
           <div className="gallery-item">
-            <img
-              src="https://images.pexels.com/photos/19689227/pexels-photo-19689227.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+            <Image
+              src="https://images.pexels.com/photos/19689227/pexels-photo-19689227.jpeg?auto=compress&cs=tinysrgb&w=1500"
               alt="Gallery 4"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 33vw"
             />
           </div>
           <div className="gallery-item tall">
-            <img
-              src="https://images.pexels.com/photos/19689237/pexels-photo-19689237.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+            <Image
+              src="https://images.pexels.com/photos/19689237/pexels-photo-19689237.jpeg?auto=compress&cs=tinysrgb&w=1500"
               alt="Gallery 5"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 33vw"
             />
           </div>
           <div className="gallery-item">
-            <img
-              src="https://images.pexels.com/photos/6758528/pexels-photo-6758528.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+            <Image
+              src="https://images.pexels.com/photos/6758528/pexels-photo-6758528.jpeg?auto=compress&cs=tinysrgb&w=1500"
               alt="Gallery 6"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 33vw"
             />
           </div>
           <div className="gallery-item">
-            <img
-              src="https://images.pexels.com/photos/11038192/pexels-photo-11038192.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+            <Image
+              src="https://images.pexels.com/photos/11038192/pexels-photo-11038192.jpeg?auto=compress&cs=tinysrgb&w=1500"
               alt="Gallery 7"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 33vw"
             />
           </div>
           <div className="gallery-item wide">
-            <img
-              src="https://images.pexels.com/photos/20143786/pexels-photo-20143786.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+            <Image
+              src="https://images.pexels.com/photos/20143786/pexels-photo-20143786.jpeg?auto=compress&cs=tinysrgb&w=1500"
               alt="Gallery 8"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 66vw"
             />
           </div>
         </div>
@@ -380,118 +469,6 @@ const HomeSections: React.FC = () => {
           </div>
         </div>
       </section>
-      <div className="home-container4">
-        <div className="home-container5">
-          <Script
-            html={`<style>
-        @keyframes float {0%,100% {transform: translateY(0);}
-50% {transform: translateY(-15px);}}
-        </style> `}
-          ></Script>
-        </div>
-      </div>
-      <div className="home-container6">
-        <div className="home-container7">
-          <Script
-            html={`<script defer data-name="booking-hub-logic">
-(function(){
-  const tabs = document.querySelectorAll(".search-tab")
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      if (!tab.classList.contains("disabled")) {
-        tabs.forEach((t) => t.classList.remove("active"))
-        tab.classList.add("active")
-        const type = tab.getAttribute("data-type")
-        const input = document.querySelector('.search-field input[type="text"]')
-        if (type === "movie") {
-          input.placeholder = "Bạn muốn xem phim gì hôm nay?"
-        } else if (type === "hotel") {
-          input.placeholder = "Bạn muốn nghỉ dưỡng ở đâu?"
-        }
-      }
-    })
-  })
-
-  const showcaseCarousel = document.getElementById("showcaseCarousel")
-  let isDown = false
-  let startX
-  let scrollLeft
-
-  const initCarousel = (carousel) => {
-    carousel.addEventListener("mousedown", (e) => {
-      isDown = true
-      carousel.classList.add("active")
-      startX = e.pageX - carousel.offsetLeft
-      scrollLeft = carousel.scrollLeft
-    })
-    carousel.addEventListener("mouseleave", () => {
-      isDown = false
-      carousel.classList.remove("active")
-    })
-    carousel.addEventListener("mouseup", () => {
-      isDown = false
-      carousel.classList.remove("active")
-    })
-    carousel.addEventListener("mousemove", (e) => {
-      if (!isDown) return
-      e.preventDefault()
-      const x = e.pageX - carousel.offsetLeft
-      const walk = (x - startX) * 2
-      carousel.scrollLeft = scrollLeft - walk
-    })
-  }
-
-  initCarousel(showcaseCarousel)
-  initCarousel(document.getElementById("testimonialCarousel"))
-
-  const animateStats = () => {
-    const stats = [
-      { id: "stat-bookings", end: 500000, suffix: "+" },
-      { id: "stat-uptime", end: 99.9, suffix: "%" },
-      { id: "stat-speed", end: 2, prefix: "< ", suffix: "s" },
-      { id: "stat-secure", end: 100, suffix: "%" },
-    ]
-
-    const options = {
-      threshold: 0.5,
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          stats.forEach((stat) => {
-            const el = document.getElementById(stat.id)
-            let start = 0
-            const duration = 2000
-            const stepTime = 20
-            const steps = duration / stepTime
-            const increment = stat.end / steps
-
-            const timer = setInterval(() => {
-              start += increment
-              if (start >= stat.end) {
-                el.innerText = (stat.prefix || "") + stat.end + stat.suffix
-                clearInterval(timer)
-              } else {
-                el.innerText = (stat.prefix || "") + Math.floor(start) + stat.suffix
-              }
-            }, stepTime)
-          })
-          observer.unobserve(entry.target)
-        }
-      })
-    }, options)
-
-    const statsSection = document.querySelector(".stats-section")
-    if (statsSection) observer.observe(statsSection)
-  }
-
-  animateStats()
-})()
-</script>`}
-          ></Script>
-        </div>
-      </div>
     </>
   )
 }

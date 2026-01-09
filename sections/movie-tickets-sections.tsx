@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 
 const MovieTicketsSections = () => {
   return (
@@ -147,54 +148,72 @@ const MovieTicketsSections = () => {
             <h2 className="gallery-title">Không Gian Điện Ảnh</h2>
             <div className="gallery-images-row">
               <div className="gallery-image-card">
-                <img
-                  src="https://images.pexels.com/photos/3709371/pexels-photo-3709371.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+                <Image
+                  src="https://images.pexels.com/photos/3709371/pexels-photo-3709371.jpeg?auto=compress&cs=tinysrgb&w=1500"
                   alt="Cinema Hall"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
                 <div className="item-overlay">
                   <span>Phòng Chiếu IMAX</span>
                 </div>
               </div>
               <div className="gallery-image-card tall">
-                <img
-                  src="https://images.pexels.com/photos/12041240/pexels-photo-12041240.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+                <Image
+                  src="https://images.pexels.com/photos/12041240/pexels-photo-12041240.jpeg?auto=compress&cs=tinysrgb&w=1500"
                   alt="Modern Architecture"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
                 <div className="item-overlay">
                   <span>Kiến Trúc Độc Đáo</span>
                 </div>
               </div>
               <div className="gallery-image-card">
-                <img
-                  src="https://images.pexels.com/photos/7991142/pexels-photo-7991142.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+                <Image
+                  src="https://images.pexels.com/photos/7991142/pexels-photo-7991142.jpeg?auto=compress&cs=tinysrgb&w=1500"
                   alt="Audience"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
                 <div className="item-overlay">
                   <span>Trải Nghiệm Nhóm</span>
                 </div>
               </div>
               <div className="gallery-image-card">
-                <img
-                  src="https://images.pexels.com/photos/7991486/pexels-photo-7991486.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+                <Image
+                  src="https://images.pexels.com/photos/7991486/pexels-photo-7991486.jpeg?auto=compress&cs=tinysrgb&w=1500"
                   alt="Cinema Seats"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
                 <div className="item-overlay">
                   <span>Ghế Ngồi Cao Cấp</span>
                 </div>
               </div>
               <div className="gallery-image-card tall">
-                <img
-                  src="https://images.pexels.com/photos/7234264/pexels-photo-7234264.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+                <Image
+                  src="https://images.pexels.com/photos/7234264/pexels-photo-7234264.jpeg?auto=compress&cs=tinysrgb&w=1500"
                   alt="Private Cinema"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
                 <div className="item-overlay">
                   <span>Rạp Chiếu Riêng Tư</span>
                 </div>
               </div>
               <div className="gallery-image-card">
-                <img
-                  src="https://images.pexels.com/photos/7513412/pexels-photo-7513412.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+                <Image
+                  src="https://images.pexels.com/photos/7513412/pexels-photo-7513412.jpeg?auto=compress&cs=tinysrgb&w=1500"
                   alt="Audience Night"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
                 <div className="item-overlay">
                   <span>Suất Chiếu Đêm</span>

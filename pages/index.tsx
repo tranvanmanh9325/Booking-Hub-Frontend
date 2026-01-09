@@ -1,24 +1,53 @@
-import React from 'react'
-import Head from 'next/head'
-
-import Script from 'dangerous-html/react'
-import { useTranslations } from 'next-intl'
-
+import React, { useState } from 'react'
+import { NextSeo } from 'next-seo'
+import dynamic from 'next/dynamic'
 import Navigation from '../components/navigation'
-import HomeSections from '../sections/home-sections'
+import Script from 'dangerous-html/react'
+
+// Dynamic Imports with loading placeholder
+const FeaturesSection = dynamic(() => import('../components/home/FeaturesSection'))
+const ShowcaseSection = dynamic(() => import('../components/home/ShowcaseSection'))
+const StatsSection = dynamic(() => import('../components/home/StatsSection'))
+const HomeSections = dynamic(() => import('../sections/home-sections'))
 
 const Home: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<'movie' | 'hotel' | 'restaurant'>('movie')
+  const [searchPlaceholder, setSearchPlaceholder] = useState('Bạn muốn xem phim gì hôm nay?')
+
+  const handleTabClick = (type: 'movie' | 'hotel' | 'restaurant') => {
+    setActiveTab(type)
+    if (type === 'movie') {
+      setSearchPlaceholder('Bạn muốn xem phim gì hôm nay?')
+    } else if (type === 'hotel') {
+      setSearchPlaceholder('Bạn muốn nghỉ dưỡng ở đâu?')
+    } else {
+      // Keep default or previous logic
+    }
+  }
+
   return (
     <>
       <div className="home-container1">
-        <Head>
-          <title>Sentimental Apprehensive Rail</title>
-          <meta property="og:title" content="Sentimental Apprehensive Rail" />
-          <link
-            rel="canonical"
-            href="https://sentimental-apprehensive-rail-jrswfn.teleporthq.app/"
-          />
-        </Head>
+        <NextSeo
+          title="Trang Chủ"
+          description="Booking Hub - Trải nghiệm đặt chỗ hoàn hảo cho phim ảnh và khách sạn."
+          canonical="https://bookinghub.com/"
+          openGraph={{
+            url: 'https://bookinghub.com/',
+            title: 'Booking Hub - Trang Chủ',
+            description:
+              'Đặt vé phim, phòng khách sạn và hơn thế nữa chỉ trên một ứng dụng duy nhất.',
+            images: [
+              {
+                url: 'https://images.pexels.com/photos/29870243/pexels-photo-29870243.jpeg',
+                width: 800,
+                height: 600,
+                alt: 'Booking Hub Hero',
+              },
+            ],
+            site_name: 'Booking Hub',
+          }}
+        />
         <Navigation></Navigation>
         <div className="home-container2">
           <div className="home-container3">
@@ -47,19 +76,28 @@ section {
                 Trải Nghiệm Đặt Chỗ Hoàn Hảo
               </h1>
               <p className="home-hero-subtitle hero-subtitle">
-                Từ những thước phim bom tấn đến những kỳ nghỉ sang trọng,
-                Booking Hub kết nối mọi nhu cầu giải trí của bạn trong một nền
-                tảng duy nhất.
+                Từ những thước phim bom tấn đến những kỳ nghỉ sang trọng, Booking
+                Hub kết nối mọi nhu cầu giải trí của bạn trong một nền tảng duy
+                nhất.
               </p>
               <div className="hero-search-container">
                 <div className="search-tabs">
-                  <button data-type="movie" className="search-tab active">
+                  <button
+                    className={`search-tab ${activeTab === 'movie' ? 'active' : ''}`}
+                    onClick={() => handleTabClick('movie')}
+                  >
                     Phim Ảnh
                   </button>
-                  <button data-type="hotel" className="search-tab">
+                  <button
+                    className={`search-tab ${activeTab === 'hotel' ? 'active' : ''}`}
+                    onClick={() => handleTabClick('hotel')}
+                  >
                     Khách Sạn
                   </button>
-                  <button title="Sắp ra mắt" className="search-tab disabled">
+                  <button
+                    className="search-tab disabled"
+                    title="Sắp ra mắt"
+                  >
                     Nhà Hàng
                   </button>
                 </div>
@@ -73,7 +111,7 @@ section {
                     <div className="search-field">
                       <input
                         type="text"
-                        placeholder="Bạn muốn đi đâu hoặc xem gì?"
+                        placeholder={searchPlaceholder}
                         required={true}
                         id="thq_textinput_n_V8"
                         name="textinput"
@@ -122,294 +160,12 @@ section {
             </div>
           </div>
         </section>
-        <section className="features-section">
-          <div className="container">
-            <div className="section-header">
-              <h2 className="section-title">Tại Sao Chọn Booking Hub?</h2>
-              <p className="section-content">
-                Nền tảng công nghệ hiện đại mang đến trải nghiệm đặt chỗ mượt mà
-                nhất.
-              </p>
-            </div>
-            <div className="features-grid">
-              <div className="feature-card">
-                <div className="feature-icon-box">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"
-                    ></path>
-                  </svg>
-                </div>
-                <h3 className="section-subtitle">Tốc Độ Vượt Trội</h3>
-                <p className="section-content">
-                  Hệ thống xử lý hàng nghìn giao dịch cùng lúc với công nghệ
-                  High Concurrency.
-                </p>
-              </div>
-              <div className="feature-card">
-                <div className="feature-icon-box">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <g
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                    >
-                      <path d="M10 22v-6.57M12 11h.01M12 7h.01M14 15.43V22m1-6a5 5 0 0 0-6 0m7-5h.01M16 7h.01M8 11h.01M8 7h.01"></path>
-                      <rect width="16" height="20" x="4" y="2" rx="2"></rect>
-                    </g>
-                  </svg>
-                </div>
-                <h3 className="section-subtitle">Tất Cả Trong Một</h3>
-                <p className="section-content">
-                  Đặt vé phim, phòng khách sạn và hơn thế nữa chỉ trên một ứng
-                  dụng duy nhất.
-                </p>
-              </div>
-              <div className="feature-card">
-                <div className="feature-icon-box">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <g
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                    >
-                      <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
-                      <path d="m9 12l2 2l4-4"></path>
-                    </g>
-                  </svg>
-                </div>
-                <h3 className="section-subtitle">Bảo Mật Tuyệt Đối</h3>
-                <p className="section-content">
-                  Công nghệ JWT và mã hóa đa lớp đảm bảo thông tin cá nhân của
-                  bạn luôn an toàn.
-                </p>
-              </div>
-              <div className="feature-card">
-                <div className="feature-icon-box">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Zm11-4v2m0 10v2m0-8v2"
-                    ></path>
-                  </svg>
-                </div>
-                <h3 className="section-subtitle">Xác Nhận Tức Thì</h3>
-                <p className="section-content">
-                  Không còn phải chờ đợi. Vé và mã đặt phòng được gửi ngay sau
-                  khi thanh toán.
-                </p>
-              </div>
-              <div className="feature-card">
-                <div className="feature-icon-box">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m9 18l6-6l-6-6"
-                    ></path>
-                  </svg>
-                </div>
-                <h3 className="section-subtitle">Giao Diện Hiện Đại</h3>
-                <p className="section-content">
-                  Thiết kế tinh tế, dễ sử dụng trên mọi thiết bị từ điện thoại
-                  đến máy tính.
-                </p>
-              </div>
-              <div className="feature-card">
-                <div className="feature-icon-box">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"
-                    ></path>
-                  </svg>
-                </div>
-                <h3 className="section-subtitle">Hỗ Trợ 24/7</h3>
-                <p className="section-content">
-                  Đội ngũ chuyên nghiệp luôn sẵn sàng giải đáp mọi thắc mắc của
-                  bạn bất cứ lúc nào.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="showcase-section">
-          <div className="section-header-full">
-            <h2 className="section-title">Khám Phá Xu Hướng</h2>
-            <p className="section-content">
-              Những lựa chọn hàng đầu dành riêng cho bạn hôm nay.
-            </p>
-          </div>
-          <div id="showcaseCarousel" className="carousel-container">
-            <div className="carousel-track">
-              <div className="showcase-card">
-                <div className="card-media">
-                  <img
-                    src="https://images.pexels.com/photos/14021955/pexels-photo-14021955.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
-                    alt="Hotel 1"
-                  />
-                  <span className="card-badge">Khách Sạn</span>
-                </div>
-                <div className="card-body">
-                  <h3 className="section-subtitle">Grand Plaza Suite</h3>
-                  <p className="section-content">
-                    Trải nghiệm không gian xa hoa tại trung tâm thành phố.
-                  </p>
-                  <div className="card-footer">
-                    <span className="price">Từ 2.500.000đ</span>
-                    <button className="btn btn-primary btn-sm">Đặt Ngay</button>
-                  </div>
-                </div>
-              </div>
-              <div className="showcase-card">
-                <div className="card-media">
-                  <img
-                    src="https://images.pexels.com/photos/4062524/pexels-photo-4062524.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
-                    alt="Cinema 1"
-                  />
-                  <span className="card-badge">Phim Ảnh</span>
-                </div>
-                <div className="card-body">
-                  <h3 className="section-subtitle">Chiến Binh Cuối Cùng</h3>
-                  <p className="section-content">
-                    Bom tấn hành động không thể bỏ lỡ trong tháng này.
-                  </p>
-                  <div className="card-footer">
-                    <span className="price">95.000đ</span>
-                    <button className="btn btn-primary btn-sm">Mua Vé</button>
-                  </div>
-                </div>
-              </div>
-              <div className="showcase-card">
-                <div className="card-media">
-                  <img
-                    src="https://images.pexels.com/photos/5461582/pexels-photo-5461582.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
-                    alt="Hotel 2"
-                  />
-                  <span className="card-badge">Khách Sạn</span>
-                </div>
-                <div className="card-body">
-                  <h3 className="section-subtitle">Ocean Breeze Resort</h3>
-                  <p className="section-content">
-                    Tận hưởng tiếng sóng biển ngay bên hiên nhà bạn.
-                  </p>
-                  <div className="card-footer">
-                    <span className="price">Từ 1.800.000đ</span>
-                    <button className="btn btn-primary btn-sm">Đặt Ngay</button>
-                  </div>
-                </div>
-              </div>
-              <div className="showcase-card">
-                <div className="card-media">
-                  <img
-                    src="https://images.pexels.com/photos/19169811/pexels-photo-19169811.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
-                    alt="Cinema 2"
-                  />
-                  <span className="card-badge">Phim Ảnh</span>
-                </div>
-                <div className="card-body">
-                  <h3 className="section-subtitle">Hành Trình Kỳ Diệu</h3>
-                  <p className="section-content">
-                    Phim hoạt hình cảm động dành cho cả gia đình.
-                  </p>
-                  <div className="card-footer">
-                    <span className="price">85.000đ</span>
-                    <button className="btn btn-primary btn-sm">Mua Vé</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="stats-section">
-          <div className="container">
-            <div className="stats-grid">
-              <div className="stat-item">
-                <div id="stat-bookings" className="stat-value">
-                  <span>500,000+</span>
-                </div>
-                <div className="stat-label">
-                  <span>Lượt Đặt Chỗ Thành Công</span>
-                </div>
-              </div>
-              <div className="stat-item">
-                <div id="stat-uptime" className="stat-value">
-                  <span>99.9%</span>
-                </div>
-                <div className="stat-label">
-                  <span>Thời Gian Hoạt Động</span>
-                </div>
-              </div>
-              <div className="stat-item">
-                <div id="stat-speed" className="stat-value">
-                  <span>&lt; 2s</span>
-                </div>
-                <div className="stat-label">
-                  <span>Tốc Độ Xử Lý Trung Bình</span>
-                </div>
-              </div>
-              <div className="stat-item">
-                <div id="stat-secure" className="stat-value">
-                  <span>100%</span>
-                </div>
-                <div className="stat-label">
-                  <span>Giao Dịch An Toàn</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <HomeSections></HomeSections>
+
+        <FeaturesSection />
+        <ShowcaseSection />
+        <StatsSection />
+        <HomeSections />
+
       </div>
       <style jsx>
         {`

@@ -1,5 +1,5 @@
 import React from 'react'
-import Head from 'next/head'
+import { NextSeo } from 'next-seo'
 
 import Script from 'dangerous-html/react'
 import { useTranslations } from 'next-intl'
@@ -13,17 +13,25 @@ const Hotels: React.FC = () => {
   return (
     <>
       <div className="hotels-container10">
-        <Head>
-          <title>Hotels - Sentimental Apprehensive Rail</title>
-          <meta
-            property="og:title"
-            content="Hotels - Sentimental Apprehensive Rail"
-          />
-          <link
-            rel="canonical"
-            href="https://sentimental-apprehensive-rail-jrswfn.teleporthq.app/hotels"
-          />
-        </Head>
+        <NextSeo
+          title="Khách Sạn"
+          description="Khám phá hàng ngàn khách sạn sang trọng với giá ưu đãi nhất tại Booking Hub."
+          canonical="https://bookinghub.com/booking/hotels"
+          openGraph={{
+            url: 'https://bookinghub.com/booking/hotels',
+            title: 'Khách Sạn - Booking Hub',
+            description: 'Đặt phòng khách sạn giá tốt, ưu đãi hấp dẫn.',
+            images: [
+              {
+                url: 'https://images.pexels.com/photos/31768453/pexels-photo-31768453.jpeg',
+                width: 800,
+                height: 600,
+                alt: 'Hotels Hero',
+              },
+            ],
+            site_name: 'Booking Hub',
+          }}
+        />
         <Navigation></Navigation>
         <div className="hotels-container11">
           <div className="hotels-container12">

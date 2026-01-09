@@ -1,5 +1,5 @@
 import React from 'react'
-import Head from 'next/head'
+import { NextSeo } from 'next-seo'
 
 import Script from 'dangerous-html/react'
 
@@ -10,17 +10,25 @@ const MovieTickets = (props: any) => {
   return (
     <>
       <div className="movie-tickets-container1">
-        <Head>
-          <title>Movie-Tickets - Sarcastic Juicy Butterfly</title>
-          <meta
-            property="og:title"
-            content="Movie-Tickets - Sarcastic Juicy Butterfly"
-          />
-          <link
-            rel="canonical"
-            href="https://sarcastic-juicy-butterfly-4vz5gk.teleporthq.app/movie-tickets"
-          />
-        </Head>
+        <NextSeo
+          title="Vé Xem Phim"
+          description="Đặt vé xem phim bom tấn nhanh chóng, không cần xếp hàng tại Booking Hub."
+          canonical="https://bookinghub.com/booking/movie-tickets"
+          openGraph={{
+            url: 'https://bookinghub.com/booking/movie-tickets',
+            title: 'Vé Xem Phim - Booking Hub',
+            description: 'Lịch chiếu phim mới nhất, hệ thống rạp toàn quốc.',
+            images: [
+              {
+                url: 'https://images.pexels.com/photos/1117132/pexels-photo-1117132.jpeg',
+                width: 800,
+                height: 600,
+                alt: 'Cinema Hero',
+              },
+            ],
+            site_name: 'Booking Hub',
+          }}
+        />
         <Navigation></Navigation>
         <section className="hero-booking">
           <div className="hero-media">
@@ -104,8 +112,8 @@ const MovieTickets = (props: any) => {
               </button>
             </div>
             <div className="tabs-content">
-                <div id="tab-now" className="tab-panel active">
-                  <div className="movie-grid">
+              <div id="tab-now" className="tab-panel active">
+                <div className="movie-grid">
                   <div className="movie-card">
                     <div className="movie-poster">
                       <img

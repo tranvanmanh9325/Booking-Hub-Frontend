@@ -10,6 +10,8 @@ import { NextIntlClientProvider } from 'next-intl'
 import type { AppProps } from 'next/app'
 import Footer from '../components/footer'
 import { ToastContainer } from 'react-toastify'
+import { DefaultSeo } from 'next-seo'
+import SEO from '../next-seo.config'
 
 export default function MyApp({ Component, pageProps }: AppProps<{ messages?: Record<string, any> }>) {
   return (
@@ -18,6 +20,7 @@ export default function MyApp({ Component, pageProps }: AppProps<{ messages?: Re
         <ErrorBoundary>
           <AuthProvider>
             <Component {...pageProps} />
+            <DefaultSeo {...SEO} />
             <ToastContainer
               position="top-right"
               autoClose={3000}
