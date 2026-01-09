@@ -92,43 +92,6 @@
 
 ## 5. HIỆU NĂNG VÀ TỐI ƯU HÓA
 
-### 5.1. Frontend
-
-#### 5.1.1. **API Calls Optimization** (MEDIUM)
-
-**Vấn đề:**
-
-- Có thể gọi API nhiều lần không cần thiết
-- Không có request deduplication
-
-**Đề xuất:**
-
-- React Query hoặc SWR
-- Request caching
-- Request deduplication
-- Stale-while-revalidate
-
-**Ưu tiên:** 🟡 MEDIUM
-
----
-
-#### 5.1.2. **Bundle Size** (LOW)
-
-**Vấn đề:**
-
-- Chưa analyze bundle size
-
-**Đề xuất:**
-
-- `@next/bundle-analyzer`
-- Code splitting
-- Tree shaking
-- Remove unused dependencies
-
-**Ưu tiên:** 🟢 LOW
-
----
-
 ## 6. KIẾN TRÚC VÀ CODE QUALITY
 
 ### 6.1. Backend
@@ -390,11 +353,10 @@ booking.setStatus("PENDING"); // Nên dùng enum hoặc constant
 
 1. **Error Response Format** - Backend (Còn cần cải thiện)
 
-2. **API Calls Optimization** - Frontend
-3. **Component Reusability** - Frontend
-4. **State Management** - Frontend
-5. **Monitoring và Logging** - DevOps
-6. **API Documentation** - Documentation
+2. **Component Reusability** - Frontend
+3. **State Management** - Frontend
+4. **Monitoring và Logging** - DevOps
+5. **API Documentation** - Documentation
 
 ### 🟢 LOW (Nice to have)
 
@@ -410,7 +372,7 @@ booking.setStatus("PENDING"); // Nên dùng enum hoặc constant
 
 **Trạng thái hiện tại:**
 Dự án đã hoàn thành các hạng mục quan trọng về **Core Features**, **Security** và **Deployment**.
-Các vấn đề còn lại chủ yếu tập trung vào **Testing**, **DevOps Automation (CI/CD)**, và **Tối ưu hóa (Code Quality/Performance)**.
+Các vấn đề còn lại chủ yếu tập trung vào **Testing**, **DevOps Automation (CI/CD)**. **Tối ưu hóa API** đã hoàn thành.
 
 Việc tiếp theo nên tập trung vào:
 

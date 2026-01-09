@@ -4,6 +4,7 @@ import Navigation from '../../components/navigation'
 import PartnershipStyles from '../../components/info/partnership-styles'
 import { apiClient } from '../../lib/api-client'
 import { PartnershipRequest, PartnershipResponse } from '../../types/partnership'
+import { useSubmitPartnership } from '../../hooks/use-partnership'
 
 const Partnership: React.FC = () => {
   const [formData, setFormData] = useState<PartnershipRequest>({
@@ -14,9 +15,6 @@ const Partnership: React.FC = () => {
     partnershipType: '',
     message: ''
   })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
-  const [errorMessage, setErrorMessage] = useState('')
 
   // Custom SVG Icons Components
   const HotelIcon = () => (
@@ -174,54 +172,39 @@ const Partnership: React.FC = () => {
     }
   ]
 
+  const { mutate, isPending, isSuccess, isError, error, reset } = useSubmitPartnership();
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
-    setSubmitStatus('idle')
 
-    try {
-      const data = await apiClient.post<PartnershipResponse, PartnershipRequest>('/api/partnership/submit', formData)
-
-      if (data.success) {
-        setSubmitStatus('success')
-        setErrorMessage('')
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          company: '',
-          partnershipType: '',
-          message: ''
-        })
-
-        // Reset success message after 5 seconds
+    mutate(formData, {
+      onSuccess: (data) => {
+        if (data.success) {
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            company: '',
+            partnershipType: '',
+            message: ''
+          })
+          // Reset status after 5 seconds
+          setTimeout(() => {
+            reset();
+          }, 5000)
+        }
+      },
+      onError: () => {
         setTimeout(() => {
-          setSubmitStatus('idle')
-        }, 5000)
-      } else {
-        setSubmitStatus('error')
-        setErrorMessage(data.message || 'Đã có lỗi xảy ra khi gửi yêu cầu. Vui lòng thử lại sau.')
-        setTimeout(() => {
-          setSubmitStatus('idle')
-          setErrorMessage('')
+          reset();
         }, 5000)
       }
-    } catch (error: any) {
-      console.error('Error submitting partnership request:', error)
-      setSubmitStatus('error')
-      setErrorMessage(error.message || 'Không thể kết nối đến server. Vui lòng kiểm tra kết nối và thử lại.')
-      setTimeout(() => {
-        setSubmitStatus('idle')
-        setErrorMessage('')
-      }, 5000)
-    } finally {
-      setIsSubmitting(false)
-    }
+    });
   }
 
   return (
@@ -388,7 +371,7 @@ const Partnership: React.FC = () => {
                     />
                   </div>
 
-                  {submitStatus === 'success' && (
+                  {isSuccess && (
                     <div className="form-success">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="20 6 9 17 4 12"></polyline>
@@ -397,23 +380,23 @@ const Partnership: React.FC = () => {
                     </div>
                   )}
 
-                  {submitStatus === 'error' && (
+                  {isError && (
                     <div className="form-error">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>
                         <line x1="12" y1="8" x2="12" y2="12"></line>
                         <line x1="12" y1="16" x2="12.01" y2="16"></line>
                       </svg>
-                      <span>{errorMessage || 'Đã có lỗi xảy ra khi gửi yêu cầu. Vui lòng thử lại sau.'}</span>
+                      <span>{(error as any)?.message || 'Đã có lỗi xảy ra khi gửi yêu cầu. Vui lòng thử lại sau.'}</span>
                     </div>
                   )}
 
                   <button
                     type="submit"
                     className="form-submit-btn"
-                    disabled={isSubmitting}
+                    disabled={isPending}
                   >
-                    {isSubmitting ? 'Đang gửi...' : 'Gửi Yêu Cầu Hợp Tác'}
+                    {isPending ? 'Đang gửi...' : 'Gửi Yêu Cầu Hợp Tác'}
                   </button>
                 </form>
               </div>

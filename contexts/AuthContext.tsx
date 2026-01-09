@@ -1,13 +1,10 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { apiClient } from '../lib/api-client';
 import { useRouter } from 'next/router';
+import { useUser, User, USER_QUERY_KEY } from '../hooks/use-auth';
+import { queryClient } from '../lib/react-query';
 
-interface User {
-    id: number;
-    email: string;
-    fullName: string;
-    avatarUrl?: string;
-}
+
 
 interface AuthContextType {
     user: User | null;
@@ -20,31 +17,19 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
+    const { data: user, isLoading, refetch } = useUser();
     const router = useRouter();
 
-    useEffect(() => {
-        // Initial check
-        const token = localStorage.getItem('token');
-        const userData = localStorage.getItem('user');
-
-        if (token && userData) {
-            try {
-                setUser(JSON.parse(userData));
-            } catch (e) {
-                console.error("Failed to parse user data", e);
-                localStorage.removeItem('user');
-            }
-        }
-        setLoading(false);
-    }, []);
-
-    const login = (token: string, refreshToken: string, newUser: User) => {
+    const login = async (token: string, refreshToken: string, newUser: User) => {
         localStorage.setItem('token', token);
         // localStorage.setItem('refreshToken', refreshToken); // Removed: Refresh Token is now in HttpOnly Cookie
         localStorage.setItem('user', JSON.stringify(newUser));
-        setUser(newUser);
+
+        // Invalidate query to refetch/update from cache
+        await queryClient.invalidateQueries({ queryKey: USER_QUERY_KEY });
+
+        // Or manually set data if we trust the login response
+        queryClient.setQueryData(USER_QUERY_KEY, newUser);
     };
 
     const logout = async () => {
@@ -56,12 +41,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         localStorage.removeItem('token');
         localStorage.removeItem('refreshToken'); // Cleanup legacy if present
         localStorage.removeItem('user');
-        setUser(null);
+
+        // Clear React Query cache for user
+        queryClient.setQueryData(USER_QUERY_KEY, null);
+
         router.push('/auth/login');
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, login, logout, isAuthenticated: !!user }}>
+        <AuthContext.Provider value={{ user: user || null, loading: isLoading, login, logout, isAuthenticated: !!user }}>
             {children}
         </AuthContext.Provider>
     );

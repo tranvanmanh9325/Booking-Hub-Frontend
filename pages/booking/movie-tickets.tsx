@@ -3,8 +3,10 @@ import { NextSeo } from 'next-seo'
 
 import Script from 'dangerous-html/react'
 
+import dynamic from 'next/dynamic'
 import Navigation from '../../components/navigation'
-import MovieTicketsSections from '../../sections/movie-tickets-sections'
+
+const MovieTicketsSections = dynamic(() => import('../../sections/movie-tickets-sections'))
 
 const MovieTickets = (props: any) => {
   return (

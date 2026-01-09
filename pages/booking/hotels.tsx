@@ -4,8 +4,10 @@ import { NextSeo } from 'next-seo'
 import Script from 'dangerous-html/react'
 import { useTranslations } from 'next-intl'
 
+import dynamic from 'next/dynamic'
 import Navigation from '../../components/navigation'
-import HotelsContent from '../../sections/hotels-content'
+
+const HotelsContent = dynamic(() => import('../../sections/hotels-content'))
 
 import { withAuth } from '../../components/withAuth'
 

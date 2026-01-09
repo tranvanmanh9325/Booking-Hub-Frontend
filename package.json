@@ -8,13 +8,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "analyze": "cross-env ANALYZE=true next build"
   },
   "author": "TeleportHQ",
   "license": "MIT",
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
-    "@teleporthq/react-components": "latest",
+    "@tanstack/react-query": "^5.90.16",
+    "@tanstack/react-query-devtools": "^5.91.2",
     "axios": "^1.13.2",
     "dangerous-html": "0.1.13",
     "jwt-decode": "^4.0.0",
