@@ -7,6 +7,8 @@ import dynamic from 'next/dynamic'
 import Navigation from '../../components/navigation'
 
 const MovieTicketsSections = dynamic(() => import('../../sections/movie-tickets-sections'))
+import { MOVIE_RATING } from '../../config/constants'
+
 
 const MovieTickets = (props: any) => {
   return (
@@ -122,7 +124,7 @@ const MovieTickets = (props: any) => {
                         src="https://images.pexels.com/photos/7991142/pexels-photo-7991142.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
                         alt="Movie Poster"
                       />
-                      <span className="movie-rating">T18</span>
+                      <span className="movie-rating">{MOVIE_RATING.T18}</span>
                     </div>
                     <div className="movie-info">
                       <h3>Hành Trình Vô Tận</h3>
@@ -158,7 +160,7 @@ const MovieTickets = (props: any) => {
                         src="https://images.pexels.com/photos/3709371/pexels-photo-3709371.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
                         alt="Movie Poster"
                       />
-                      <span className="movie-rating">P</span>
+                      <span className="movie-rating">{MOVIE_RATING.P}</span>
                     </div>
                     <div className="movie-info">
                       <h3>Thế Giới Diệu Kỳ</h3>

@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '../lib/api-client';
+import { MOVIE_RATING } from '../config/constants';
+
 
 export interface Movie {
     id: number;
@@ -16,7 +18,7 @@ const MOCK_MOVIES: Movie[] = [
         title: 'Hành Trình Vô Tận',
         description: 'Bom tấn hành động kịch tính nhất năm',
         posterUrl: 'https://images.pexels.com/photos/7991142/pexels-photo-7991142.jpeg?auto=compress&cs=tinysrgb&w=1500',
-        rating: 'T18',
+        rating: MOVIE_RATING.T18,
         showtimes: ['09:30', '12:15', '15:00', '18:45']
     },
     {
@@ -24,7 +26,7 @@ const MOCK_MOVIES: Movie[] = [
         title: 'Thế Giới Diệu Kỳ',
         description: 'Chuyến phiêu lưu kỳ thú',
         posterUrl: 'https://images.pexels.com/photos/3709371/pexels-photo-3709371.jpeg?auto=compress&cs=tinysrgb&w=1500',
-        rating: 'P',
+        rating: MOVIE_RATING.P,
         showtimes: ['10:00', '14:30', '17:15', '20:00']
     }
 ];

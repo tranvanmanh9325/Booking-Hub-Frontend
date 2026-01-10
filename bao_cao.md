@@ -96,61 +96,6 @@
 
 ### 6.1. Backend
 
-#### 6.1.1. **Service Layer có thể tách nhỏ hơn** (LOW)
-
-**Vấn đề:**
-
-- HotelService, MovieService có thể quá lớn
-- Có thể tách thành nhiều services nhỏ hơn
-
-**Đề xuất:**
-
-- BookingService riêng
-- SearchService riêng
-- ReviewService riêng
-
-**Ưu tiên:** 🟢 LOW
-
----
-
-#### 6.1.2. **DTO Mapping** (MEDIUM)
-
-**Vấn đề:**
-
-- Manual mapping trong service
-- Code lặp lại
-
-**Đề xuất:**
-
-- MapStruct hoặc ModelMapper
-- Auto-generate mappers
-
-**Ưu tiên:** 🟡 MEDIUM
-
----
-
-#### 6.1.3. **Constants** (LOW)
-
-**Vấn đề:**
-
-- Magic strings/numbers trong code
-
-**Ví dụ:**
-
-```java
-booking.setStatus("PENDING"); // Nên dùng enum hoặc constant
-```
-
-**Đề xuất:**
-
-- Enum cho status
-- Constants class
-- Configuration properties
-
-**Ưu tiên:** 🟢 LOW
-
----
-
 ### 6.2. Frontend
 
 #### 6.2.1. **Component Reusability** (MEDIUM)
@@ -361,10 +306,7 @@ booking.setStatus("PENDING"); // Nên dùng enum hoặc constant
 ### 🟢 LOW (Nice to have)
 
 1. **Bundle Size** - Frontend
-2. **Service Layer Refactoring** - Backend
-3. **DTO Mapping** - Backend
-4. **Constants** - Backend
-5. **Code Documentation** - Documentation
+2. **Code Documentation** - Documentation
 
 ---
 

@@ -1,5 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { API_CONFIG } from '../config/api';
+import { STORAGE_KEYS } from '../config/constants';
+
 import { toast } from 'react-toastify';
 import { getSpecificErrorMessage } from '../utils/error-mapping';
 import { jwtDecode } from 'jwt-decode';
@@ -39,17 +41,17 @@ class ApiClient {
     private async refreshToken(): Promise<string | null> {
         try {
             // refreshToken is now in HttpOnly cookie, automatically sent by browser
-            
-             // Avoid infinite loops if we use this.instance
-             const response = await axios.post(`${API_CONFIG.BASE_URL}/api/v1/auth/refresh`, {}, {
-                 withCredentials: true
-             });
+
+            // Avoid infinite loops if we use this.instance
+            const response = await axios.post(`${API_CONFIG.BASE_URL}/api/v1/auth/refresh`, {}, {
+                withCredentials: true
+            });
 
             const { token } = response.data; // Response might still have refreshToken but we ignore it
 
-            localStorage.setItem('token', token);
+            localStorage.setItem(STORAGE_KEYS.TOKEN, token);
             // Do not save refreshToken to localStorage
-            
+
             return token;
         } catch (error) {
             return null;
@@ -71,7 +73,7 @@ class ApiClient {
         // Request Interceptor
         this.instance.interceptors.request.use(
             async (config) => {
-                let token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+                let token = typeof window !== 'undefined' ? localStorage.getItem(STORAGE_KEYS.TOKEN) : null;
 
                 if (token) {
                     // Check if token is expired or about to expire (e.g., within 10 seconds)
@@ -134,7 +136,7 @@ class ApiClient {
 
                         const { token } = response.data;
 
-                        localStorage.setItem('token', token);
+                        localStorage.setItem(STORAGE_KEYS.TOKEN, token);
                         // Do not save refreshToken
 
                         this.processQueue(null, token);
@@ -143,9 +145,9 @@ class ApiClient {
                         return this.instance(originalRequest);
                     } catch (refreshError) {
                         this.processQueue(refreshError, null);
-                        localStorage.removeItem('token');
-                        localStorage.removeItem('refreshToken'); // Just in case it was there
-                        localStorage.removeItem('user');
+                        localStorage.removeItem(STORAGE_KEYS.TOKEN);
+                        localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN); // Just in case it was there
+                        localStorage.removeItem(STORAGE_KEYS.USER);
                         window.location.href = '/auth/login';
                         // 401 fail to refresh -> Redirect to login, maybe toast here too?
                         toast.error('Phiên đăng nhập đã hết hạn.');
