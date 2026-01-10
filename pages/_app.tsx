@@ -3,8 +3,7 @@ import '../styles/attractions.css'
 import '../styles/loading-styles.css'
 import 'react-toastify/dist/ReactToastify.css';
 
-import { GlobalProvider } from '../global-context'
-import { AuthProvider } from '../contexts/AuthContext'
+// Providers removed
 import ErrorBoundary from '../components/ErrorBoundary'
 import { NextIntlClientProvider } from 'next-intl'
 import type { AppProps } from 'next/app'
@@ -27,27 +26,23 @@ export default function MyApp({ Component, pageProps }: AppProps<{ messages?: Re
   return (
     <NextIntlClientProvider locale="en" messages={pageProps?.messages || {}}>
       <QueryClientProvider client={queryClient}>
-        <GlobalProvider>
-          <ErrorBoundary>
-            <AuthProvider>
-              <Component {...pageProps} />
-              <DefaultSeo {...SEO} />
-              <ToastContainer
-                position="top-right"
-                autoClose={3000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-              />
-              <Footer />
-            </AuthProvider>
-          </ErrorBoundary>
-        </GlobalProvider>
+        <ErrorBoundary>
+          <Component {...pageProps} />
+          <DefaultSeo {...SEO} />
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
+          <Footer />
+        </ErrorBoundary>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </NextIntlClientProvider>

@@ -10,7 +10,7 @@ import Navigation from '../../components/navigation'
 import { RegisterStyles } from '../../components/auth/register-styles'
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner'
 import { apiClient } from '../../lib/api-client'
-import { useAuth } from '../../contexts/AuthContext'
+import { useAuth } from '../../hooks/use-auth'
 import { registerSchema, RegisterValues } from '../../lib/validations/auth-schemas'
 import { AuthResponse, RegisterRequest, GoogleAuthRequest } from '../../types/auth'
 

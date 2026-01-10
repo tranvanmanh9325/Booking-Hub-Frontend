@@ -9,10 +9,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Navigation from '../../components/navigation'
 import { LoginStyles } from '../../components/auth/login-styles'
 import { apiClient } from '../../lib/api-client'
-import { useAuth } from '../../contexts/AuthContext'
+import { useAuth } from '../../hooks/use-auth'
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner'
 import { loginSchema, LoginValues } from '../../lib/validations/auth-schemas';
 import { AuthResponse, LoginRequest, GoogleAuthRequest } from '../../types/auth';
+import { Button } from '../../components/ui/Button';
+import { Input } from '../../components/ui/Input';
+import { Card } from '../../components/ui/Card';
 
 const Login: React.FC = () => {
   const router = useRouter()
@@ -191,7 +194,7 @@ const Login: React.FC = () => {
             <div className="login-overlay"></div>
           </div>
           <div className="login-content-wrapper">
-            <div className="login-card">
+            <Card className="login-card-content">
               <div className="login-header">
                 <div className="login-icon-wrapper">
                   <svg
@@ -237,75 +240,62 @@ const Login: React.FC = () => {
               )}
 
               <form onSubmit={handleSubmit(onSubmit)} className="login-form">
-                <div className="login-form-group">
-                  <label htmlFor="email" className="login-label">
-                    Email
-                  </label>
-                  <div className="login-input-wrapper">
-                    <div className="login-input-icon">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                      >
-                        <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-                        <path d="m22 7l-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path>
-                      </svg>
-                    </div>
-                    <input
-                      type="email"
-                      id="email"
-                      className={`login-input ${errors.email ? 'login-input-error' : ''}`}
-                      placeholder="Nhập email của bạn"
-                      autoComplete="email"
-                      {...register('email')}
-                    />
-                  </div>
-                  {errors.email && (
-                    <span className="login-field-error">{errors.email.message}</span>
-                  )}
-                </div>
+                <Input
+                  label="Email"
+                  type="email"
+                  id="email"
+                  placeholder="Nhập email của bạn"
+                  autoComplete="email"
+                  error={errors.email?.message}
+                  {...register('email')}
+                  leftIcon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                    >
+                      <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                      <path d="m22 7l-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path>
+                    </svg>
+                  }
+                />
 
-                <div className="login-form-group">
-                  <label htmlFor="password" className="login-label">
-                    Mật khẩu
-                  </label>
-                  <div className="login-input-wrapper">
-                    <div className="login-input-icon">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                      >
-                        <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                      </svg>
-                    </div>
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      id="password"
-                      className={`login-input ${errors.password ? 'login-input-error' : ''}`}
-                      placeholder="Nhập mật khẩu của bạn"
-                      autoComplete="current-password"
-                      {...register('password')}
-                    />
+                <Input
+                  label="Mật khẩu"
+                  type={showPassword ? 'text' : 'password'}
+                  id="password"
+                  placeholder="Nhập mật khẩu của bạn"
+                  autoComplete="current-password"
+                  error={errors.password?.message}
+                  {...register('password')}
+                  leftIcon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                    >
+                      <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                  }
+                  rightElement={
                     <button
                       type="button"
-                      className="login-password-toggle"
                       onClick={() => setShowPassword(!showPassword)}
                       aria-label={showPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, display: 'flex' }}
                     >
                       {showPassword ? (
                         <svg
@@ -340,11 +330,8 @@ const Login: React.FC = () => {
                         </svg>
                       )}
                     </button>
-                  </div>
-                  {errors.password && (
-                    <span className="login-field-error">{errors.password.message}</span>
-                  )}
-                </div>
+                  }
+                />
 
                 <div className="login-form-options">
                   <label className="login-checkbox-wrapper">
@@ -360,20 +347,16 @@ const Login: React.FC = () => {
                   </a>
                 </div>
 
-                <button
+                <Button
                   type="submit"
-                  className="login-submit-btn"
-                  disabled={isLoading}
+                  size="lg"
+                  variant="primary"
+                  isLoading={isLoading}
+                  className="w-full mt-4"
+                  style={{ width: '100%', marginTop: '1rem' }}
                 >
-                  {isLoading ? (
-                    <>
-                      <LoadingSpinner size={20} />
-                      <span>Đang đăng nhập...</span>
-                    </>
-                  ) : (
-                    <span>Đăng Nhập</span>
-                  )}
-                </button>
+                  Đăng Nhập
+                </Button>
               </form>
 
               <div className="login-divider">
@@ -381,19 +364,16 @@ const Login: React.FC = () => {
               </div>
 
               <div className="login-social-buttons">
-                <button
+                <Button
                   type="button"
-                  className="login-social-btn login-social-google"
+                  variant="ghost"
                   onClick={handleGoogleSignIn}
                   disabled={isGoogleLoading || isLoading}
-                >
-                  {isGoogleLoading ? (
-                    <>
-                      <LoadingSpinner size={20} />
-                      <span>Đang xử lý...</span>
-                    </>
-                  ) : (
-                    <>
+                  isLoading={isGoogleLoading}
+                  className="login-social-btn"
+                  style={{ border: '1px solid var(--color-border)', justifyContent: 'flex-start', paddingLeft: '2rem' }}
+                  leftIcon={
+                    !isGoogleLoading && (
                       <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <g fill="none" fillRule="evenodd">
                           <path d="M20.66 12.693c0-.603-.054-1.182-.155-1.738H12v3.287h4.844a3.91 3.91 0 0 1-1.697 2.566v2.133h2.747c1.608-1.48 2.535-3.65 2.535-6.24z" fill="#4285F4" />
@@ -402,16 +382,25 @@ const Login: React.FC = () => {
                           <path d="M12 7.38c1.248 0 2.368.428 3.25 1.27l2.438-2.438C16.22 4.558 14.295 3.75 12 3.75a8.997 8.997 0 0 0-7.423 3.933l2.667 2.202C7.912 8.874 9.786 7.38 12 7.38z" fill="#EA4335" />
                         </g>
                       </svg>
-                      <span>Tiếp tục với Google</span>
-                    </>
-                  )}
-                </button>
-                <button type="button" className="login-social-btn login-social-facebook">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="#1877F2" />
-                  </svg>
-                  <span>Tiếp tục với Facebook</span>
-                </button>
+                    )
+                  }
+                >
+                  <span style={{ width: '100%', textAlign: 'center' }}>Tiếp tục với Google</span>
+                </Button>
+
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="login-social-btn"
+                  style={{ border: '1px solid var(--color-border)', justifyContent: 'flex-start', paddingLeft: '2rem' }}
+                  leftIcon={
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="#1877F2" />
+                    </svg>
+                  }
+                >
+                  <span style={{ width: '100%', textAlign: 'center' }}>Tiếp tục với Facebook</span>
+                </Button>
               </div>
 
               <div className="login-footer">
@@ -422,7 +411,7 @@ const Login: React.FC = () => {
                   </a>
                 </span>
               </div>
-            </div>
+            </Card>
           </div>
         </section>
       </div>

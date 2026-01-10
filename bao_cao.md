@@ -98,24 +98,7 @@
 
 ### 6.2. Frontend
 
-#### 6.2.1. **Component Reusability** (MEDIUM)
-
-**Vấn đề:**
-
-- Có thể có code duplicate
-- Components có thể reusable hơn
-
-**Đề xuất:**
-
-- Extract common components
-- Reusable form components
-- Reusable UI components
-
-**Ưu tiên:** 🟡 MEDIUM
-
----
-
-#### 6.2.2. **State Management** (MEDIUM)
+#### 6.2.2. **State Management** (DONE)
 
 **Vấn đề:**
 
@@ -124,10 +107,11 @@
 
 **Đề xuất:**
 
-- Zustand hoặc Redux nếu cần
-- Hoặc Context API đơn giản hơn
+- Đã migrate sang **Zustand** (`useLocaleStore`) cho global UI state
+- Refactor `AuthContext` sang **React Query Hooks** custom (`useAuth`)
+- Loại bỏ Context Providers khỏi `_app.tsx`
 
-**Ưu tiên:** 🟡 MEDIUM
+**TRẠNG THÁI:** ✅ COMPLETED
 
 ---
 
@@ -298,10 +282,9 @@
 
 1. **Error Response Format** - Backend (Còn cần cải thiện)
 
-2. **Component Reusability** - Frontend
-3. **State Management** - Frontend
-4. **Monitoring và Logging** - DevOps
-5. **API Documentation** - Documentation
+2. ~~**State Management** - Frontend~~ (Done)
+3. **Monitoring và Logging** - DevOps
+4. **API Documentation** - Documentation
 
 ### 🟢 LOW (Nice to have)
 

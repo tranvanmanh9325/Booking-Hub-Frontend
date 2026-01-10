@@ -1,5 +1,8 @@
 import React, { useEffect, useRef } from 'react'
 import Image from 'next/image'
+import { Button } from '../components/ui/Button'
+import { SectionHeader } from '../components/ui/SectionHeader'
+import { TestimonialCard } from '../components/home/TestimonialCard'
 
 const HomeSections: React.FC = () => {
   const testimonialRef = useRef<HTMLDivElement>(null)
@@ -52,261 +55,65 @@ const HomeSections: React.FC = () => {
 
   // Inline styles for the grab cursor behavior if not present in global css
   const styles = `
-   .testimonial-carousel {
-     cursor: grab;
-     overflow-x: auto;
-     scrollbar-width: none; /* Firefox */
-     -ms-overflow-style: none; /* IE 10+ */
-   }
-   .testimonial-carousel::-webkit-scrollbar { 
-     display: none; /* Chrome/Safari */
-   }
-   .testimonial-carousel.active {
-     cursor: grabbing;
-   }
- `
+    .testimonial-carousel {
+      cursor: grab;
+      overflow-x: auto;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE 10+ */
+      padding: var(--spacing-xl);
+      display: flex; /* Ensure container behaves as flex container for items */
+    }
+    .testimonial-carousel::-webkit-scrollbar { 
+      display: none; /* Chrome/Safari */
+    }
+    .testimonial-carousel.active {
+      cursor: grabbing;
+    }
+    .testimonial-track {
+      display: flex;
+      gap: var(--spacing-2xl);
+      min-width: max-content; /* Ensure track spans all items */
+    }
+  `
 
   return (
     <>
       <style>{styles}</style>
       <section className="testimonials-section">
-        <div className="section-header-full">
-          <h2 className="section-title">Khách Hàng Nói Gì?</h2>
-          <p className="section-content">
-            Sự tin tưởng của bạn là động lực để chúng tôi phát triển.
-          </p>
-        </div>
+        <SectionHeader
+          title="Khách Hàng Nói Gì?"
+          description="Sự tin tưởng của bạn là động lực để chúng tôi phát triển."
+        />
         <div id="testimonialCarousel" className="testimonial-carousel" ref={testimonialRef}>
           <div className="testimonial-track">
-            <div className="testimonial-card">
-              <div className="testimonial-rating">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="var(--color-accent)"
-                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                  ></path>
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="var(--color-accent)"
-                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                  ></path>
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="var(--color-accent)"
-                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                  ></path>
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="var(--color-accent)"
-                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                  ></path>
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="var(--color-accent)"
-                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                  ></path>
-                </svg>
-              </div>
-              <p className="testimonial-text">
-                &quot;Giao diện cực kỳ mượt mà. Tôi có thể đặt vé xem phim và
-                phòng khách sạn chỉ trong chưa đầy 5 phút. Rất chuyên
-                nghiệp!&quot;
-              </p>
-              <div className="testimonial-user">
-                <div className="user-avatar">
-                  <span>MH</span>
-                </div>
-                <div className="user-info">
-                  <span className="user-name">Minh Hoàng</span>
-                  <span className="user-role">Khách hàng thường xuyên</span>
-                </div>
-              </div>
-            </div>
-            <div className="testimonial-card">
-              <div className="testimonial-rating">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="var(--color-accent)"
-                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                  ></path>
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="var(--color-accent)"
-                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                  ></path>
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="var(--color-accent)"
-                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                  ></path>
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="var(--color-accent)"
-                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                  ></path>
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="var(--color-accent)"
-                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                  ></path>
-                </svg>
-              </div>
-              <p className="testimonial-text">
-                &quot;Hệ thống thanh toán rất an toàn. Tôi luôn yên tâm khi sử
-                dụng Booking Hub cho các chuyến công tác của mình.&quot;
-              </p>
-              <div className="testimonial-user">
-                <div className="user-avatar">
-                  <span>LA</span>
-                </div>
-                <div className="user-info">
-                  <span className="user-name">Lan Anh</span>
-                  <span className="user-role">Quản lý dự án</span>
-                </div>
-              </div>
-            </div>
-            <div className="testimonial-card">
-              <div className="testimonial-rating">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="var(--color-accent)"
-                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                  ></path>
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="var(--color-accent)"
-                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                  ></path>
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="var(--color-accent)"
-                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                  ></path>
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="var(--color-accent)"
-                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                  ></path>
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="var(--color-accent)"
-                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                  ></path>
-                </svg>
-              </div>
-              <p className="testimonial-text">
-                &quot;Ấm cúng và tiện lợi. Booking Hub thực sự hiểu người dùng
-                cần gì. Chắc chắn sẽ giới thiệu cho bạn bè!&quot;
-              </p>
-              <div className="testimonial-user">
-                <div className="user-avatar">
-                  <span>QT</span>
-                </div>
-                <div className="user-info">
-                  <span className="user-name">Quốc Trung</span>
-                  <span className="user-role">Travel Blogger</span>
-                </div>
-              </div>
-            </div>
+            <TestimonialCard
+              quote="Giao diện cực kỳ mượt mà. Tôi có thể đặt vé xem phim và phòng khách sạn chỉ trong chưa đầy 5 phút. Rất chuyên nghiệp!"
+              userName="Minh Hoàng"
+              userRole="Khách hàng thường xuyên"
+              userInitials="MH"
+            />
+            <TestimonialCard
+              quote="Hệ thống thanh toán rất an toàn. Tôi luôn yên tâm khi sử dụng Booking Hub cho các chuyến công tác của mình."
+              userName="Lan Anh"
+              userRole="Quản lý dự án"
+              userInitials="LA"
+            />
+            <TestimonialCard
+              quote="Ấm cúng và tiện lợi. Booking Hub thực sự hiểu người dùng cần gì. Chắc chắn sẽ giới thiệu cho bạn bè!"
+              userName="Quốc Trung"
+              userRole="Travel Blogger"
+              userInitials="QT"
+            />
           </div>
         </div>
       </section>
+
       <section className="gallery-section">
-        <div className="section-header-full">
-          <h2 className="section-title">Không Gian Của Chúng Tôi</h2>
-          <p className="section-content">
-            Khám phá những địa điểm tuyệt vời bạn có thể trải nghiệm cùng
-            Booking Hub.
-          </p>
-        </div>
-        <div className="gallery-masonry">
+        <SectionHeader
+          title="Không Gian Của Chúng Tôi"
+          description="Khám phá những địa điểm tuyệt vời bạn có thể trải nghiệm cùng Booking Hub."
+        />
+        <div className="home-gallery-grid">
           <div className="gallery-item">
             <Image
               src="https://images.pexels.com/photos/18426842/pexels-photo-18426842.jpeg?auto=compress&cs=tinysrgb&w=1500"
@@ -381,21 +188,19 @@ const HomeSections: React.FC = () => {
           </div>
         </div>
       </section>
+
       <section className="final-cta-section">
         <div className="cta-split-container">
           <div className="cta-content-column">
-            <h2 className="section-title">
-              Sẵn Sàng Cho Trải Nghiệm Tiếp Theo?
-            </h2>
-            <p className="section-content">
-              Tham gia cùng hơn 500,000 người dùng đã tin tưởng Booking Hub.
-              Đăng ký tài khoản ngay hôm nay để nhận những ưu đãi độc quyền.
-            </p>
+            <SectionHeader
+              title="Sẵn Sàng Cho Trải Nghiệm Tiếp Theo?"
+              description="Tham gia cùng hơn 500,000 người dùng đã tin tưởng Booking Hub. Đăng ký tài khoản ngay hôm nay để nhận những ưu đãi độc quyền."
+              align="left"
+              className="mb-8"
+            />
             <div className="cta-button-group">
-              <button className="btn btn-primary btn-xl">Đăng Ký Ngay</button>
-              <button className="btn btn-xl btn-outline">
-                Khám Phá Thêm
-              </button>
+              <Button size="xl" variant="primary">Đăng Ký Ngay</Button>
+              <Button size="xl" variant="outline">Khám Phá Thêm</Button>
             </div>
             <div className="cta-quick-links">
               <a href="#">
