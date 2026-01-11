@@ -9,7 +9,10 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    "analyze": "cross-env ANALYZE=true next build"
+    "analyze": "cross-env ANALYZE=true next build",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:e2e": "playwright test"
   },
   "author": "TeleportHQ",
   "license": "MIT",
@@ -36,6 +39,7 @@
   "devDependencies": {
     "@axe-core/react": "^4.11.0",
     "@next/bundle-analyzer": "^16.1.1",
+    "@playwright/test": "^1.57.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.1",

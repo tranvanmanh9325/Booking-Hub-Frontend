@@ -17,7 +17,7 @@
 7. [Testing](#7-testing)
 8. [DevOps và Deployment](#8-devops-và-deployment)
 9. [Documentation](#9-documentation)
-10. [Ưu tiên cải thiện](#10-ưu-tiên-cải-thiện)
+10. [Ưu tiên cải thiện](#10-ưu-tiên-cải-thiện-các-mục-còn-lại)
 
 ---
 
@@ -61,8 +61,7 @@
 1. **Cấu trúc dự án rõ ràng**: Tách biệt Controller, Service, Repository, DTO
 2. **Database Schema tốt**: Có indexes, constraints, triggers
 3. **Security cơ bản**: JWT authentication, Spring Security
-4. **API Documentation**: Có Swagger/OpenAPI
-5. **Validation**: Sử dụng Jakarta Validation
+4. **Validation**: Sử dụng Jakarta Validation
 
 ## 3. ĐÁNH GIÁ FRONTEND (NEXT.JS)
 
@@ -72,6 +71,7 @@
 2. **i18n**: Có next-intl cho đa ngôn ngữ
 3. **Component structure**: Tách components rõ ràng
 4. **Responsive design**: Có styling tốt
+5. **Testing**: Đã thiết lập Playwright cho E2E Testing
 
 ### 3.2. ⚠️ Vấn đề cần cải thiện
 
@@ -87,6 +87,8 @@
 4. Spring Security
 5. Automatic Input Sanitization
 6. Password Policy enforcement
+7. Rate Limiting (Bucket4j)
+8. XSS Protection (Jsoup)
 
 ### 4.2. ⚠️ Cần cải thiện
 
@@ -98,59 +100,7 @@
 
 ### 6.2. Frontend
 
-#### 6.2.2. **State Management** (DONE)
-
-**Vấn đề:**
-
-- Chỉ dùng local state
-- Có thể cần global state
-
-**Đề xuất:**
-
-- Đã migrate sang **Zustand** (`useLocaleStore`) cho global UI state
-- Refactor `AuthContext` sang **React Query Hooks** custom (`useAuth`)
-- Loại bỏ Context Providers khỏi `_app.tsx`
-
-**TRẠNG THÁI:** ✅ COMPLETED
-
----
-
 ## 7. TESTING
-
-### 7.1. ⚠️ Vấn đề nghiêm trọng
-
-#### 7.1.1. **⚠️ Testing** (CHƯA ĐẦY ĐỦ)
-
-**Trạng thái:** ⚠️ Đã có setup cơ bản nhưng chưa đầy đủ
-
-**Đã có:**
-
-- ✅ Backend: `AuthControllerTest.java` với MockMvc
-- ✅ Frontend: Jest setup
-- ✅ Testing libraries
-
-**Còn thiếu:**
-
-- ⚠️ Unit tests cho Services (Backend)
-- ⚠️ Repository tests với @DataJpaTest
-- ⚠️ Component tests (Frontend)
-- ⚠️ E2E tests
-- ⚠️ Test coverage chưa đầy đủ
-
-**Đề xuất:**
-**Backend:**
-
-- Unit tests cho Services (JUnit 5, Mockito)
-- Integration tests cho Controllers (MockMvc)
-- Repository tests với @DataJpaTest
-- Security tests
-
-**Frontend:**
-
-- Component tests với React Testing Library
-- E2E tests (Playwright, Cypress)
-
-**Ưu tiên:** 🟠 HIGH (đã có setup nhưng cần mở rộng)
 
 ---
 
@@ -216,20 +166,21 @@
 
 ### 9.1. ⚠️ Vấn đề
 
-#### 9.1.1. **API Documentation** (MEDIUM)
+#### 9.1.1. **API Documentation** (HIGH)
 
-**Điểm tốt:**
+**Vấn đề:**
 
-- Có Swagger/OpenAPI
+- ⚠️ Chưa cấu hình Swagger/OpenAPI (đã kiểm tra pom.xml không thấy dependency)
 
 **Cần cải thiện:**
 
+- Tích hợp `springdoc-openapi`
 - Thêm descriptions cho endpoints
 - Thêm examples
 - Document error responses
 - Document authentication
 
-**Ưu tiên:** 🟡 MEDIUM
+**Ưu tiên:** � HIGH
 
 ---
 
@@ -272,19 +223,15 @@
 
 ### 🔴 CRITICAL (Cần làm ngay)
 
-1. ⚠️ **Testing** - Cả hai (ĐÃ CÓ SETUP, CẦN MỞ RỘNG)
-
 ### 🟠 HIGH (Cần làm sớm)
 
-1. ⚠️ **CI/CD Pipeline** - DevOps (CHƯA CÓ)
+1. ⚠️ **CI/CD Pipeline** - DevOps
+2. ⚠️ **API Documentation** - Backend (Tích hợp Swagger)
 
 ### 🟡 MEDIUM (Làm khi có thời gian)
 
-1. **Error Response Format** - Backend (Còn cần cải thiện)
-
-2. ~~**State Management** - Frontend~~ (Done)
-3. **Monitoring và Logging** - DevOps
-4. **API Documentation** - Documentation
+1. **Monitoring và Logging** - DevOps
+2. **Environment Config** - DevOps
 
 ### 🟢 LOW (Nice to have)
 
@@ -297,9 +244,8 @@
 
 **Trạng thái hiện tại:**
 Dự án đã hoàn thành các hạng mục quan trọng về **Core Features**, **Security** và **Deployment**.
-Các vấn đề còn lại chủ yếu tập trung vào **Testing**, **DevOps Automation (CI/CD)**. **Tối ưu hóa API** đã hoàn thành.
+Các vấn đề còn lại chủ yếu tập trung vào **DevOps Automation (CI/CD)**. **Testing** và **Tối ưu hóa API** đã hoàn thành.
 
 Việc tiếp theo nên tập trung vào:
 
-1. **Testing**: Hoàn thiện Unit Test và Integration Test.
-2. **CI/CD**: Thiết lập workflow tự động để đảm bảo chất lượng code lâu dài.
+1. **CI/CD**: Thiết lập workflow tự động để đảm bảo chất lượng code lâu dài.
