@@ -1,16 +1,16 @@
 import React from 'react'
 
 interface CardProps {
-    children: React.ReactNode
-    className?: string
-    noPadding?: boolean
+  children: React.ReactNode
+  className?: string
+  noPadding?: boolean
 }
 
 export const Card: React.FC<CardProps> = ({ children, className = '', noPadding = false }) => {
-    return (
-        <div className={`card ${className}`}>
-            {children}
-            <style jsx>{`
+  return (
+    <div className={`card ${className}`}>
+      {children}
+      <style jsx>{`
         .card {
           background: var(--color-surface, #fff);
           border-radius: var(--border-radius-card, 12px);
@@ -20,6 +20,6 @@ export const Card: React.FC<CardProps> = ({ children, className = '', noPadding 
           padding: ${noPadding ? '0' : 'var(--spacing-xl, 1.5rem)'};
         }
       `}</style>
-        </div>
-    )
+    </div>
+  )
 }

@@ -2,6 +2,9 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../lib/api-client';
 import { useRouter } from 'next/router';
 
+/**
+ * Interface đại diện cho thông tin người dùng.
+ */
 export interface User {
     id: number;
     email: string;
@@ -12,6 +15,10 @@ export interface User {
 
 export const USER_QUERY_KEY = ['user', 'profile'];
 
+/**
+ * Hook để lấy thông tin người dùng hiện tại từ cache hoặc localStorage.
+ * Sử dụng React Query để quản lý state.
+ */
 export function useUser() {
     return useQuery({
         queryKey: USER_QUERY_KEY,
@@ -46,11 +53,22 @@ export function useUser() {
     });
 }
 
+/**
+ * Hook chính để quản lý xác thực (Authentication).
+ * Cung cấp user state, hàm login, logout và trạng thái loading.
+ */
 export const useAuth = () => {
     const { data: user, isLoading, refetch } = useUser();
     const queryClient = useQueryClient();
     const router = useRouter();
 
+    /**
+     * Hàm xử lý đăng nhập.
+     * Lưu token vào localStorage và cập nhật cache của React Query.
+     * @param token Access Token
+     * @param refreshToken Refresh Token
+     * @param newUser Thông tin user
+     */
     const login = async (token: string, refreshToken: string, newUser: User) => {
         localStorage.setItem('token', token);
         // localStorage.setItem('refreshToken', refreshToken); // HttpOnly cookie ideally
@@ -60,6 +78,10 @@ export const useAuth = () => {
         queryClient.setQueryData(USER_QUERY_KEY, newUser);
     };
 
+    /**
+     * Hàm xử lý đăng xuất.
+     * Gọi API logout, xóa localStorage và clear cache.
+     */
     const logout = async () => {
         try {
             await apiClient.post('/auth/logout');

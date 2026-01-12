@@ -1,0 +1,84 @@
+
+> sentimental-apprehensive-rail@1.0.0 build
+> next build
+
+ΓÜá `images.domains` is deprecated in favor of `images.remotePatterns`. Please update next.config.js to protect your application from malicious users.
+Γû▓ Next.js 16.1.1 (Turbopack)
+- Environments: .env.local, .env
+- Experiments (use with caution):
+  ┬╖ clientTraceMetadata
+
+ΓÜá The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Running TypeScript ...
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 4 errors:
+./node_modules/react-toastify/dist/ReactToastify.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use `tailwindcss` directly as a PostCSS plugin. The PostCSS plugin has moved to a separate package, so to continue using Tailwind CSS with PostCSS you'll need to install `@tailwindcss/postcss` and update your PostCSS configuration.
+    [at lt (D:\GitHub\Booking Hub\Booking-Hub-Frontend\node_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcss.ts:56:14 [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__6d51cb5d._.js:165:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/transforms/postcss.ts:43:33) [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__6d51cb5d._.js:155:35]
+    at run (turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__44695d76._.js:429:26]
+
+Import trace:
+  Browser:
+    ./node_modules/react-toastify/dist/ReactToastify.css
+    ./pages/_app.tsx
+
+
+./styles/attractions.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use `tailwindcss` directly as a PostCSS plugin. The PostCSS plugin has moved to a separate package, so to continue using Tailwind CSS with PostCSS you'll need to install `@tailwindcss/postcss` and update your PostCSS configuration.
+    [at lt (D:\GitHub\Booking Hub\Booking-Hub-Frontend\node_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcss.ts:56:14 [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__6d51cb5d._.js:165:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/transforms/postcss.ts:43:33) [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__6d51cb5d._.js:155:35]
+    at run (turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__44695d76._.js:429:26]
+
+Import trace:
+  Browser:
+    ./styles/attractions.css
+    ./pages/_app.tsx
+
+
+./styles/loading-styles.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use `tailwindcss` directly as a PostCSS plugin. The PostCSS plugin has moved to a separate package, so to continue using Tailwind CSS with PostCSS you'll need to install `@tailwindcss/postcss` and update your PostCSS configuration.
+    [at lt (D:\GitHub\Booking Hub\Booking-Hub-Frontend\node_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcss.ts:56:14 [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__6d51cb5d._.js:165:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/transforms/postcss.ts:43:33) [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__6d51cb5d._.js:155:35]
+    at run (turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__44695d76._.js:429:26]
+
+Import trace:
+  Browser:
+    ./styles/loading-styles.css
+    ./pages/_app.tsx
+
+
+./styles/style.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use `tailwindcss` directly as a PostCSS plugin. The PostCSS plugin has moved to a separate package, so to continue using Tailwind CSS with PostCSS you'll need to install `@tailwindcss/postcss` and update your PostCSS configuration.
+    [at lt (D:\GitHub\Booking Hub\Booking-Hub-Frontend\node_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcss.ts:56:14 [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__6d51cb5d._.js:165:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/transforms/postcss.ts:43:33) [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__6d51cb5d._.js:155:35]
+    at run (turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__44695d76._.js:429:26]
+
+Import trace:
+  Browser:
+    ./styles/style.css
+    ./pages/_app.tsx
+
+
+    at Module.init (turbopack:///[turbopack-node]/transforms/postcss.ts:43:33) [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__6d51cb5d._.js:155:35])
+    at run (turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__44695d76._.js:429:26])
+    at Module.init (turbopack:///[turbopack-node]/transforms/postcss.ts:43:33) [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__6d51cb5d._.js:155:35])
+    at run (turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__44695d76._.js:429:26])
+    at Module.init (turbopack:///[turbopack-node]/transforms/postcss.ts:43:33) [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__6d51cb5d._.js:155:35])
+    at run (turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__44695d76._.js:429:26])
+    at Module.init (turbopack:///[turbopack-node]/transforms/postcss.ts:43:33) [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__6d51cb5d._.js:155:35])
+    at run (turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) [D:\GitHub\Booking Hub\Booking-Hub-Frontend\.next\build\chunks\[root-of-the-server]__44695d76._.js:429:26])

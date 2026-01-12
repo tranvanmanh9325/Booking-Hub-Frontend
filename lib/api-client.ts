@@ -10,6 +10,10 @@ interface DecodedToken {
     exp: number;
 }
 
+/**
+ * ApiClient xử lý các request HTTP sử dụng Axios.
+ * Hỗ trợ tự động attach token, refresh token và xử lý lỗi global.
+ */
 class ApiClient {
     private instance: AxiosInstance;
     private isRefreshing = false;
@@ -170,18 +174,44 @@ class ApiClient {
         );
     }
 
+    /**
+     * Thực hiện GET request.
+     * @param url Endpoint URL
+     * @param config Axios config tùy chọn
+     * @returns Promise chứa data phản hồi
+     */
     public get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
         return this.instance.get<T>(url, config).then(res => res.data);
     }
 
+    /**
+     * Thực hiện POST request.
+     * @param url Endpoint URL
+     * @param data Dữ liệu gửi đi
+     * @param config Axios config tùy chọn
+     * @returns Promise chứa data phản hồi
+     */
     public post<T, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig): Promise<T> {
         return this.instance.post<T>(url, data, config).then(res => res.data);
     }
 
+    /**
+     * Thực hiện PUT request.
+     * @param url Endpoint URL
+     * @param data Dữ liệu cập nhật
+     * @param config Axios config tùy chọn
+     * @returns Promise chứa data phản hồi
+     */
     public put<T, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig): Promise<T> {
         return this.instance.put<T>(url, data, config).then(res => res.data);
     }
 
+    /**
+     * Thực hiện DELETE request.
+     * @param url Endpoint URL
+     * @param config Axios config tùy chọn
+     * @returns Promise chứa data phản hồi
+     */
     public delete<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
         return this.instance.delete<T>(url, config).then(res => res.data);
     }

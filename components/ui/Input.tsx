@@ -1,44 +1,44 @@
 import React from 'react'
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-    label?: string
-    error?: string
-    leftIcon?: React.ReactNode
-    rightElement?: React.ReactNode
+  label?: string
+  error?: string
+  leftIcon?: React.ReactNode
+  rightElement?: React.ReactNode
 }
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-    ({ label, error, leftIcon, rightElement, className = '', id, ...props }, ref) => {
-        const inputId = id || props.name || Math.random().toString(36).substr(2, 9)
+  ({ label, error, leftIcon, rightElement, className = '', id, ...props }, ref) => {
+    const inputId = id || props.name || Math.random().toString(36).substr(2, 9)
 
-        return (
-            <div className="input-group">
-                {label && (
-                    <label htmlFor={inputId} className="input-label">
-                        {label}
-                    </label>
-                )}
-                <div className="input-wrapper">
-                    {leftIcon && (
-                        <div className="input-icon-left">
-                            {leftIcon}
-                        </div>
-                    )}
-                    <input
-                        ref={ref}
-                        id={inputId}
-                        className={`input-field ${error ? 'input-error' : ''} ${leftIcon ? 'pl-10' : ''} ${rightElement ? 'pr-10' : ''} ${className}`}
-                        {...props}
-                    />
-                    {rightElement && (
-                        <div className="input-element-right">
-                            {rightElement}
-                        </div>
-                    )}
-                </div>
-                {error && <span className="input-error-message">{error}</span>}
+    return (
+      <div className="input-group">
+        {label && (
+          <label htmlFor={inputId} className="input-label">
+            {label}
+          </label>
+        )}
+        <div className="input-wrapper">
+          {leftIcon && (
+            <div className="input-icon-left">
+              {leftIcon}
+            </div>
+          )}
+          <input
+            ref={ref}
+            id={inputId}
+            className={`input-field ${error ? 'input-error' : ''} ${leftIcon ? 'pl-10' : ''} ${rightElement ? 'pr-10' : ''} ${className}`}
+            {...props}
+          />
+          {rightElement && (
+            <div className="input-element-right">
+              {rightElement}
+            </div>
+          )}
+        </div>
+        {error && <span className="input-error-message">{error}</span>}
 
-                <style jsx>{`
+        <style jsx>{`
           .input-group {
             display: flex;
             flex-direction: column;
@@ -98,9 +98,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           .pl-10 { padding-left: 2.5rem; }
           .pr-10 { padding-right: 2.5rem; }
         `}</style>
-            </div>
-        )
-    }
+      </div>
+    )
+  }
 )
 
 Input.displayName = 'Input'

@@ -7,6 +7,7 @@ Dự án **High-Concurrency-Booking** là một nền tảng du lịch tổng h�
 ### 🎯 Trạng Thái Hiện Tại
 
 **✅ Đã Hoàn Thành (MVP):**
+
 - Hệ thống xác thực người dùng (JWT)
 - Đặt vé xem phim (tìm kiếm, lịch chiếu, chọn ghế, booking)
 - Đặt phòng khách sạn (tìm kiếm, xem phòng, booking)
@@ -15,6 +16,7 @@ Dự án **High-Concurrency-Booking** là một nền tảng du lịch tổng h�
 - Frontend hoàn chỉnh với UI/UX hiện đại
 
 **🔄 Đang Phát Triển:**
+
 - Restaurant booking service (UI đã có, backend chưa)
 - Amusement park booking service (UI đã có, backend chưa)
 - Reviews & ratings UI (Model đã có)
@@ -23,6 +25,7 @@ Dự án **High-Concurrency-Booking** là một nền tảng du lịch tổng h�
 - Pagination cho list endpoints
 
 **✅ Đã Cải Thiện (So với báo cáo ban đầu):**
+
 - ✅ Global Exception Handler với ErrorResponse format thống nhất
 - ✅ Custom Exception Classes (9 classes)
 - ✅ Input Validation & Sanitization (XSS protection)
@@ -37,6 +40,7 @@ Dự án **High-Concurrency-Booking** là một nền tảng du lịch tổng h�
 - ✅ Partnership request feature
 
 **📝 Kế Hoạch:**
+
 - Combo & packages
 - Recommendation engine
 - Mobile apps
@@ -67,13 +71,20 @@ CREATE DATABASE booking_db;
 
 #### 2. Cấu hình Backend
 
-Cập nhật thông tin database trong `Booking-Hub-Backend/src/main/resources/application.properties`:
+Cập nhật thông tin database trong `Booking-Hub-Backend/src/main/resources/application.properties` hoặc tốt hơn là sử dụng biến môi trường.
 
-```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/booking_db
-spring.datasource.username=postgres
-spring.datasource.password=your_password
-```
+Dự án cung cấp file `.env.example`. Bạn có thể copy thành `.env` (nếu chạy với Docker Compose hoặc setup env local) hoặc set biến môi trường trực tiếp.
+
+Các biến môi trường quan trọng:
+
+| Biến | Mô tả | Mặc định/Ví dụ |
+|------|-------|----------------|
+| `DB_PASSWORD` | Mật khẩu PostgreSQL | `your_password` |
+| `JWT_SECRET` | Secret key để ký JWT | `your_secure_secret` |
+| `REDIS_PASSWORD` | Mật khẩu Redis (nếu có) | Để trống |
+| `MAIL_USERNAME` | Gmail username để gửi mail | `email@gmail.com` |
+| `MAIL_PASSWORD` | Gmail App Password (không phải pass đăng nhập) | `xxxx xxxx xxxx xxxx` |
+| `PARTNERSHIP_RECIPIENT_EMAIL` | Email nhận yêu cầu đối tác | `admin@example.com` |
 
 #### 3. Chạy Backend
 
@@ -90,6 +101,14 @@ Backend sẽ chạy tại: `http://localhost:8080`
 - API Docs: `http://localhost:8080/api-docs`
 
 #### 4. Chạy Frontend
+
+Trước khi chạy, hãy copy `.env.example` thành `.env.local` và cập nhật các giá trị cần thiết:
+
+```bash
+cp .env.example .env.local
+```
+
+Cài đặt dependencies và chạy:
 
 ```bash
 cd Booking-Hub-Frontend
@@ -205,8 +224,9 @@ Booking Hub/
 ### 2. Công Nghệ Đề Xuất
 
 #### Backend
+
 - **Framework**: Spring Boot 4.0.1 ✅
-- **Database**: 
+- **Database**:
   - PostgreSQL (Primary) ✅
   - Redis (Cache, Session) ✅
 - **API Documentation**: Swagger/OpenAPI 3.0 ✅
@@ -217,6 +237,7 @@ Booking Hub/
 - **Monitoring**: Prometheus, Grafana (planned)
 
 #### Frontend
+
 - **Web**: Next.js 16 với TypeScript ✅
 - **State Management**: React Context API ✅
 - **UI Framework**: Tailwind CSS ✅
@@ -224,6 +245,7 @@ Booking Hub/
 - **Mobile**: React Native / Flutter (planned)
 
 #### DevOps & Infrastructure
+
 - **Containerization**: ✅ Docker, Docker Compose (đã có)
 - **Orchestration**: Kubernetes (cho production - kế hoạch)
 - **CI/CD**: Jenkins / GitLab CI / GitHub Actions (kế hoạch)
@@ -234,7 +256,8 @@ Booking Hub/
 
 ### 1. Đặt Vé Xem Phim (Movie Booking) ✅
 
-#### Tính năng đã triển khai:
+#### Tính năng đã triển khai
+
 - ✅ **Tìm kiếm phim**: Theo tên phim
 - ✅ **Lọc phim**: Theo thể loại (genre), phim đang chiếu
 - ✅ **Xem lịch chiếu**: Lịch chiếu theo phim
@@ -242,13 +265,15 @@ Booking Hub/
 - ✅ **Đặt vé**: Tạo booking với ghế đã chọn
 - ✅ **Quản lý booking**: Xem lịch sử, hủy booking
 
-#### Tính năng kế hoạch:
+#### Tính năng kế hoạch
+
 - 📝 **Giữ chỗ tạm thời**: Giữ ghế trong 5-10 phút khi đang thanh toán (Redis distributed lock)
 - 📝 **Sơ đồ ghế trực quan**: UI hiển thị sơ đồ rạp
 - 📝 **Combo**: Vé + bắp nước, vé + đồ ăn
 - 📝 **Đánh giá phim**: Rating và review sau khi xem
 
-#### Database Schema (✅ Đã triển khai):
+#### Database Schema (✅ Đã triển khai)
+
 ```sql
 - movies (id, title, description, genre, duration, rating, poster_url, trailer_url, release_date, created_at, updated_at)
 - cinemas (id, name, address, city, facilities, created_at, updated_at)
@@ -261,21 +286,24 @@ Booking Hub/
 
 ### 2. Đặt Phòng Khách Sạn (Hotel Booking) ✅
 
-#### Tính năng đã triển khai:
+#### Tính năng đã triển khai
+
 - ✅ **Tìm kiếm khách sạn**: Theo tên, theo thành phố
 - ✅ **Lọc phòng**: Theo ngày check-in/out, số khách
 - ✅ **Xem danh sách phòng**: Thông tin phòng, giá, tiện ích
 - ✅ **Đặt phòng**: Tạo booking với thông tin check-in/out
 - ✅ **Quản lý booking**: Xem lịch sử, hủy booking
 
-#### Tính năng kế hoạch:
+#### Tính năng kế hoạch
+
 - 📝 **Lọc nâng cao**: Giá, sao, tiện ích (wifi, pool, gym, spa...)
 - 📝 **Xem phòng trực quan**: 360° view, ảnh phòng, bản đồ
 - 📝 **Chính sách hủy**: Free cancellation, non-refundable
 - 📝 **Đánh giá**: Rating, review, ảnh từ khách hàng (model đã có)
 - 📝 **Combo**: Phòng + bữa sáng, phòng + tour
 
-#### Database Schema (✅ Đã triển khai):
+#### Database Schema (✅ Đã triển khai)
+
 ```sql
 - hotels (id, name, address, city, star_rating, description, facilities, phone_number, email, created_at, updated_at)
 - rooms (id, hotel_id, room_type, max_guests, price_per_night, amenities, created_at, updated_at)
@@ -286,7 +314,8 @@ Booking Hub/
 
 ### 3. Đặt Vé Khu Vui Chơi (Amusement Park Booking)
 
-#### Tính năng chính:
+#### Tính năng chính
+
 - **Danh sách khu vui chơi**: Theme park, water park, adventure park
 - **Loại vé**: 1 ngày, nhiều ngày, vé gia đình, vé nhóm
 - **Fast Pass**: Vé ưu tiên không xếp hàng
@@ -294,7 +323,8 @@ Booking Hub/
 - **Lịch hoạt động**: Show, parade, event đặc biệt
 - **Bản đồ khu vui chơi**: Tương tác, tìm đường
 
-#### Database Schema:
+#### Database Schema
+
 ```sql
 - amusement_parks (id, name, address, city, description, opening_hours)
 - park_tickets (id, park_id, ticket_type, price, validity_days, includes)
@@ -304,7 +334,8 @@ Booking Hub/
 
 ### 4. Đặt Bàn Nhà Hàng (Restaurant Booking)
 
-#### Tính năng chính:
+#### Tính năng chính
+
 - **Tìm kiếm nhà hàng**: Theo món ăn, địa điểm, giá, rating
 - **Đặt bàn**: Chọn ngày, giờ, số người
 - **Menu trực tuyến**: Xem menu, giá, ảnh món
@@ -312,7 +343,8 @@ Booking Hub/
 - **Đánh giá**: Rating món ăn, dịch vụ
 - **Combo**: Bàn + set menu, bàn + đồ uống
 
-#### Database Schema:
+#### Database Schema
+
 ```sql
 - restaurants (id, name, address, city, cuisine_type, price_range, rating, opening_hours)
 - restaurant_tables (id, restaurant_id, table_number, capacity, location_type)
@@ -324,6 +356,7 @@ Booking Hub/
 ### 5. Tính Năng Chung
 
 #### User Management
+
 - ✅ **Đăng ký/Đăng nhập**: Email, password (JWT authentication)
 - 📝 **Hồ sơ người dùng**: Thông tin cá nhân, sở thích (kế hoạch)
 - ✅ **Lịch sử đặt chỗ**: Xem tất cả booking đã thực hiện (movies & hotels)
@@ -332,6 +365,7 @@ Booking Hub/
 - 📝 **Thông báo**: Email, SMS, Push notification (kế hoạch)
 
 #### Booking Management
+
 - ✅ **Thanh toán**: Payment service với nhiều phương thức (Visa, Mastercard, MoMo, ZaloPay, VNPay)
 - ✅ **Hủy booking**: Hủy đặt chỗ cho movies & hotels
 - ✅ **Xem booking**: Chi tiết booking, lịch sử booking
@@ -340,6 +374,7 @@ Booking Hub/
 - 📝 **Hoàn tiền**: Tự động hoàn tiền khi hủy (kế hoạch)
 
 #### Search & Discovery
+
 - ✅ **Tìm kiếm cơ bản**: Tìm kiếm phim và khách sạn theo tên
 - 📝 **Tìm kiếm thông minh**: Full-text search với Elasticsearch (kế hoạch)
 - 📝 **Gợi ý**: AI/ML gợi ý dựa trên lịch sử (kế hoạch)
@@ -347,12 +382,14 @@ Booking Hub/
 - 📝 **Sắp xếp**: Theo giá, rating, phổ biến, mới nhất (kế hoạch)
 
 #### Combo & Packages
+
 - 📝 **Gói du lịch**: Khách sạn + vé máy bay + tour (kế hoạch)
 - 📝 **Combo tiết kiệm**: Giảm giá khi mua nhiều dịch vụ (kế hoạch)
 - 📝 **Flash sale**: Khuyến mãi giới hạn thời gian (kế hoạch)
 - 📝 **Loyalty program**: Tích điểm, đổi quà (kế hoạch)
 
 #### Reviews & Ratings
+
 - 📝 **Đánh giá**: Rating 1-5 sao (model HotelReview đã có, chưa có UI)
 - 📝 **Review**: Viết review chi tiết, đăng ảnh (kế hoạch)
 - 📝 **Xác thực**: Chỉ khách đã sử dụng mới được review (kế hoạch)
@@ -361,12 +398,14 @@ Booking Hub/
 ## 🔒 Xử Lý High Concurrency
 
 ### 1. Database Level
+
 - **Connection Pooling**: HikariCP với cấu hình tối ưu
 - **Read Replicas**: Tách read/write operations
 - **Database Sharding**: Chia dữ liệu theo địa lý hoặc loại dịch vụ
 - **Indexing**: Tối ưu indexes cho các query thường dùng
 
 ### 2. Caching Strategy
+
 - **Redis Cache**:
   - Cache danh sách phim, khách sạn, nhà hàng (TTL: 1-5 phút)
   - Cache thông tin booking đang xử lý
@@ -374,12 +413,14 @@ Booking Hub/
   - Distributed locks cho việc giữ chỗ
 
 ### 3. Distributed Locking
-- **Redis Distributed Lock**: 
+
+- **Redis Distributed Lock**:
   - Giữ ghế xem phim (5-10 phút)
   - Giữ phòng khách sạn (15-30 phút)
   - Tránh double booking
 
 ### 4. Message Queue
+
 - **Event-Driven Architecture**:
   - Booking events → Payment processing
   - Payment success → Notification service
@@ -387,18 +428,21 @@ Booking Hub/
   - Analytics events → Data warehouse
 
 ### 5. Rate Limiting
-- **API Rate Limiting**: 
+
+- **API Rate Limiting**:
   - User level: 100 requests/minute
   - IP level: 1000 requests/minute
   - Sử dụng Redis + Token Bucket algorithm
 
 ### 6. Load Balancing
-- **Horizontal Scaling**: 
+
+- **Horizontal Scaling**:
   - Multiple instances của mỗi service
   - Load balancer phân phối request
   - Health checks và auto-scaling
 
 ### 7. Database Transactions
+
 - **Optimistic Locking**: Version field trong database
 - **Pessimistic Locking**: SELECT FOR UPDATE cho critical operations
 - **Saga Pattern**: Quản lý distributed transactions
@@ -596,6 +640,7 @@ notifications (
 ### API Examples
 
 #### Register User
+
 ```bash
 POST /api/auth/register
 Content-Type: application/json
@@ -609,6 +654,7 @@ Content-Type: application/json
 ```
 
 #### Login
+
 ```bash
 POST /api/auth/login
 Content-Type: application/json
@@ -620,6 +666,7 @@ Content-Type: application/json
 ```
 
 #### Response
+
 ```json
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
@@ -633,6 +680,7 @@ Content-Type: application/json
 ## 🚀 Roadmap Phát Triển
 
 ### Phase 1: MVP (Minimum Viable Product) - ✅ Hoàn thành
+
 - [x] User authentication & authorization ✅
 - [x] JWT token-based authentication với refresh token ✅
 - [x] Google OAuth authentication ✅
@@ -654,6 +702,7 @@ Content-Type: application/json
 - [x] Partnership request feature ✅
 
 ### Phase 2: Core Features - 🔄 Đang phát triển
+
 - [ ] Restaurant booking service (UI đã có, backend chưa)
 - [ ] Amusement park booking service (UI đã có, backend chưa)
 - [ ] Advanced search & filtering
@@ -666,6 +715,7 @@ Content-Type: application/json
 - [ ] Pagination cho list endpoints
 
 ### Phase 3: Advanced Features - 📝 Kế hoạch
+
 - [ ] Combo & packages
 - [ ] Recommendation engine
 - [ ] Loyalty program
@@ -676,6 +726,7 @@ Content-Type: application/json
 - [ ] Payment gateway integration (VNPay, MoMo)
 
 ### Phase 4: Scale & Optimize - 📝 Kế hoạch
+
 - [ ] Performance optimization
 - [ ] Load testing & scaling
 - [ ] Advanced caching strategies (Redis implementation)
@@ -687,11 +738,13 @@ Content-Type: application/json
 ## 🧪 Testing Strategy
 
 **Trạng thái hiện tại:**
+
 - ✅ Backend: Đã có `AuthControllerTest` với MockMvc
 - ✅ Frontend: Jest setup với React Testing Library
 - ⚠️ Cần mở rộng test coverage
 
 **Kế hoạch:**
+
 - **Unit Tests**: JUnit 5, Mockito cho business logic (Backend)
 - **Integration Tests**: Spring Boot Test, TestContainers (Backend)
 - **Component Tests**: React Testing Library (Frontend)
@@ -712,6 +765,7 @@ Content-Type: application/json
 ## 🛠️ Tính Năng Đã Triển Khai
 
 ### Backend ✅
+
 - [x] Spring Boot 4.0.1 với Java 21
 - [x] PostgreSQL database integration
 - [x] Redis caching configuration (được sử dụng cho rate limiting)
@@ -744,6 +798,7 @@ Content-Type: application/json
 - [x] **7 Controllers**: AuthController, MovieController, HotelController, CinemaController, PaymentController, PartnershipController, HealthController
 
 ### Frontend ✅
+
 - [x] Next.js 16 với TypeScript
 - [x] Tailwind CSS styling
 - [x] **Authentication context** (React Context API) với useAuth hook
@@ -756,7 +811,7 @@ Content-Type: application/json
 - [x] Home page với UI hiện đại và animations
 - [x] Token management (localStorage) với refresh token support
 - [x] Responsive design
-- [x] **Movies Pages**: 
+- [x] **Movies Pages**:
   - Movies list với search
   - Movie detail page
   - Movie booking page với seat selection
@@ -783,6 +838,7 @@ Content-Type: application/json
 ## 📝 Lưu Ý Khi Phát Triển
 
 ### Backend
+
 - JWT secret key trong `application.properties` cần được thay đổi trong production (sử dụng environment variables)
 - Database migrations được quản lý bởi Flyway (không còn auto-create)
 - Redis được sử dụng cho rate limiting (bắt buộc cho auth endpoints)
@@ -794,7 +850,15 @@ Content-Type: application/json
   - `PARTNERSHIP_RECIPIENT_EMAIL`: Email nhận partnership requests
 
 ### Frontend
-- API URL được cấu hình trong `.env.local` (mặc định: `http://localhost:8080`)
+
+- Sử dụng file `.env.local` để cấu hình biến môi trường (không commit file này).
+- Tham khảo `.env.example` để biết các biến cần thiết.
+
+| Biến | Mô tả | Mặc định/Ví dụ |
+|------|-------|----------------|
+| `NEXT_PUBLIC_API_URL` | Địa chỉ Backend API | `http://localhost:8080` |
+| `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | Client ID cho Google Login | `your_client_id` |
+
 - Token và refresh token được lưu trong localStorage
 - API client tự động thêm token và refresh khi cần
 - Cần đảm bảo backend đang chạy trước khi test frontend
@@ -803,16 +867,19 @@ Content-Type: application/json
 ## 🐛 Troubleshooting
 
 ### Backend không kết nối được database
+
 - Kiểm tra PostgreSQL đã chạy chưa
 - Kiểm tra username/password trong `application.properties`
 - Kiểm tra database `booking_db` đã được tạo chưa
 
 ### Frontend không kết nối được API
+
 - Kiểm tra backend đã chạy tại port 8080 chưa
 - Kiểm tra `NEXT_PUBLIC_API_URL` trong `.env.local`
 - Kiểm tra CORS configuration trong backend
 
 ### Redis connection error
+
 - Redis bắt buộc cho rate limiting (auth endpoints)
 - Kiểm tra Redis đã chạy chưa
 - Kiểm tra port 6379 có bị chiếm không

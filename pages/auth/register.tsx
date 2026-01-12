@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import Navigation from '../../components/navigation'
-import { RegisterStyles } from '../../components/auth/register-styles'
+import { RegisterStyles } from '@/components/auth/register-styles'
 import { LoadingSpinner } from '../../components/ui/LoadingSpinner'
 import { apiClient } from '../../lib/api-client'
 import { useAuth } from '../../hooks/use-auth'

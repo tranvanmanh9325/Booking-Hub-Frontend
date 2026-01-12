@@ -3,6 +3,9 @@ import { apiClient } from '../lib/api-client';
 import { MOVIE_RATING } from '../config/constants';
 
 
+/**
+ * Interface định nghĩa thông tin phim.
+ */
 export interface Movie {
     id: number;
     title: string;
@@ -31,6 +34,10 @@ const MOCK_MOVIES: Movie[] = [
     }
 ];
 
+/**
+ * Hook để lấy danh sách phim.
+ * @returns React Query result chứa danh sách phim
+ */
 export function useMovies() {
     return useQuery({
         queryKey: ['movies', 'list'],

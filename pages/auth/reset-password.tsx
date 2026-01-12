@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import Navigation from '../../components/navigation'
-import { ForgotPasswordStyles } from '../../components/auth/forgot-password-styles' // Reuse styles
+import { ForgotPasswordStyles } from '@/components/auth/forgot-password-styles' // Reuse styles
 import { apiClient } from '../../lib/api-client'
 
 const ResetPassword: React.FC = () => {

@@ -1,0 +1,2 @@
+pages/auth/forgot-password.tsx(52,30): error TS1160: Unterminated template literal.
+pages/auth/reset-password.tsx(355,37): error TS1005: '}' expected.

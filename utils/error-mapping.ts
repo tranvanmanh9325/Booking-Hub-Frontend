@@ -1,3 +1,9 @@
+/**
+ * Lấy thông báo lỗi dựa trên HTTP status code.
+ * @param status HTTP status code (e.g. 404, 500)
+ * @param code Mã lỗi chi tiết (nếu có)
+ * @returns Chuỗi thông báo lỗi thân thiện với người dùng
+ */
 export const getErrorMessage = (status: number | undefined, code?: string): string => {
     if (!status) {
         return 'Không thể kết nối đến máy chủ. Vui lòng kiểm tra kết nối mạng của bạn.';
@@ -29,6 +35,12 @@ export const getErrorMessage = (status: number | undefined, code?: string): stri
     }
 };
 
+/**
+ * Trích xuất thông báo lỗi cụ thể từ response error object.
+ * Ưu tiên message từ backend trả về.
+ * @param error Error object từ Axios hoặc bất kỳ nguồn nào
+ * @returns Chuỗi thông báo lỗi
+ */
 export const getSpecificErrorMessage = (error: any): string => {
     if (typeof error === 'string') return error;
 

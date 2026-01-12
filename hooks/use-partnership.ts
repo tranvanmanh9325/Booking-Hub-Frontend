@@ -3,6 +3,10 @@ import { apiClient } from '../lib/api-client';
 import { PartnershipRequest, PartnershipResponse } from '../types/partnership';
 import { toast } from 'react-toastify';
 
+/**
+ * Hook để gửi yêu cầu hợp tác (Partnership).
+ * Sử dụng `useMutation` để gọi API.
+ */
 export function useSubmitPartnership() {
     return useMutation({
         mutationFn: (data: PartnershipRequest) => {
