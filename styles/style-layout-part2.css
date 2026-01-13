@@ -149,7 +149,7 @@
 
 .info-label {
   display: block;
-  opacity: 0.6;
+  opacity: 0.9;
   font-size: var(--font-size-xs);
   margin-bottom: var(--spacing-xs);
 }
@@ -203,8 +203,16 @@
   width: 10px;
   cursor: pointer;
   height: 10px;
-  background: var(--color-border);
+  background: var(--color-on-surface-secondary);
   border-radius: 50%;
+  border: none;
+  padding: 0;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+}
+
+.dot:hover {
+  opacity: 1;
 }
 
 .hotels-testimonial-rating {
@@ -336,7 +344,7 @@
   font-size: var(--font-size-lg);
 }
 
-.input-with-icon  input {
+.input-with-icon input {
   color: var(--color-on-surface);
   width: 100%;
   border: none;
@@ -345,7 +353,7 @@
   font-family: var(--font-family-body);
 }
 
-.input-with-icon  input:focus {
+.input-with-icon input:focus {
   outline: none;
 }
 
@@ -363,7 +371,7 @@
   transform: translateY(-10px);
 }
 
-.card-image-wrapper  img {
+.card-image-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -374,18 +382,18 @@
   border-color: var(--color-primary);
 }
 
-.landmarks  li {
+.landmarks li {
   display: flex;
   padding: var(--spacing-sm) 0;
   border-bottom: 1px dashed var(--color-border);
   justify-content: space-between;
 }
 
-.summary-content  svg {
+.summary-content svg {
   color: var(--color-primary);
 }
 
-.checkbox-container  input {
+.checkbox-container input {
   width: 0;
   cursor: pointer;
   height: 0;
@@ -393,16 +401,16 @@
   position: absolute;
 }
 
-.checkbox-container:hover input ~ .checkmark {
+.checkbox-container:hover input~.checkmark {
   background-color: var(--color-outline);
 }
 
-.checkbox-container  input:checked ~ .checkmark {
+.checkbox-container input:checked~.checkmark {
   border-color: var(--color-primary);
   background-color: var(--color-primary);
 }
 
-.checkbox-container  input:checked ~ .checkmark:after {
+.checkbox-container input:checked~.checkmark:after {
   display: block;
 }
 
@@ -419,11 +427,11 @@
   border-width: 0 2px 2px 0;
 }
 
-.policy-list  li {
+.policy-list li {
   margin-bottom: var(--spacing-sm);
 }
 
-.bento-cell  img {
+.bento-cell img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -440,7 +448,7 @@
   border-radius: 10px;
 }
 
-.pricing-table  th {
+.pricing-table th {
   padding: var(--spacing-xl);
   background: var(--color-surface-elevated);
   text-align: center;
@@ -448,13 +456,13 @@
   border-bottom: 2px solid var(--color-border);
 }
 
-.pricing-table  td {
+.pricing-table td {
   padding: var(--spacing-xl);
   text-align: center;
   border-bottom: 1px solid var(--color-border);
 }
 
-.pricing-table  tfoot td {
+.pricing-table tfoot td {
   padding: var(--spacing-2xl) var(--spacing-xl);
   border-bottom: none;
 }

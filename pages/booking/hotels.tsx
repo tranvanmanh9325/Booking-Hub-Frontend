@@ -199,7 +199,12 @@ details[open] .chevron {
               Lựa chọn hàng đầu dựa trên đánh giá của người dùng
             </p>
           </div>
-          <div className="card-rail-container">
+          <div
+            className="card-rail-container"
+            tabIndex={0}
+            role="region"
+            aria-label="Danh sách khách sạn nổi bật"
+          >
             <div className="card-rail">
               <div className="hotel-card">
                 <div className="card-image-wrapper">

@@ -4,16 +4,16 @@
   align-items: center;
   justify-content: center;
 }
- 
+
 .legend-item {
   gap: var(--spacing-sm);
   display: flex;
   font-size: var(--font-size-sm);
   align-items: center;
 }
- 
 
- 
+
+
 .badge {
   color: var(--color-primary);
   padding: 4px var(--spacing-sm);
@@ -21,7 +21,7 @@
   background: var(--color-outline);
   border-radius: var(--border-radius-sm);
 }
- 
+
 .method-icon {
   border: 1px solid var(--color-border);
   padding: var(--spacing-sm) var(--spacing-md);
@@ -29,41 +29,41 @@
   font-weight: var(--font-weight-medium);
   border-radius: var(--border-radius-md);
 }
- 
+
 .movie-tickets-user-name {
   color: var(--color-primary);
   font-weight: var(--font-weight-medium);
 }
- 
+
 .user-status {
   color: var(--color-on-surface-secondary);
   font-size: var(--font-size-xs);
 }
- 
+
 .showtime-tags {
   gap: var(--spacing-sm);
   display: flex;
   margin-top: var(--spacing-sm);
 }
- 
+
 .checkbox-wrapper {
   gap: var(--spacing-sm);
   cursor: pointer;
   display: flex;
   align-items: center;
 }
- 
+
 .seat-label {
-  color: var(--color-neutral);
+  color: var(--color-on-surface-secondary);
   width: 20px;
   font-size: var(--font-size-sm);
 }
- 
+
 .seats {
   gap: var(--spacing-sm);
   display: flex;
 }
- 
+
 .seat {
   width: 32px;
   cursor: pointer;
@@ -71,7 +71,7 @@
   transition: all 0.2s ease;
   border-radius: 6px;
 }
- 
+
 .tag {
   color: var(--color-primary);
   padding: 2px var(--spacing-sm);
@@ -80,12 +80,12 @@
   font-weight: var(--font-weight-medium);
   border-radius: var(--border-radius-sm);
 }
- 
+
 .seat-gap {
   width: 32px;
 }
- 
-.search-input-wrapper  input {
+
+.search-input-wrapper input {
   color: var(--color-on-surface);
   width: 100%;
   border: none;
@@ -93,65 +93,70 @@
   background: transparent;
   font-family: var(--font-family-body);
 }
- 
-.search-input-wrapper  input:focus {
+
+.search-input-wrapper input:focus {
   outline: none;
 }
- 
-.search-input-wrapper  svg {
+
+.search-input-wrapper svg {
   color: var(--color-on-surface-secondary);
 }
- 
+
 .showtime-card:hover {
   transform: translateY(-4px);
 }
- 
-.filter-group  label {
+
+.filter-group label {
   display: block;
   font-weight: var(--font-weight-medium);
   margin-bottom: var(--spacing-sm);
 }
- 
+
 .seat.available {
   background: var(--color-on-surface-secondary);
 }
- 
+
 .seat.selected {
   background: var(--color-primary);
   box-shadow: 0 0 10px var(--color-primary);
 }
- 
+
 .seat.occupied {
   cursor: not-allowed;
   background: #333;
 }
- 
+
 .seat.vip {
   border: 2px solid var(--color-accent);
 }
- 
+
 .seat.vip.available {
   background: color-mix(in srgb, var(--color-accent) 20%, transparent);
 }
- 
-.legend-item  .seat {
+
+.legend-item .seat {
   width: 16px;
   cursor: default;
   height: 16px;
 }
- 
-.promo-form  input {
+
+.promo-form input {
   flex: 1;
   border: 1px solid var(--color-border);
   padding: var(--spacing-sm);
   border-radius: var(--border-radius-control);
 }
- 
+
 .play-button:hover {
   transform: translate(-50%, -50%) scale(1.1);
 }
- 
-.faq-item  summary {
+
+.faq-container .section-title {
+  text-align: center;
+  margin-bottom: var(--spacing-3xl);
+}
+
+.faq-item .faq-summary {
   cursor: pointer;
   display: flex;
   padding: var(--spacing-lg);
@@ -159,33 +164,63 @@
   align-items: center;
   font-weight: var(--font-weight-medium);
   justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  color: inherit;
 }
- 
-.faq-item  summary::after {
+
+.faq-item .faq-summary::after {
   content: "+";
   font-size: var(--font-size-xl);
   transition: transform 0.3s ease;
 }
- 
-.faq-item[open] summary::after {
+
+.faq-item.open .faq-summary::after {
   content: "-";
   transform: rotate(180deg);
 }
- 
-.contact-cta  .section-subtitle {
+
+.faq-content-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease-out;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.faq-item.open .faq-content-wrapper {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  opacity: 1;
+  transition: grid-template-rows 0.3s ease-out, opacity 0.3s ease-out, visibility 0s 0s;
+}
+
+.faq-content {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.faq-content p {
+  padding: 0 var(--spacing-lg) var(--spacing-lg) var(--spacing-lg);
+  margin: 0;
+}
+
+.contact-cta .section-subtitle {
   color: var(--color-on-primary);
 }
- 
-.contact-cta  .section-content {
+
+.contact-cta .section-content {
   color: var(--color-on-primary);
 }
- 
-.contact-buttons  .btn-outline {
+
+.contact-buttons .btn-outline {
   color: var(--color-on-primary);
   background: transparent;
   border-color: var(--color-on-primary);
 }
- 
+
 .hotels-hero-section {
   display: flex;
   padding: var(--spacing-4xl) 0;
@@ -195,7 +230,7 @@
   align-items: center;
   justify-content: center;
 }
- 
+
 .hotels-hero-content-wrapper {
   color: var(--color-surface);
   width: 100%;
@@ -205,14 +240,14 @@
   max-width: var(--content-max-width);
   text-align: center;
 }
- 
+
 .hotels-hero-text-block {
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: var(--spacing-3xl);
 }
- 
+
 .hotels-hero-search-container {
   color: var(--color-on-surface);
   margin: 0 auto;
@@ -222,21 +257,21 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   border-radius: var(--border-radius-xl);
 }
- 
+
 .hotels-hero-title {
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   margin-bottom: var(--spacing-lg);
 }
- 
+
 .hotels-hero-subtitle {
   opacity: 0.9;
   font-size: var(--font-size-xl);
 }
- 
+
 .hotels-hero-search-form {
   margin-bottom: var(--spacing-xl);
 }
- 
+
 .hotels-hero-quick-filters {
   gap: var(--spacing-md);
   display: flex;
@@ -245,18 +280,18 @@
   align-items: center;
   padding-top: var(--spacing-lg);
 }
- 
+
 .hotels-search-input-group {
   gap: var(--spacing-md);
   display: flex;
   align-items: center;
 }
- 
+
 .hotels-filter-label {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
 }
- 
+
 .hotels-filter-chip {
   border: 1px solid var(--color-border);
   cursor: pointer;
@@ -266,14 +301,14 @@
   transition: all 0.2s;
   border-radius: var(--border-radius-full);
 }
- 
+
 .availability-indicator {
   gap: var(--spacing-sm);
   display: flex;
   align-items: center;
   margin-left: auto;
 }
- 
+
 .input-with-icon {
   gap: var(--spacing-sm);
   flex: 1;
@@ -284,7 +319,7 @@
   align-items: center;
   border-radius: var(--border-radius-md);
 }
- 
+
 .pulse-dot {
   width: 8px;
   height: 8px;
@@ -292,30 +327,30 @@
   background: #2ecc71;
   border-radius: 50%;
 }
- 
+
 .indicator-text {
   color: var(--color-on-surface-secondary);
   font-size: var(--font-size-xs);
 }
- 
+
 .showcase-header {
   padding: 0 var(--spacing-xl);
   text-align: center;
   margin-bottom: var(--spacing-3xl);
 }
- 
+
 .card-rail-container {
   padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-3xl);
   overflow-x: auto;
   scrollbar-width: none;
 }
- 
+
 .card-rail {
   gap: var(--spacing-xl);
   width: max-content;
   display: flex;
 }
- 
+
 .hotel-card {
   width: 350px;
   overflow: hidden;
@@ -324,12 +359,12 @@
   transition: transform 0.3s ease;
   border-radius: var(--border-radius-card);
 }
- 
+
 .card-image-wrapper {
   height: 220px;
   position: relative;
 }
- 
+
 .hotels-card-badge {
   top: var(--spacing-md);
   left: var(--spacing-md);
@@ -341,29 +376,29 @@
   font-weight: var(--font-weight-medium);
   border-radius: var(--border-radius-sm);
 }
- 
+
 .card-meta {
   margin-bottom: var(--spacing-sm);
 }
- 
+
 .card-title {
   font-size: var(--font-size-lg);
   font-family: var(--font-family-heading);
   margin-bottom: var(--spacing-xs);
 }
- 
+
 .card-location {
   color: var(--color-on-surface-secondary);
   font-size: var(--font-size-sm);
   margin-bottom: var(--spacing-md);
 }
- 
+
 .card-amenities {
   gap: var(--spacing-sm);
   display: flex;
   margin-bottom: var(--spacing-xl);
 }
- 
+
 .hotels-card-footer {
   display: flex;
   border-top: 1px solid var(--color-border);
@@ -371,7 +406,7 @@
   padding-top: var(--spacing-lg);
   justify-content: space-between;
 }
- 
+
 .card-rating {
   gap: var(--spacing-xs);
   color: #ffb800;
@@ -380,65 +415,65 @@
   align-items: center;
   font-weight: var(--font-weight-medium);
 }
- 
+
 .amenity-item {
   padding: 2px 8px;
   font-size: var(--font-size-xs);
   background: var(--color-surface-elevated);
   border-radius: var(--border-radius-full);
 }
- 
 
- 
+
+
 .card-actions {
   gap: var(--spacing-xs);
   display: flex;
 }
- 
+
 .price-amount {
   color: var(--color-primary);
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-heading);
 }
- 
+
 .price-unit {
   color: var(--color-on-surface-secondary);
   font-size: var(--font-size-xs);
 }
- 
+
 .location-section {
   padding: var(--spacing-4xl) 0;
   background: var(--color-surface);
 }
- 
+
 .location-split-container {
   display: flex;
   max-width: 100%;
 }
- 
+
 .location-info-panel {
   flex: 1;
   padding: var(--spacing-4xl) var(--spacing-xl);
   background: var(--color-surface-elevated);
 }
- 
+
 .location-map-panel {
   flex: 1;
   position: relative;
   min-height: 600px;
 }
- 
+
 .neighborhood-selector {
   gap: var(--spacing-md);
   margin: var(--spacing-3xl) 0;
   display: flex;
   flex-direction: column;
 }
- 
+
 .landmark-list {
   margin-top: var(--spacing-3xl);
 }
- 
+
 .map-placeholder {
   top: 0;
   left: 0;
@@ -447,7 +482,7 @@
   position: absolute;
   background: #e0e0e0;
 }
- 
+
 .neighborhood-item {
   border: 1px solid var(--color-border);
   cursor: pointer;
@@ -456,42 +491,42 @@
   transition: all 0.3s ease;
   border-radius: var(--border-radius-lg);
 }
- 
+
 .landmark-title {
   margin-bottom: var(--spacing-md);
 }
- 
+
 .landmarks {
   padding: 0;
   list-style: none;
 }
- 
+
 .map-img {
   width: 100%;
   filter: grayscale(0.2);
   height: 100%;
   object-fit: cover;
 }
- 
+
 .map-marker {
   cursor: pointer;
   position: absolute;
   transform: translate(-50%, -100%);
 }
- 
 
- 
+
+
 .neighborhood-header {
   display: flex;
   margin-bottom: var(--spacing-xs);
   justify-content: space-between;
 }
- 
+
 .neighborhood-description {
   color: var(--color-on-surface-secondary);
   font-size: var(--font-size-sm);
 }
- 
+
 .marker-pulse {
   width: 20px;
   border: 3px solid white;
@@ -501,7 +536,7 @@
   box-shadow: 0 0 0 rgba(0, 119, 204, 0.4);
   border-radius: 50%;
 }
- 
+
 .marker-label {
   top: -30px;
   left: 50%;
@@ -514,13 +549,13 @@
   white-space: nowrap;
   border-radius: 4px;
 }
- 
 
- 
+
+
 .neighborhood-name {
   font-weight: var(--font-weight-heading);
 }
- 
+
 .neighborhood-count {
   color: var(--color-primary);
   font-size: var(--font-size-xs);

@@ -70,7 +70,12 @@ const HotelsSections: React.FC = () => {
             Hơn 10,000 khách hàng đã tin tưởng Booking Hub
           </p>
         </div>
-        <div className="hotels-carousel-container">
+        <div
+          className="hotels-carousel-container"
+          tabIndex={0}
+          role="region"
+          aria-label="Khách hàng nói gì carousel"
+        >
           <div className="hotels-carousel-track">
             <div className="hotels-testimonial-card">
               <div className="hotels-testimonial-rating">
@@ -263,9 +268,21 @@ const HotelsSections: React.FC = () => {
             </div>
           </div>
           <div className="carousel-dots">
-            <span className="dot active"></span>
-            <span className="dot"></span>
-            <span className="dot"></span>
+            <button
+              className="dot active"
+              aria-label="Go to testimonial 1"
+              type="button"
+            ></button>
+            <button
+              className="dot"
+              aria-label="Go to testimonial 2"
+              type="button"
+            ></button>
+            <button
+              className="dot"
+              aria-label="Go to testimonial 3"
+              type="button"
+            ></button>
           </div>
         </div>
       </section>

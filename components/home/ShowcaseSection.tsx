@@ -81,6 +81,9 @@ const ShowcaseSection: React.FC = () => {
                     id="showcaseCarousel"
                     className="carousel-container"
                     ref={scrollContainerRef}
+                    tabIndex={0}
+                    role="region"
+                    aria-label="Khám phá xu hướng carousel"
                 >
                     <div className="carousel-track">
                         <div className="showcase-card">

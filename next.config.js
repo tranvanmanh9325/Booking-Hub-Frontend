@@ -8,7 +8,7 @@ const { withSentryConfig } = require("@sentry/nextjs");
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['images.pexels.com', 'api.iconify.design', 'res.cloudinary.com'],
+
     remotePatterns: [
       {
         protocol: 'https',
@@ -31,7 +31,8 @@ const nextConfig = {
   i18n: {
     locales: ['en'],
     defaultLocale: "en",
-  }
+  },
+
 }
 
 module.exports = withSentryConfig(

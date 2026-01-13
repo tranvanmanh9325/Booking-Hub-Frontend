@@ -136,7 +136,7 @@ const Attractions: React.FC = () => {
             <h2 className="section-title">Hoạt Động Phổ Biến</h2>
             <p className="section-content">Những trải nghiệm được yêu thích nhất bởi cộng đồng Booking Hub.</p>
           </div>
-          <div className="carousel-container">
+          <div className="carousel-container" tabIndex={0} role="region" aria-label="Hoạt động phổ biến carousel">
             <div className="carousel-track">
               <div className="showcase-card">
                 <img src="https://images.pexels.com/photos/13333183/pexels-photo-13333183.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" alt="Công viên Hồ Tây" className="card-img" />

@@ -5,12 +5,10 @@ class CustomDocument extends Document {
     return (
       <Html data-scroll-behavior="smooth" lang="vi">
         <Head>
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-          ></meta>
+
           <meta charSet="utf-8"></meta>
           <meta property="twitter:card" content="summary_large_image"></meta>
+          <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
           <style
             dangerouslySetInnerHTML={{
               __html:

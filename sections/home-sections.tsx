@@ -84,7 +84,14 @@ const HomeSections: React.FC = () => {
           title="Khách Hàng Nói Gì?"
           description="Sự tin tưởng của bạn là động lực để chúng tôi phát triển."
         />
-        <div id="testimonialCarousel" className="testimonial-carousel" ref={testimonialRef}>
+        <div
+          id="testimonialCarousel"
+          className="testimonial-carousel"
+          ref={testimonialRef}
+          tabIndex={0}
+          role="region"
+          aria-label="Khách hàng nói gì carousel"
+        >
           <div className="testimonial-track">
             <TestimonialCard
               quote="Giao diện cực kỳ mượt mà. Tôi có thể đặt vé xem phim và phòng khách sạn chỉ trong chưa đầy 5 phút. Rất chuyên nghiệp!"

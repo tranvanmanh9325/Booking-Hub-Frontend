@@ -2,9 +2,38 @@ import React from 'react'
 import Image from 'next/image'
 
 const MovieTicketsSections = () => {
+  const [openIndex, setOpenIndex] = React.useState<number | null>(null)
+
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index)
+  }
+
+  const faqs = [
+    {
+      question: 'Làm thế nào để tôi nhận được vé sau khi thanh toán?',
+      answer:
+        'Sau khi thanh toán thành công, vé điện tử (QR Code) sẽ được gửi trực tiếp vào email của bạn và hiển thị trong mục "Vé của tôi" trên ứng dụng Booking Hub.',
+    },
+    {
+      question: 'Tôi có thể hủy vé và hoàn tiền không?',
+      answer:
+        'Chính sách hủy vé tùy thuộc vào quy định của từng rạp chiếu phim. Thông thường, bạn có thể hủy vé trước giờ chiếu ít nhất 2 tiếng để được hoàn tiền vào ví Booking Hub.',
+    },
+    {
+      question: 'Booking Hub có hỗ trợ đặt vé cho nhóm lớn không?',
+      answer:
+        'Có, bạn có thể đặt tối đa 10 vé trong một giao dịch. Đối với nhu cầu đặt vé số lượng lớn hơn cho sự kiện, vui lòng liên hệ hotline hỗ trợ của chúng tôi.',
+    },
+    {
+      question: 'Thanh toán trên Booking Hub có an toàn không?',
+      answer:
+        'Tuyệt đối an toàn. Chúng tôi sử dụng các tiêu chuẩn bảo mật cao nhất như PCI DSS và mã hóa JWT để bảo vệ thông tin cá nhân và tài chính của bạn.',
+    },
+  ]
+
   return (
     <>
-      <section className="about-grid">
+      <section className="movie-about-section">
         <div className="about-container">
           <div className="about-header">
             <h2 className="section-title">Tại Sao Chọn Booking Hub?</h2>
@@ -314,112 +343,26 @@ const MovieTicketsSections = () => {
         <div className="faq-container">
           <h2 className="section-title">Câu Hỏi Thường Gặp</h2>
           <div className="accordion-wrapper">
-            <details className="faq-item">
-              <summary className="faq-summary">
-                <span>
-                  Làm thế nào để tôi nhận được vé sau khi thanh toán?
-                </span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="chevron"
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className={`faq-item ${openIndex === index ? 'open' : ''}`}
+              >
+                <button
+                  className="faq-summary"
+                  onClick={() => toggleFAQ(index)}
+                  type="button"
+                  aria-expanded={openIndex === index}
                 >
-                  <path d="m6 9 6 6 6-6"></path>
-                </svg>
-              </summary>
-              <div className="faq-content">
-                <p>
-                  Sau khi thanh toán thành công, vé điện tử (QR Code) sẽ được
-                  gửi trực tiếp vào email của bạn và hiển thị trong mục
-                  &quot;Vé của tôi&quot; trên ứng dụng Booking Hub.
-                </p>
+                  <span>{faq.question}</span>
+                </button>
+                <div className="faq-content-wrapper">
+                  <div className="faq-content">
+                    <p>{faq.answer}</p>
+                  </div>
+                </div>
               </div>
-            </details>
-            <details className="faq-item">
-              <summary className="faq-summary">
-                <span>Tôi có thể hủy vé và hoàn tiền không?</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="chevron"
-                >
-                  <path d="m6 9 6 6 6-6"></path>
-                </svg>
-              </summary>
-              <div className="faq-content">
-                <p>
-                  Chính sách hủy vé tùy thuộc vào quy định của từng rạp chiếu
-                  phim. Thông thường, bạn có thể hủy vé trước giờ chiếu ít
-                  nhất 2 tiếng để được hoàn tiền vào ví Booking Hub.
-                </p>
-              </div>
-            </details>
-            <details className="faq-item">
-              <summary className="faq-summary">
-                <span>Booking Hub có hỗ trợ đặt vé cho nhóm lớn không?</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="chevron"
-                >
-                  <path d="m6 9 6 6 6-6"></path>
-                </svg>
-              </summary>
-              <div className="faq-content">
-                <p>
-                  Có, bạn có thể đặt tối đa 10 vé trong một giao dịch. Đối với
-                  nhu cầu đặt vé số lượng lớn hơn cho sự kiện, vui lòng liên
-                  hệ hotline hỗ trợ của chúng tôi.
-                </p>
-              </div>
-            </details>
-            <details className="faq-item">
-              <summary className="faq-summary">
-                <span>Thanh toán trên Booking Hub có an toàn không?</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="chevron"
-                >
-                  <path d="m6 9 6 6 6-6"></path>
-                </svg>
-              </summary>
-              <div className="faq-content">
-                <p>
-                  Tuyệt đối an toàn. Chúng tôi sử dụng các tiêu chuẩn bảo mật
-                  cao nhất như PCI DSS và mã hóa JWT để bảo vệ thông tin cá
-                  nhân và tài chính của bạn.
-                </p>
-              </div>
-            </details>
+            ))}
           </div>
         </div>
       </section>

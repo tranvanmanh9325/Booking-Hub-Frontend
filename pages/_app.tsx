@@ -2,6 +2,7 @@ import '../styles/style.css'
 import '../styles/attractions.css'
 import '../styles/loading-styles.css'
 import 'react-toastify/dist/ReactToastify.css';
+import Head from 'next/head'
 
 // Providers removed
 import ErrorBoundary from '../components/ErrorBoundary'
@@ -20,13 +21,16 @@ import { useEffect } from 'react'
 
 export default function MyApp({ Component, pageProps }: AppProps<{ messages?: Record<string, any> }>) {
   useEffect(() => {
-    initAxe()
+    // initAxe() // Uncomment to enable accessibility testing
   }, [])
 
   return (
     <NextIntlClientProvider locale="en" messages={pageProps?.messages || {}}>
       <QueryClientProvider client={queryClient}>
         <ErrorBoundary>
+          <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          </Head>
           <Component {...pageProps} />
           <DefaultSeo {...SEO} />
           <ToastContainer

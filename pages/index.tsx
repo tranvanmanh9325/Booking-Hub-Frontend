@@ -110,49 +110,49 @@ section {
                       Nhà Hàng
                     </button>
                   </div>
-                  <form
-                    action="/search"
-                    method="GET"
-                    data-form-id="d7b4f0f9-f90e-48e9-82f5-a79329de5b6e"
-                    className="search-form"
-                    id="search-panel"
-                    role="tabpanel"
-                  >
-                    <div className="search-input-group">
-                      <div className="search-field">
-                        <label htmlFor="thq_textinput_n_V8" className="visually-hidden">Tìm kiếm</label>
-                        <input
-                          type="text"
-                          placeholder={searchPlaceholder}
-                          required={true}
-                          id="thq_textinput_n_V8"
-                          name="textinput"
-                          data-form-field-id="thq_textinput_n_V8"
-                          aria-label={searchPlaceholder}
-                        />
+                  <div id="search-panel" role="tabpanel">
+                    <form
+                      action="/search"
+                      method="GET"
+                      data-form-id="d7b4f0f9-f90e-48e9-82f5-a79329de5b6e"
+                      className="search-form"
+                    >
+                      <div className="search-input-group">
+                        <div className="search-field">
+                          <label htmlFor="thq_textinput_n_V8" className="visually-hidden">Tìm kiếm</label>
+                          <input
+                            type="text"
+                            placeholder={searchPlaceholder}
+                            required={true}
+                            id="thq_textinput_n_V8"
+                            name="textinput"
+                            data-form-field-id="thq_textinput_n_V8"
+                            aria-label={searchPlaceholder}
+                          />
+                        </div>
+                        <div className="search-field">
+                          <label htmlFor="thq_textinput_WVzY" className="visually-hidden">Ngày</label>
+                          <input
+                            type="date"
+                            required={true}
+                            id="thq_textinput_WVzY"
+                            name="textinput"
+                            data-form-field-id="thq_textinput_WVzY"
+                            aria-label="Chọn ngày"
+                          />
+                        </div>
+                        <button
+                          type="submit"
+                          id="thq_button_8H9E"
+                          name="button"
+                          data-form-field-id="thq_button_8H9E"
+                          className="btn btn-accent btn-lg"
+                        >
+                          Tìm Kiếm
+                        </button>
                       </div>
-                      <div className="search-field">
-                        <label htmlFor="thq_textinput_WVzY" className="visually-hidden">Ngày</label>
-                        <input
-                          type="date"
-                          required={true}
-                          id="thq_textinput_WVzY"
-                          name="textinput"
-                          data-form-field-id="thq_textinput_WVzY"
-                          aria-label="Chọn ngày"
-                        />
-                      </div>
-                      <button
-                        type="submit"
-                        id="thq_button_8H9E"
-                        name="button"
-                        data-form-field-id="thq_button_8H9E"
-                        className="btn btn-accent btn-lg"
-                      >
-                        Tìm Kiếm
-                      </button>
-                    </div>
-                  </form>
+                    </form>
+                  </div>
                   <div className="hero-quick-filters">
                     <span className="filter-label">Gợi ý:</span>
                     <button className="filter-chip">Phim hành động</button>
