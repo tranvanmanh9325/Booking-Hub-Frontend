@@ -10,6 +10,7 @@ export interface User {
 export interface LoginRequest {
     email: string;
     password: string;
+    rememberMe?: boolean;
 }
 
 export interface RegisterRequest {
@@ -35,4 +36,5 @@ export interface AuthResponse {
     fullName: string;
     avatarUrl?: string;
     type?: string;
+    role?: string;
 }

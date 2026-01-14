@@ -2,16 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '../lib/api-client';
 import { useRouter } from 'next/router';
 
-/**
- * Interface đại diện cho thông tin người dùng.
- */
-export interface User {
-    id: number;
-    email: string;
-    fullName: string;
-    avatarUrl?: string;
-    role?: string;
-}
+import { User } from '../types/auth';
 
 export const USER_QUERY_KEY = ['user', 'profile'];
 
@@ -84,7 +75,7 @@ export const useAuth = () => {
      */
     const logout = async () => {
         try {
-            await apiClient.post('/auth/logout');
+            await apiClient.post('/api/auth/logout');
         } catch (error) {
             console.error("Logout failed", error);
         }
@@ -98,11 +89,30 @@ export const useAuth = () => {
         router.push('/auth/login');
     };
 
+    /**
+     * Hàm cập nhật thông tin profile.
+     * @param data Dữ liệu cần cập nhật
+     */
+    const updateProfile = async (data: Partial<User>) => {
+        const response = await apiClient.put<User>('/api/users/profile', data);
+
+        // Update local storage
+        const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+        const updatedUser = { ...currentUser, ...response };
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+
+        // Update React Query cache
+        queryClient.setQueryData(USER_QUERY_KEY, updatedUser);
+
+        return updatedUser;
+    };
+
     return {
         user: user || null,
         loading: isLoading,
         login,
         logout,
+        updateProfile,
         isAuthenticated: !!user
     };
 };

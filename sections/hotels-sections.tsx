@@ -481,8 +481,8 @@ const HotelsSections: React.FC = () => {
                 height={32}
               />
               <Image
-                src="https://api.iconify.design/logos:momo.svg"
-                alt="Momo"
+                src="https://api.iconify.design/logos:google-pay.svg"
+                alt="Google Pay"
                 width={32}
                 height={32}
               />

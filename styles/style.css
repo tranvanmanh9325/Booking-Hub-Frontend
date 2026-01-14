@@ -1,5 +1,6 @@
 /* Import additional style modules */
 @import url("./style-navigation-footer.css");
+@import url("./navigation.css");
 @import url("./style-components.css");
 @import url("./style-layout.css");
 @import url("./style-layout-part2.css");

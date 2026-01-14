@@ -104,7 +104,7 @@ const MovieTickets = (props: any) => {
             <h2 className="movie-tickets-thq-section-title-elm1 section-title">
               Lịch Chiếu &amp; Chỗ Ngồi
             </h2>
-            <div className="tabs-header">
+            <div className="movie-tabs-header">
               <button data-target="tab-now" className="tab-trigger active">
                 Đang Chiếu
               </button>

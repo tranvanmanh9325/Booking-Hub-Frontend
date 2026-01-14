@@ -3,6 +3,8 @@ import '../styles/attractions.css'
 import '../styles/loading-styles.css'
 import 'react-toastify/dist/ReactToastify.css';
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { AuthGuard } from '../components/auth/AuthGuard'
 
 // Providers removed
 import ErrorBoundary from '../components/ErrorBoundary'
@@ -20,6 +22,9 @@ import { queryClient } from '../lib/react-query'
 import { useEffect } from 'react'
 
 export default function MyApp({ Component, pageProps }: AppProps<{ messages?: Record<string, any> }>) {
+  const router = useRouter()
+  const isAdminPage = router.pathname.startsWith('/admin')
+
   useEffect(() => {
     // initAxe() // Uncomment to enable accessibility testing
   }, [])
@@ -31,7 +36,12 @@ export default function MyApp({ Component, pageProps }: AppProps<{ messages?: Re
           <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           </Head>
-          <Component {...pageProps} />
+          <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          </Head>
+          <AuthGuard>
+            <Component {...pageProps} />
+          </AuthGuard>
           <DefaultSeo {...SEO} />
           <ToastContainer
             position="top-right"
@@ -45,7 +55,7 @@ export default function MyApp({ Component, pageProps }: AppProps<{ messages?: Re
             pauseOnHover
             theme="light"
           />
-          <Footer />
+          {!isAdminPage && <Footer />}
         </ErrorBoundary>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

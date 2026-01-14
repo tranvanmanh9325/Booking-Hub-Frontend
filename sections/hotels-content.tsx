@@ -71,7 +71,7 @@ const HotelsContent: React.FC = () => {
                         }}
                       />
                     </span>
-                    <input type="checkbox" checked={true} />
+                    <input type="checkbox" defaultChecked={true} />
                     <span className="hotels-thq-checkmark-elm1"></span>
                   </label>
                   <label className="checkbox-container">
@@ -84,7 +84,7 @@ const HotelsContent: React.FC = () => {
                         }}
                       />
                     </span>
-                    <input type="checkbox" checked={true} />
+                    <input type="checkbox" defaultChecked={true} />
                     <span className="hotels-thq-checkmark-elm2"></span>
                   </label>
                   <label className="checkbox-container">
@@ -110,7 +110,7 @@ const HotelsContent: React.FC = () => {
                         }}
                       />
                     </span>
-                    <input type="checkbox" checked={true} />
+                    <input type="checkbox" defaultChecked={true} />
                     <span className="hotels-thq-checkmark-elm4"></span>
                   </label>
                   <label className="checkbox-container">
@@ -123,7 +123,7 @@ const HotelsContent: React.FC = () => {
                         }}
                       />
                     </span>
-                    <input type="checkbox" checked={true} />
+                    <input type="checkbox" defaultChecked={true} />
                     <span className="hotels-thq-checkmark-elm5"></span>
                   </label>
                   <label className="checkbox-container">

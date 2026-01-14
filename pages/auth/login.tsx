@@ -53,12 +53,17 @@ const Login: React.FC = () => {
           id: response.id ?? response.userId ?? 0,
           email: response.email,
           fullName: response.fullName,
-          avatarUrl: response.avatarUrl
+          avatarUrl: response.avatarUrl,
+          role: response.role
         })
       }
 
-      // Redirect to home page
-      router.push('/')
+      // Redirect based on role
+      if (response.role === 'ADMIN' || response.role === 'PARTNER') {
+        router.push('/admin/dashboard')
+      } else {
+        router.push('/')
+      }
     } catch (error: any) {
       console.error('Login error:', error)
       const errorMessage = error.response?.data?.message || error.message || 'Có lỗi xảy ra. Vui lòng thử lại sau.';
@@ -155,12 +160,17 @@ const Login: React.FC = () => {
           id: data.id ?? data.userId ?? 0,
           email: data.email,
           fullName: data.fullName,
-          avatarUrl: data.avatarUrl
+          avatarUrl: data.avatarUrl || userInfo.picture, // Fallback to Google picture if backend doesn't return it
+          role: data.role
         })
       }
 
-      // Redirect to home page
-      router.push('/')
+      // Redirect based on role
+      if (data.role === 'ADMIN' || data.role === 'PARTNER') {
+        router.push('/admin/dashboard')
+      } else {
+        router.push('/')
+      }
     } catch (error: any) {
       console.error('Google token response error:', error)
       setError('root', { message: error.message || 'Có lỗi xảy ra khi xử lý đăng nhập Google. Vui lòng thử lại.' });
