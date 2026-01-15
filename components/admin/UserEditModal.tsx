@@ -1,119 +1,143 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 import { User } from '../../types/auth';
+import { Select } from '../ui/Select';
 
 interface UserEditModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    user: User | null;
-    onSave: (data: Partial<User>) => void;
-    isLoading?: boolean;
+  isOpen: boolean;
+  onClose: () => void;
+  user: User | null;
+  onSave: (data: Partial<User>) => void;
+  isLoading?: boolean;
 }
 
 interface FormData {
-    fullName: string;
-    phone: string;
-    role: string;
+  fullName: string;
+  phone: string;
+  role: string;
 }
 
 export const UserEditModal: React.FC<UserEditModalProps> = ({
-    isOpen,
-    onClose,
-    user,
-    onSave,
-    isLoading = false
+  isOpen,
+  onClose,
+  user,
+  onSave,
+  isLoading = false
 }) => {
-    const { register, handleSubmit, reset, setValue } = useForm<FormData>();
+  const t = useTranslations('Users');
+  const { register, handleSubmit, reset, setValue, watch } = useForm<FormData>();
 
-    useEffect(() => {
-        if (user) {
-            setValue('fullName', user.fullName);
-            setValue('phone', user.phone || '');
-            setValue('role', user.role || 'USER');
-        }
-    }, [user, setValue]);
+  const role = watch('role');
 
-    if (!isOpen) return null;
+  useEffect(() => {
+    if (user) {
+      setValue('fullName', user.fullName);
+      setValue('phone', user.phone || '');
+      setValue('role', user.role || 'USER');
+    }
+  }, [user, setValue]);
 
-    const onSubmit = (data: FormData) => {
-        onSave(data);
-    };
+  if (!isOpen) return null;
 
-    return (
-        <div className="modal-overlay">
-            <div className="modal-content">
-                <div className="modal-header">
-                    <h3>Chỉnh sửa tài khoản</h3>
-                    <button className="close-button" onClick={onClose}>&times;</button>
-                </div>
+  const onSubmit = (data: FormData) => {
+    onSave(data);
+  };
 
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="form-group">
-                        <label>Họ và tên</label>
-                        <input
-                            {...register('fullName', { required: true })}
-                            className="form-input"
-                            placeholder="Nhập họ và tên"
-                        />
-                    </div>
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h3>{t('editModal.title')}</h3>
+          <button className="close-button" onClick={onClose}>&times;</button>
+        </div>
 
-                    <div className="form-group">
-                        <label>Số điện thoại</label>
-                        <input
-                            {...register('phone')}
-                            className="form-input"
-                            placeholder="Nhập số điện thoại"
-                        />
-                    </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="form-group">
+            <label>{t('editModal.fullName')}</label>
+            <input
+              {...register('fullName', { required: true })}
+              className="form-input"
+              placeholder={t('editModal.placeholderName')}
+            />
+          </div>
 
-                    <div className="form-group">
-                        <label>Vai trò</label>
-                        <select {...register('role')} className="form-select">
-                            <option value="USER">User</option>
-                            <option value="ADMIN">Admin</option>
-                            <option value="PARTNER">Partner</option>
-                        </select>
-                    </div>
+          <div className="form-group">
+            <label>{t('editModal.phone')}</label>
+            <input
+              {...register('phone')}
+              className="form-input"
+              placeholder={t('editModal.placeholderPhone')}
+            />
+          </div>
 
-                    <div className="modal-actions">
-                        <button type="button" className="btn-cancel" onClick={onClose} disabled={isLoading}>
-                            Hủy
-                        </button>
-                        <button type="submit" className="btn-save" disabled={isLoading}>
-                            {isLoading ? 'Đang lưu...' : 'Lưu thay đổi'}
-                        </button>
-                    </div>
-                </form>
-            </div>
+          <div className="form-group">
+            <Select
+              label={t('editModal.role')}
+              value={role}
+              onChange={(value) => setValue('role', value)}
+              options={[
+                { value: 'USER', label: 'User' },
+                { value: 'ADMIN', label: 'Admin' },
+                { value: 'PARTNER', label: 'Partner' }
+              ]}
+            />
+          </div>
 
-            <style jsx>{`
+          <div className="modal-actions">
+            <button type="button" className="btn-cancel" onClick={onClose} disabled={isLoading}>
+              {t('editModal.cancel')}
+            </button>
+            <button type="submit" className="btn-save" disabled={isLoading}>
+              {isLoading ? t('editModal.saving') : t('editModal.save')}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <style jsx>{`
         .modal-overlay {
           position: fixed;
           top: 0;
           left: 0;
           right: 0;
           bottom: 0;
-          background-color: rgba(0, 0, 0, 0.5);
+          background-color: rgba(15, 23, 42, 0.4);
+          backdrop-filter: blur(4px);
           display: flex;
           align-items: center;
           justify-content: center;
           z-index: 1000;
+          animation: fadeIn 0.2s ease-out;
         }
 
         .modal-content {
           background: white;
-          padding: 24px;
-          border-radius: 12px;
-          width: 100%;
-          max-width: 500px;
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+          padding: 32px;
+          border-radius: 16px;
+          width: 90%;
+          max-width: 480px;
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+          animation: scalecheck 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scalecheck {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         .modal-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 20px;
+          margin-bottom: 24px;
+          border-bottom: 1px solid #f1f5f9;
+          padding-bottom: 16px;
         }
 
         .modal-header h3 {
@@ -139,23 +163,30 @@ export const UserEditModal: React.FC<UserEditModalProps> = ({
           margin-bottom: 8px;
           font-size: 0.875rem;
           font-weight: 500;
-          color: #4a5568;
+          color: #1e293b;
         }
 
-        .form-input, .form-select {
+        .form-input {
           width: 100%;
-          padding: 8px 12px;
+          padding: 10px 14px;
           border: 1px solid #e2e8f0;
-          border-radius: 6px;
+          border-radius: 8px;
           font-size: 1rem;
           outline: none;
-          transition: border-color 0.2s;
+          transition: all 0.2s;
+          color: #0f1720;
+        }
+        
+        .form-input:hover {
+            border-color: #cbd5e1;
         }
 
-        .form-input:focus, .form-select:focus {
-          border-color: #3182ce;
-          box-shadow: 0 0 0 1px #3182ce;
+        .form-input:focus {
+          border-color: #3b82f6;
+          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
+
+
 
         .modal-actions {
           display: flex;
@@ -193,6 +224,6 @@ export const UserEditModal: React.FC<UserEditModalProps> = ({
           background-color: #2c5282;
         }
       `}</style>
-        </div>
-    );
+    </div>
+  );
 };

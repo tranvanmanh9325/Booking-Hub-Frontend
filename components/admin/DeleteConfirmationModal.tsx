@@ -1,37 +1,39 @@
 import React from 'react';
+import { useTranslations } from 'next-intl';
 
 interface DeleteConfirmationModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    onConfirm: () => void;
-    isLoading?: boolean;
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  isLoading?: boolean;
 }
 
 export const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
-    isOpen,
-    onClose,
-    onConfirm,
-    isLoading = false,
+  isOpen,
+  onClose,
+  onConfirm,
+  isLoading = false,
 }) => {
-    if (!isOpen) return null;
+  const t = useTranslations('Users');
+  if (!isOpen) return null;
 
-    return (
-        <div className="modal-overlay">
-            <div className="modal-content">
-                <h3 className="modal-title">Xác nhận xóa</h3>
-                <p className="modal-message">Bạn có chắc chắn muốn xóa người dùng này? Hành động này không thể hoàn tác.</p>
+  return (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <h3 className="modal-title">{t('deleteModal.title')}</h3>
+        <p className="modal-message">{t('deleteModal.message')}</p>
 
-                <div className="modal-actions">
-                    <button className="btn-cancel" onClick={onClose} disabled={isLoading}>
-                        Hủy
-                    </button>
-                    <button className="btn-delete" onClick={onConfirm} disabled={isLoading}>
-                        {isLoading ? 'Đang xóa...' : 'Xóa'}
-                    </button>
-                </div>
-            </div>
+        <div className="modal-actions">
+          <button className="btn-cancel" onClick={onClose} disabled={isLoading}>
+            {t('deleteModal.cancel')}
+          </button>
+          <button className="btn-delete" onClick={onConfirm} disabled={isLoading}>
+            {isLoading ? t('deleteModal.deleting') : t('deleteModal.confirm')}
+          </button>
+        </div>
+      </div>
 
-            <style jsx>{`
+      <style jsx>{`
         .modal-overlay {
           position: fixed;
           top: 0;
@@ -109,6 +111,6 @@ export const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (
           cursor: not-allowed;
         }
       `}</style>
-        </div>
-    );
+    </div>
+  );
 };

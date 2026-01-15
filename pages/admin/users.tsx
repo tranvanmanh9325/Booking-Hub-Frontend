@@ -12,7 +12,7 @@ import { DeleteConfirmationModal } from '../../components/admin/DeleteConfirmati
 import { User } from '../../types/auth';
 
 const AdminUsersPage = () => {
-  const t = useTranslations('Sidebar'); // Reusing Sidebar namespace
+  const t = useTranslations('Users');
   const { data: users = [], isLoading, isError, error } = useUsers();
   const updateUserMutation = useUpdateUser();
   const deleteUserMutation = useDeleteUser();
@@ -118,8 +118,8 @@ const AdminUsersPage = () => {
     return (
       <AdminLayout>
         <div className="error-container">
-          <h2>Có lỗi xảy ra khi tải danh sách người dùng</h2>
-          <p>{(error as Error)?.message || 'Vui lòng thử lại sau.'}</p>
+          <h2>{t('title')}</h2>
+          <p>{(error as Error)?.message || 'Error loading users.'}</p>
         </div>
         <style jsx>{`
                  .error-container {
@@ -135,20 +135,20 @@ const AdminUsersPage = () => {
   return (
     <AdminLayout>
       <Head>
-        <title>Quản lý tài khoản - Booking Hub</title>
+        <title>{t('title')} - Booking Hub</title>
       </Head>
 
       <div className="users-page-container">
         <div className="page-header">
           <div>
-            <h1 className="page-title">Quản lý tài khoản</h1>
-            <p className="page-subtitle">Quản lý tất cả tài khoản người dùng trên hệ thống.</p>
+            <h1 className="page-title">{t('title')}</h1>
+            <p className="page-subtitle">{t('subtitle')}</p>
           </div>
 
           <div className="actions">
             <input
               type="text"
-              placeholder="Tìm kiếm người dùng..."
+              placeholder={t('searchPlaceholder')}
               className="search-input"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -162,20 +162,20 @@ const AdminUsersPage = () => {
               <thead>
                 <tr>
                   <th onClick={() => handleSort('fullName')} style={{ cursor: 'pointer' }}>
-                    Người dùng {sortConfig.key === 'fullName' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                    {t('table.user')} {sortConfig.key === 'fullName' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
                   </th>
                   <th onClick={() => handleSort('role')} style={{ cursor: 'pointer' }}>
-                    Vai trò {sortConfig.key === 'role' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                    {t('table.role')} {sortConfig.key === 'role' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
                   </th>
-                  <th>Số điện thoại</th>
-                  <th>Hành động</th>
+                  <th>{t('table.phone')}</th>
+                  <th>{t('table.actions')}</th>
                 </tr>
               </thead>
               <tbody>
                 {sortedUsers.length === 0 ? (
                   <tr>
                     <td colSpan={4} style={{ textAlign: 'center', padding: '32px' }}>
-                      Không tìm thấy người dùng nào
+                      {t('table.empty')}
                     </td>
                   </tr>
                 ) : (
@@ -204,8 +204,8 @@ const AdminUsersPage = () => {
                         <span>{user.phone || '-'}</span>
                       </td>
                       <td>
-                        <button className="action-button edit" onClick={() => handleEdit(user)}>Sửa</button>
-                        <button className="action-button delete" onClick={() => handleDeleteClick(user.id)}>Xóa</button>
+                        <button className="action-button edit" onClick={() => handleEdit(user)}>{t('table.edit')}</button>
+                        <button className="action-button delete" onClick={() => handleDeleteClick(user.id)}>{t('table.delete')}</button>
                       </td>
                     </tr>
                   ))

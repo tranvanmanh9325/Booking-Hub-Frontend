@@ -24,6 +24,7 @@ import { useEffect } from 'react'
 export default function MyApp({ Component, pageProps }: AppProps<{ messages?: Record<string, any> }>) {
   const router = useRouter()
   const isAdminPage = router.pathname.startsWith('/admin')
+  const isPartnerPage = router.pathname.startsWith('/partner')
 
   useEffect(() => {
     // initAxe() // Uncomment to enable accessibility testing
@@ -55,7 +56,7 @@ export default function MyApp({ Component, pageProps }: AppProps<{ messages?: Re
             pauseOnHover
             theme="light"
           />
-          {!isAdminPage && <Footer />}
+          {!isAdminPage && !isPartnerPage && <Footer />}
         </ErrorBoundary>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

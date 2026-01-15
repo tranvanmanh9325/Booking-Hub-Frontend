@@ -26,7 +26,7 @@ export function rotateSize(width: number, height: number, rotation: number) {
 }
 
 /**
- * This function was adapted from the one in the Readme of https://github.com/DominicTobias/react-image-crop
+ * This function was adapted from the one in the ReadMe of https://github.com/DominicTobias/react-image-crop
  */
 export default async function getCroppedImg(
     imageSrc: string,
@@ -61,10 +61,10 @@ export default async function getCroppedImg(
     ctx.scale(flip.horizontal ? -1 : 1, flip.vertical ? -1 : 1)
     ctx.translate(-image.width / 2, -image.height / 2)
 
-    // draw image
+    // draw rotated image
     ctx.drawImage(image, 0, 0)
 
-    // croppedAreaPixels values are bounding box relative
+    // croppedAreaPixels values are bounding-box relative
     // extract the cropped image using these values
     const data = ctx.getImageData(
         pixelCrop.x,

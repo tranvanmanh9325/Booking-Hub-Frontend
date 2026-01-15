@@ -57,6 +57,7 @@
         "bookings": "Đặt vé",
         "users": "Tài khoản",
         "settings": "Cài đặt",
+        "content": "Quản lý nội dung",
         "logout": "Đăng xuất"
     },
     "Dashboard": {
@@ -78,6 +79,72 @@
             "minutesAgo": "{count} phút trước",
             "hoursAgo": "{count} giờ trước",
             "daysAgo": "{count} ngày trước"
+        }
+    },
+    "Content": {
+        "title": "Quản lý nội dung",
+        "subtitle": "Quản lý các nội dung kinh doanh của bạn.",
+        "addNew": "Thêm mới",
+        "searchPlaceholder": "Tìm kiếm nội dung...",
+        "table": {
+            "id": "ID",
+            "name": "Tên nội dung",
+            "thumbnail": "Ảnh đại diện",
+            "images": "Ảnh chi tiết",
+            "type": "Loại",
+            "price": "Giá",
+            "description": "Mô tả chi tiết",
+            "status": "Trạng thái",
+            "actions": "Hành động",
+            "edit": "Sửa",
+            "delete": "Xóa",
+            "active": "Hoạt động",
+            "inactive": "Tạm ngưng"
+        },
+        "modal": {
+            "save": "Lưu",
+            "cancel": "Hủy",
+            "upload": "Tải ảnh lên",
+            "close": "Đóng",
+            "deleteTitle": "Xóa nội dung",
+            "deleteMessage": "Bạn có chắc chắn muốn xóa <bold>{name}</bold> không?",
+            "confirmDelete": "Xóa",
+            "editImage": "Chỉnh sửa ảnh",
+            "zoom": "Thu phóng",
+            "cropAndSave": "Cắt & Lưu",
+            "saving": "Đang lưu..."
+        }
+    },
+    "Users": {
+        "title": "Quản lý tài khoản",
+        "subtitle": "Quản lý tất cả tài khoản người dùng trên hệ thống.",
+        "searchPlaceholder": "Tìm kiếm người dùng...",
+        "table": {
+            "user": "Người dùng",
+            "role": "Vai trò",
+            "phone": "Số điện thoại",
+            "actions": "Hành động",
+            "edit": "Sửa",
+            "delete": "Xóa",
+            "empty": "Không tìm thấy người dùng nào"
+        },
+        "editModal": {
+            "title": "Chỉnh sửa tài khoản",
+            "fullName": "Họ và tên",
+            "placeholderName": "Nhập họ và tên",
+            "phone": "Số điện thoại",
+            "placeholderPhone": "Nhập số điện thoại",
+            "role": "Vai trò",
+            "cancel": "Hủy",
+            "save": "Lưu thay đổi",
+            "saving": "Đang lưu..."
+        },
+        "deleteModal": {
+            "title": "Xác nhận xóa",
+            "message": "Bạn có chắc chắn muốn xóa người dùng này? Hành động này không thể hoàn tác.",
+            "cancel": "Hủy",
+            "confirm": "Xóa",
+            "deleting": "Đang xóa..."
         }
     }
 }

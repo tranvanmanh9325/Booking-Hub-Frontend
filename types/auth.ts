@@ -35,6 +35,7 @@ export interface AuthResponse {
     email: string;
     fullName: string;
     avatarUrl?: string;
+    phone?: string;
     type?: string;
     role?: string;
 }

@@ -57,6 +57,7 @@
         "bookings": "Bookings",
         "users": "Customers",
         "settings": "Settings",
+        "content": "Content Management",
         "logout": "Logout"
     },
     "Dashboard": {
@@ -78,6 +79,72 @@
             "minutesAgo": "{count} minutes ago",
             "hoursAgo": "{count} hours ago",
             "daysAgo": "{count} day ago"
+        }
+    },
+    "Content": {
+        "title": "Content Management",
+        "subtitle": "Manage your business content.",
+        "addNew": "Add New",
+        "searchPlaceholder": "Search content...",
+        "table": {
+            "id": "ID",
+            "name": "Content Name",
+            "thumbnail": "Thumbnail",
+            "images": "Detail Images",
+            "type": "Type",
+            "price": "Price",
+            "description": "Description",
+            "status": "Status",
+            "actions": "Actions",
+            "edit": "Edit",
+            "delete": "Delete",
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "modal": {
+            "save": "Save",
+            "cancel": "Cancel",
+            "upload": "Upload Image",
+            "close": "Close",
+            "deleteTitle": "Delete Content",
+            "deleteMessage": "Are you sure you want to delete <bold>{name}</bold>?",
+            "confirmDelete": "Delete",
+            "editImage": "Edit Image",
+            "zoom": "Zoom",
+            "cropAndSave": "Crop & Save",
+            "saving": "Saving..."
+        }
+    },
+    "Users": {
+        "title": "Account Management",
+        "subtitle": "Manage all user accounts in the system.",
+        "searchPlaceholder": "Search users...",
+        "table": {
+            "user": "User",
+            "role": "Role",
+            "phone": "Phone",
+            "actions": "Actions",
+            "edit": "Edit",
+            "delete": "Delete",
+            "empty": "No users found"
+        },
+        "editModal": {
+            "title": "Edit User",
+            "fullName": "Full Name",
+            "placeholderName": "Enter full name",
+            "phone": "Phone Number",
+            "placeholderPhone": "Enter phone number",
+            "role": "Role",
+            "cancel": "Cancel",
+            "save": "Save Changes",
+            "saving": "Saving..."
+        },
+        "deleteModal": {
+            "title": "Confirm Delete",
+            "message": "Are you sure you want to delete this user? This action cannot be undone.",
+            "cancel": "Cancel",
+            "confirm": "Delete",
+            "deleting": "Deleting..."
         }
     }
 }

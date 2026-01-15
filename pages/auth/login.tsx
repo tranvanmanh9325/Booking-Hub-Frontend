@@ -54,13 +54,16 @@ const Login: React.FC = () => {
           email: response.email,
           fullName: response.fullName,
           avatarUrl: response.avatarUrl,
+          phone: response.phone,
           role: response.role
         })
       }
 
       // Redirect based on role
-      if (response.role === 'ADMIN' || response.role === 'PARTNER') {
+      if (response.role === 'ADMIN') {
         router.push('/admin/dashboard')
+      } else if (response.role === 'PARTNER') {
+        router.push('/partner/dashboard')
       } else {
         router.push('/')
       }
@@ -161,13 +164,16 @@ const Login: React.FC = () => {
           email: data.email,
           fullName: data.fullName,
           avatarUrl: data.avatarUrl || userInfo.picture, // Fallback to Google picture if backend doesn't return it
+          phone: data.phone,
           role: data.role
         })
       }
 
       // Redirect based on role
-      if (data.role === 'ADMIN' || data.role === 'PARTNER') {
+      if (data.role === 'ADMIN') {
         router.push('/admin/dashboard')
+      } else if (data.role === 'PARTNER') {
+        router.push('/partner/dashboard')
       } else {
         router.push('/')
       }

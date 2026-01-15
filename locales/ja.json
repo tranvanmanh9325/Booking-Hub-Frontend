@@ -57,6 +57,7 @@
         "bookings": "予約",
         "users": "顧客",
         "settings": "設定",
+        "content": "コンテンツ管理",
         "logout": "ログアウト"
     },
     "Dashboard": {
@@ -78,6 +79,72 @@
             "minutesAgo": "{count} 分前",
             "hoursAgo": "{count} 時間前",
             "daysAgo": "{count} 日前"
+        }
+    },
+    "Content": {
+        "title": "コンテンツ管理",
+        "subtitle": "ビジネスコンテンツを管理します。",
+        "addNew": "新規追加",
+        "searchPlaceholder": "コンテンツを検索...",
+        "table": {
+            "id": "ID",
+            "name": "コンテンツ名",
+            "thumbnail": "サムネイル",
+            "images": "詳細画像",
+            "type": "タイプ",
+            "price": "価格",
+            "description": "詳細説明",
+            "status": "ステータス",
+            "actions": "操作",
+            "edit": "編集",
+            "delete": "削除",
+            "active": "有効",
+            "inactive": "無効"
+        },
+        "modal": {
+            "save": "保存",
+            "cancel": "キャンセル",
+            "upload": "画像をアップロード",
+            "close": "閉じる",
+            "deleteTitle": "コンテンツを削除",
+            "deleteMessage": "本当に <bold>{name}</bold> を削除しますか？",
+            "confirmDelete": "削除",
+            "editImage": "画像の編集",
+            "zoom": "ズーム",
+            "cropAndSave": "切り抜き＆保存",
+            "saving": "保存中..."
+        }
+    },
+    "Users": {
+        "title": "アカウント管理",
+        "subtitle": "システム上のすべてのユーザーアカウントを管理します。",
+        "searchPlaceholder": "ユーザーを検索...",
+        "table": {
+            "user": "ユーザー",
+            "role": "役割",
+            "phone": "電話番号",
+            "actions": "操作",
+            "edit": "編集",
+            "delete": "削除",
+            "empty": "ユーザーが見つかりません"
+        },
+        "editModal": {
+            "title": "ユーザー編集",
+            "fullName": "氏名",
+            "placeholderName": "氏名を入力",
+            "phone": "電話番号",
+            "placeholderPhone": "電話番号を入力",
+            "role": "役割",
+            "cancel": "キャンセル",
+            "save": "変更を保存",
+            "saving": "保存中..."
+        },
+        "deleteModal": {
+            "title": "削除の確認",
+            "message": "本当にこのユーザーを削除しますか？この操作は取り消せません。",
+            "cancel": "キャンセル",
+            "confirm": "削除",
+            "deleting": "削除中..."
         }
     }
 }
