@@ -1,0 +1,83 @@
+{
+    "Settings": {
+        "title": "Cài đặt tài khoản",
+        "subtitle": "Quản lý thông tin cá nhân và tùy chọn bảo mật của bạn.",
+        "tabs": {
+            "profile": "Hồ sơ cá nhân",
+            "security": "Bảo mật",
+            "notifications": "Thông báo",
+            "language": "Ngôn ngữ"
+        },
+        "Profile": {
+            "title": "Thông tin chung",
+            "subtitle": "Cập nhật thông tin chi tiết về tài khoản của bạn.",
+            "changeAvatar": "Thay đổi ảnh",
+            "uploadHint": "JPG, GIF hoặc PNG. Tối đa 2MB.",
+            "fullName": "Họ và tên",
+            "phone": "Số điện thoại",
+            "email": "Email",
+            "save": "Lưu thay đổi",
+            "saving": "Đang lưu...",
+            "success": "Đã cập nhật thông tin hồ sơ thành công!"
+        },
+        "Security": {
+            "title": "Đổi mật khẩu",
+            "subtitle": "Vui lòng nhập mật khẩu hiện tại để thay đổi mật khẩu mới.",
+            "currentPassword": "Mật khẩu hiện tại",
+            "newPassword": "Mật khẩu mới",
+            "confirmPassword": "Xác nhận mật khẩu mới",
+            "submit": "Cập nhật mật khẩu",
+            "submitting": "Đang xử lý...",
+            "success": "Đã đổi mật khẩu thành công!",
+            "errorMismatch": "Mật khẩu mới không khớp!"
+        },
+        "Notifications": {
+            "title": "Tùy chọn thông báo",
+            "subtitle": "Chọn cách chúng tôi liên lạc với bạn.",
+            "email": "Thông báo qua Email",
+            "emailDesc": "Nhận thông báo về các đơn đặt phòng mới qua email.",
+            "push": "Thông báo đẩy",
+            "pushDesc": "Nhận thông báo ngay trên trình duyệt.",
+            "marketing": "Email Marketing",
+            "marketingDesc": "Nhận tin tức về các tính năng mới và ưu đãi."
+        },
+        "Language": {
+            "title": "Cài đặt ngôn ngữ",
+            "subtitle": "Chọn ngôn ngữ hiển thị cho giao diện.",
+            "select": "Ngôn ngữ giao diện",
+            "options": {
+                "en": "Tiếng Anh",
+                "vi": "Tiếng Việt",
+                "ja": "Tiếng Nhật"
+            }
+        }
+    },
+    "Sidebar": {
+        "dashboard": "Tổng quan",
+        "bookings": "Đặt vé",
+        "users": "Tài khoản",
+        "settings": "Cài đặt",
+        "logout": "Đăng xuất"
+    },
+    "Dashboard": {
+        "welcome": "Chào mừng trở lại, {name}!",
+        "overview": "Đây là tổng quan về hoạt động kinh doanh của bạn hôm nay.",
+        "stats": {
+            "revenue": "Doanh thu hôm nay",
+            "orders": "Đơn đặt mới",
+            "customers": "Khách hàng mới",
+            "reviews": "Đánh giá 5 sao",
+            "vsYesterday": "{value}% so với hôm qua",
+            "totalSystem": "Tổng cộng trên hệ thống"
+        },
+        "activity": {
+            "title": "Hoạt động gần đây",
+            "newBooking": "Đơn đặt phòng mới từ <bold>{name}</bold>",
+            "paymentSuccess": "Thanh toán thành công đơn hàng <bold>{orderId}</bold>",
+            "newMessage": "Tin nhắn mới từ đối tác <bold>{partner}</bold>",
+            "minutesAgo": "{count} phút trước",
+            "hoursAgo": "{count} giờ trước",
+            "daysAgo": "{count} ngày trước"
+        }
+    }
+}

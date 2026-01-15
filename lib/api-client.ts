@@ -215,6 +215,22 @@ class ApiClient {
     public delete<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
         return this.instance.delete<T>(url, config).then(res => res.data);
     }
+
+    /**
+     * Upload avatar image.
+     * @param file File ảnh
+     * @returns Promise chứa URL ảnh
+     */
+    public uploadAvatar(file: File): Promise<string> {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        return this.instance.post<string>('/api/v1/users/profile/avatar', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(res => res.data);
+    }
 }
 
 export const apiClient = new ApiClient();

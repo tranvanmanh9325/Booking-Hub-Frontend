@@ -29,7 +29,7 @@ const nextConfig = {
   },
   // Keep i18n config for Pages Router compatibility with next-intl
   i18n: {
-    locales: ['en'],
+    locales: ['en', 'vi', 'ja'],
     defaultLocale: "en",
   },
 

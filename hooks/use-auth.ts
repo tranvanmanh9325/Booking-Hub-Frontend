@@ -107,12 +107,31 @@ export const useAuth = () => {
         return updatedUser;
     };
 
+    /**
+     * Hàm upload và cập nhật avatar.
+     * @param file File ảnh
+     */
+    const updateAvatar = async (file: File) => {
+        const avatarUrl = await apiClient.uploadAvatar(file);
+
+        // Update local storage
+        const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+        const updatedUser = { ...currentUser, avatarUrl };
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+
+        // Update React Query cache
+        queryClient.setQueryData(USER_QUERY_KEY, updatedUser);
+
+        return avatarUrl;
+    };
+
     return {
         user: user || null,
         loading: isLoading,
         login,
         logout,
         updateProfile,
+        updateAvatar,
         isAuthenticated: !!user
     };
 };

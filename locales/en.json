@@ -1,1 +1,83 @@
-{}
+{
+    "Settings": {
+        "title": "Account Settings",
+        "subtitle": "Manage your personal information and security preferences.",
+        "tabs": {
+            "profile": "Profile",
+            "security": "Security",
+            "notifications": "Notifications",
+            "language": "Language"
+        },
+        "Profile": {
+            "title": "General Info",
+            "subtitle": "Update your account details.",
+            "changeAvatar": "Change Photo",
+            "uploadHint": "JPG, GIF or PNG. Max 2MB.",
+            "fullName": "Full Name",
+            "phone": "Phone Number",
+            "email": "Email",
+            "save": "Save Changes",
+            "saving": "Saving...",
+            "success": "Profile updated successfully!"
+        },
+        "Security": {
+            "title": "Change Password",
+            "subtitle": "Please enter your current password to change new password.",
+            "currentPassword": "Current Password",
+            "newPassword": "New Password",
+            "confirmPassword": "Confirm New Password",
+            "submit": "Update Password",
+            "submitting": "Processing...",
+            "success": "Password changed successfully!",
+            "errorMismatch": "New passwords do not match!"
+        },
+        "Notifications": {
+            "title": "Notification Preferences",
+            "subtitle": "Choose how we communicate with you.",
+            "email": "Email Notifications",
+            "emailDesc": "Receive notifications about new bookings via email.",
+            "push": "Push Notifications",
+            "pushDesc": "Receive notifications right in your browser.",
+            "marketing": "Marketing Emails",
+            "marketingDesc": "Receive news about new features and offers."
+        },
+        "Language": {
+            "title": "Language Settings",
+            "subtitle": "Choose your preferred language for the interface.",
+            "select": "Interface Language",
+            "options": {
+                "en": "English",
+                "vi": "Vietnamese",
+                "ja": "Japanese"
+            }
+        }
+    },
+    "Sidebar": {
+        "dashboard": "Dashboard",
+        "bookings": "Bookings",
+        "users": "Customers",
+        "settings": "Settings",
+        "logout": "Logout"
+    },
+    "Dashboard": {
+        "welcome": "Welcome back, {name}!",
+        "overview": "Here is an overview of your business today.",
+        "stats": {
+            "revenue": "Today's Revenue",
+            "orders": "New Orders",
+            "customers": "New Customers",
+            "reviews": "5-star Reviews",
+            "vsYesterday": "{value}% vs yesterday",
+            "totalSystem": "Total on system"
+        },
+        "activity": {
+            "title": "Recent Activity",
+            "newBooking": "New booking from <bold>{name}</bold>",
+            "paymentSuccess": "Payment successful for order <bold>{orderId}</bold>",
+            "newMessage": "New message from partner <bold>{partner}</bold>",
+            "minutesAgo": "{count} minutes ago",
+            "hoursAgo": "{count} hours ago",
+            "daysAgo": "{count} day ago"
+        }
+    }
+}

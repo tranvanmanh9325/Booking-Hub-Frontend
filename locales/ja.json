@@ -1,0 +1,83 @@
+{
+    "Settings": {
+        "title": "アカウント設定",
+        "subtitle": "個人情報とセキュリティ設定を管理します。",
+        "tabs": {
+            "profile": "プロフィール",
+            "security": "セキュリティ",
+            "notifications": "通知",
+            "language": "言語"
+        },
+        "Profile": {
+            "title": "基本情報",
+            "subtitle": "アカウントの詳細を更新します。",
+            "changeAvatar": "写真を変更",
+            "uploadHint": "JPG, GIF または PNG。最大 2MB。",
+            "fullName": "氏名",
+            "phone": "電話番号",
+            "email": "メールアドレス",
+            "save": "変更を保存",
+            "saving": "保存中...",
+            "success": "プロフィールが更新されました！"
+        },
+        "Security": {
+            "title": "パスワード変更",
+            "subtitle": "新しいパスワードに変更するには、現在のパスワードを入力してください。",
+            "currentPassword": "現在のパスワード",
+            "newPassword": "新しいパスワード",
+            "confirmPassword": "新しいパスワード（確認）",
+            "submit": "パスワードを更新",
+            "submitting": "処理中...",
+            "success": "パスワードが変更されました！",
+            "errorMismatch": "新しいパスワードが一致しません！"
+        },
+        "Notifications": {
+            "title": "通知設定",
+            "subtitle": "連絡方法を選択してください。",
+            "email": "メール通知",
+            "emailDesc": "新しい予約に関する通知をメールで受け取ります。",
+            "push": "プッシュ通知",
+            "pushDesc": "ブラウザで直接通知を受け取ります。",
+            "marketing": "マーケティングメール",
+            "marketingDesc": "新機能やオファーに関するニュースを受け取ります。"
+        },
+        "Language": {
+            "title": "言語設定",
+            "subtitle": "インターフェースの優先言語を選択してください。",
+            "select": "表示言語",
+            "options": {
+                "en": "英語",
+                "vi": "ベトナム語",
+                "ja": "日本語"
+            }
+        }
+    },
+    "Sidebar": {
+        "dashboard": "ダッシュボード",
+        "bookings": "予約",
+        "users": "顧客",
+        "settings": "設定",
+        "logout": "ログアウト"
+    },
+    "Dashboard": {
+        "welcome": "お帰りなさい、{name}さん！",
+        "overview": "本日のビジネス活動の概要です。",
+        "stats": {
+            "revenue": "本日の収益",
+            "orders": "新規注文",
+            "customers": "新規顧客",
+            "reviews": "5つ星レビュー",
+            "vsYesterday": "昨日比 {value}%",
+            "totalSystem": "システム全体"
+        },
+        "activity": {
+            "title": "最近のアクティビティ",
+            "newBooking": "<bold>{name}</bold> からの新規予約",
+            "paymentSuccess": "注文 <bold>{orderId}</bold> の支払いが完了しました",
+            "newMessage": "パートナー <bold>{partner}</bold> からの新しいメッセージ",
+            "minutesAgo": "{count} 分前",
+            "hoursAgo": "{count} 時間前",
+            "daysAgo": "{count} 日前"
+        }
+    }
+}

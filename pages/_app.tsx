@@ -30,7 +30,7 @@ export default function MyApp({ Component, pageProps }: AppProps<{ messages?: Re
   }, [])
 
   return (
-    <NextIntlClientProvider locale="en" messages={pageProps?.messages || {}}>
+    <NextIntlClientProvider locale={router.locale} messages={pageProps?.messages || {}}>
       <QueryClientProvider client={queryClient}>
         <ErrorBoundary>
           <Head>
