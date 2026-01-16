@@ -16,6 +16,7 @@ interface FormData {
   fullName: string;
   phone: string;
   role: string;
+  partnerType: string;
 }
 
 export const UserEditModal: React.FC<UserEditModalProps> = ({
@@ -35,6 +36,7 @@ export const UserEditModal: React.FC<UserEditModalProps> = ({
       setValue('fullName', user.fullName);
       setValue('phone', user.phone || '');
       setValue('role', user.role || 'USER');
+      setValue('partnerType', user.partnerType || 'HOTEL');
     }
   }, [user, setValue]);
 
@@ -83,6 +85,21 @@ export const UserEditModal: React.FC<UserEditModalProps> = ({
               ]}
             />
           </div>
+
+          {role === 'PARTNER' && (
+            <div className="form-group">
+              <Select
+                label={t('editModal.partnerType') || "Loại hình đối tác"}
+                value={watch('partnerType')}
+                onChange={(value) => setValue('partnerType', value)}
+                options={[
+                  { value: 'HOTEL', label: 'Partner Khách sạn' },
+                  { value: 'CINEMA', label: 'Partner Rạp phim' },
+                  { value: 'ENTERTAINMENT', label: 'Partner Giải trí' }
+                ]}
+              />
+            </div>
+          )}
 
           <div className="modal-actions">
             <button type="button" className="btn-cancel" onClick={onClose} disabled={isLoading}>

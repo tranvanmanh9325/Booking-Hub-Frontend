@@ -2,6 +2,7 @@ import '../styles/style.css'
 import '../styles/attractions.css'
 import '../styles/loading-styles.css'
 import 'react-toastify/dist/ReactToastify.css';
+import { Analytics } from '@vercel/analytics/react';
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { AuthGuard } from '../components/auth/AuthGuard'
@@ -37,9 +38,7 @@ export default function MyApp({ Component, pageProps }: AppProps<{ messages?: Re
           <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           </Head>
-          <Head>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          </Head>
+
           <AuthGuard>
             <Component {...pageProps} />
           </AuthGuard>
@@ -56,6 +55,7 @@ export default function MyApp({ Component, pageProps }: AppProps<{ messages?: Re
             pauseOnHover
             theme="light"
           />
+          <Analytics />
           {!isAdminPage && !isPartnerPage && <Footer />}
         </ErrorBoundary>
         <ReactQueryDevtools initialIsOpen={false} />

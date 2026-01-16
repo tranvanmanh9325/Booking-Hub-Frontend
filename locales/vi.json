@@ -137,7 +137,8 @@
             "role": "Vai trò",
             "cancel": "Hủy",
             "save": "Lưu thay đổi",
-            "saving": "Đang lưu..."
+            "saving": "Đang lưu...",
+            "partnerType": "Loại hình đối tác"
         },
         "deleteModal": {
             "title": "Xác nhận xóa",
@@ -146,5 +147,32 @@
             "confirm": "Xóa",
             "deleting": "Đang xóa..."
         }
+    },
+    "PartnerBookings": {
+        "titleEntertainment": "Quản lý vé vui chơi & Giải trí",
+        "subtitleEntertainment": "Quản lý vé đặt chỗ, suất chiếu và dịch vụ giải trí.",
+        "titleCinema": "Quản lý vé xem phim",
+        "subtitleCinema": "Quản lý suất chiếu phim, đặt vé và ghế ngồi.",
+        "searchPlaceholder": "Tìm kiếm theo mã vé, tên khách hàng...",
+        "allStatuses": "Tất cả trạng thái",
+        "status": {
+            "pending": "Chờ xác nhận",
+            "confirmed": "Đã xác nhận",
+            "cancelled": "Đã hủy",
+            "completed": "Hoàn thành"
+        },
+        "errorLoading": "Có lỗi xảy ra khi tải dữ liệu.",
+        "table": {
+            "id": "Mã vé",
+            "customer": "Khách hàng",
+            "item": "Dịch vụ/Vé",
+            "visitDate": "Ngày sử dụng",
+            "quantity": "Số lượng",
+            "total": "Tổng tiền",
+            "status": "Trạng thái",
+            "actions": "Hành động"
+        },
+        "noBookings": "Chưa có dữ liệu đặt vé nào.",
+        "viewDetails": "Xem chi tiết"
     }
 }

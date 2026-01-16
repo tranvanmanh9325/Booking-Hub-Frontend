@@ -137,7 +137,8 @@
             "role": "Role",
             "cancel": "Cancel",
             "save": "Save Changes",
-            "saving": "Saving..."
+            "saving": "Saving...",
+            "partnerType": "Partner Type"
         },
         "deleteModal": {
             "title": "Confirm Delete",

@@ -137,7 +137,8 @@
             "role": "役割",
             "cancel": "キャンセル",
             "save": "変更を保存",
-            "saving": "保存中..."
+            "saving": "保存中...",
+            "partnerType": "パートナータイプ"
         },
         "deleteModal": {
             "title": "削除の確認",
@@ -146,5 +147,32 @@
             "confirm": "削除",
             "deleting": "削除中..."
         }
+    },
+    "PartnerBookings": {
+        "titleEntertainment": "エンターテイメント＆チケット予約管理",
+        "subtitleEntertainment": "予約、上映、エンターテイメントサービスの管理。",
+        "titleCinema": "映画チケット予約管理",
+        "subtitleCinema": "映画の上映、予約、座席を管理します。",
+        "searchPlaceholder": "チケットID、顧客名で検索...",
+        "allStatuses": "すべてのステータス",
+        "status": {
+            "pending": "確認待ち",
+            "confirmed": "確認済み",
+            "cancelled": "キャンセル済み",
+            "completed": "完了"
+        },
+        "errorLoading": "データの読み込み中にエラーが発生しました。",
+        "table": {
+            "id": "チケットID",
+            "customer": "顧客",
+            "item": "サービス/チケット",
+            "visitDate": "利用日",
+            "quantity": "数量",
+            "total": "合計金額",
+            "status": "ステータス",
+            "actions": "操作"
+        },
+        "noBookings": "予約データがありません。",
+        "viewDetails": "詳細を見る"
     }
 }

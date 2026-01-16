@@ -5,6 +5,7 @@ export interface User {
     avatarUrl?: string;
     phone?: string;
     role?: string;
+    partnerType?: string;
 }
 
 export interface LoginRequest {
@@ -38,4 +39,5 @@ export interface AuthResponse {
     phone?: string;
     type?: string;
     role?: string;
+    partnerType?: string;
 }

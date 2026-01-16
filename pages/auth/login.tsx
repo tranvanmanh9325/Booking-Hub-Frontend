@@ -55,7 +55,8 @@ const Login: React.FC = () => {
           fullName: response.fullName,
           avatarUrl: response.avatarUrl,
           phone: response.phone,
-          role: response.role
+          role: response.role,
+          partnerType: response.partnerType
         })
       }
 
@@ -165,7 +166,8 @@ const Login: React.FC = () => {
           fullName: data.fullName,
           avatarUrl: data.avatarUrl || userInfo.picture, // Fallback to Google picture if backend doesn't return it
           phone: data.phone,
-          role: data.role
+          role: data.role,
+          partnerType: data.partnerType
         })
       }
 
