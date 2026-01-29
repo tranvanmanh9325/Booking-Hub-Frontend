@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint .",
+    "lint": "next lint --dir pages --dir components --dir config --dir hooks --dir lib --dir sections --dir store --dir types --dir utils",
     "type-check": "tsc --noEmit",
     "analyze": "cross-env ANALYZE=true next build",
     "test": "jest",
