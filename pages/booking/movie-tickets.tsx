@@ -1,16 +1,86 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
-
-import Script from 'dangerous-html/react'
-
 import dynamic from 'next/dynamic'
 import Navigation from '../../components/navigation'
-
-const MovieTicketsSections = dynamic(() => import('../../sections/movie-tickets-sections'))
+import { useAuth } from '../../hooks/use-auth'
 import { MOVIE_RATING } from '../../config/constants'
+
+const MovieTicketsSections = dynamic(() =>
+  import('../../sections/movie-tickets-sections')
+)
+
+import { useNowShowingMovies, useUpcomingMovies, Movie } from '../../hooks/use-movies'
+
+import { useShowtimes } from '../../hooks/use-movies'
+
+const MovieCard = ({
+  id,
+  title,
+  poster,
+  rating,
+  defaultTime,
+}: any) => {
+  const { data: showtimes } = useShowtimes(id)
+  const times = showtimes?.map((s: any) => {
+    // Format time from 2024-01-01T10:00:00 to 10:00
+    const date = new Date(s.startTime);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+  }) || []
+
+  const [selectedTime, setSelectedTime] = useState(defaultTime || times[0])
+
+  // Mock seat config for visual since API doesn't return summary yet
+  // In a real app we'd fetch this per showtime selection
+  const seatConfig = { occupied: [], selected: [] }
+  const seatsRemaining = 50 // Placeholder
+
+  return (
+    <div className="movie-card">
+      <div className="movie-poster">
+        <img src={poster} alt="Movie Poster" />
+        <span className="movie-rating">{rating}</span>
+      </div>
+      <div className="movie-info">
+        <h3>{title}</h3>
+        <div className="time-slots">
+          {times.length > 0 ? times.slice(0, 4).map((time: string) => (
+            <button
+              key={time}
+              className={`time-btn ${selectedTime === time ? 'active' : ''}`}
+              onClick={() => setSelectedTime(time)}
+            >
+              {time}
+            </button>
+          )) : <p className="text-sm text-gray-500">Chưa có lịch chiếu</p>}
+        </div>
+        <div className="seat-preview">
+          <div className="screen-indicator">
+            <span>Màn Hình</span>
+          </div>
+          <div className="seat-grid-mini">
+            {[...Array(10)].map((_, i) => {
+              let className = 'seat'
+              // Randomly finish for visual effect if needed, otherwise empty
+              return <div key={i} className={className}></div>
+            })}
+          </div>
+          <p className="seat-status">Đang mở bán</p>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 
 const MovieTickets = (props: any) => {
+  const router = useRouter()
+  const { isAuthenticated } = useAuth()
+  const [activeTab, setActiveTab] = useState('tab-now')
+
+  const { data: nowShowingMovies } = useNowShowingMovies()
+  const { data: upcomingMovies } = useUpcomingMovies()
+
   return (
     <>
       <div className="movie-tickets-container1">
@@ -56,8 +126,27 @@ const MovieTickets = (props: any) => {
                 bảo mật chỉ trong vài bước chạm.
               </p>
               <div className="hero-actions">
-                <button className="btn btn-primary btn-lg">Đặt Vé Ngay</button>
-                <button className="btn btn-lg btn-outline">
+                <button
+                  className="btn btn-primary btn-lg"
+                  onClick={() => {
+                    if (isAuthenticated) {
+                      router.push('/booking/select-movie')
+                    } else {
+                      router.push('/auth/login')
+                    }
+                  }}
+                >
+                  Đặt Vé Ngay
+                </button>
+                <button
+                  className="btn btn-lg btn-outline"
+                  onClick={() => {
+                    const element = document.getElementById('showtimes')
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth' })
+                    }
+                  }}
+                >
                   Xem Lịch Chiếu
                 </button>
               </div>
@@ -99,104 +188,84 @@ const MovieTickets = (props: any) => {
             </div>
           </div>
         </section>
-        <section className="showtimes-tabs">
+        <section className="showtimes-tabs" id="showtimes">
           <div className="showtimes-container">
             <h2 className="movie-tickets-thq-section-title-elm1 section-title">
               Lịch Chiếu &amp; Chỗ Ngồi
             </h2>
             <div className="movie-tabs-header">
-              <button data-target="tab-now" className="tab-trigger active">
+              <button
+                className={`tab-trigger ${activeTab === 'tab-now' ? 'active' : ''
+                  }`}
+                onClick={() => setActiveTab('tab-now')}
+              >
                 Đang Chiếu
               </button>
-              <button data-target="tab-soon" className="tab-trigger">
+              <button
+                className={`tab-trigger ${activeTab === 'tab-soon' ? 'active' : ''
+                  }`}
+                onClick={() => setActiveTab('tab-soon')}
+              >
                 Sắp Chiếu
               </button>
-              <button data-target="tab-special" className="tab-trigger">
+              <button
+                className={`tab-trigger ${activeTab === 'tab-special' ? 'active' : ''
+                  }`}
+                onClick={() => setActiveTab('tab-special')}
+              >
                 Suất Chiếu Đặc Biệt
               </button>
             </div>
             <div className="tabs-content">
-              <div id="tab-now" className="tab-panel active">
-                <div className="movie-grid">
-                  <div className="movie-card">
-                    <div className="movie-poster">
-                      <img
-                        src="https://images.pexels.com/photos/7991142/pexels-photo-7991142.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
-                        alt="Movie Poster"
-                      />
-                      <span className="movie-rating">{MOVIE_RATING.T18}</span>
-                    </div>
-                    <div className="movie-info">
-                      <h3>Hành Trình Vô Tận</h3>
-                      <div className="time-slots">
-                        <button className="time-btn">09:30</button>
-                        <button className="time-btn">12:15</button>
-                        <button className="time-btn active">15:00</button>
-                        <button className="time-btn">18:45</button>
-                      </div>
-                      <div className="seat-preview">
-                        <div className="screen-indicator">
-                          <span>Màn Hình</span>
-                        </div>
-                        <div className="seat-grid-mini">
-                          <div className="seat occupied"></div>
-                          <div className="seat occupied"></div>
-                          <div className="seat"></div>
-                          <div className="seat"></div>
-                          <div className="seat"></div>
-                          <div className="seat"></div>
-                          <div className="seat selected"></div>
-                          <div className="seat selected"></div>
-                          <div className="seat"></div>
-                          <div className="seat"></div>
-                        </div>
-                        <p className="seat-status">Còn 42 chỗ trống</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="movie-card">
-                    <div className="movie-poster">
-                      <img
-                        src="https://images.pexels.com/photos/3709371/pexels-photo-3709371.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
-                        alt="Movie Poster"
-                      />
-                      <span className="movie-rating">{MOVIE_RATING.P}</span>
-                    </div>
-                    <div className="movie-info">
-                      <h3>Thế Giới Diệu Kỳ</h3>
-                      <div className="time-slots">
-                        <button className="time-btn">10:00</button>
-                        <button className="time-btn">14:30</button>
-                        <button className="time-btn">17:15</button>
-                        <button className="time-btn">20:00</button>
-                      </div>
-                      <div className="seat-preview">
-                        <div className="screen-indicator">
-                          <span>Màn Hình</span>
-                        </div>
-                        <div className="seat-grid-mini">
-                          <div className="seat"></div>
-                          <div className="seat"></div>
-                          <div className="seat"></div>
-                          <div className="seat occupied"></div>
-                          <div className="seat occupied"></div>
-                          <div className="seat"></div>
-                          <div className="seat"></div>
-                          <div className="seat"></div>
-                          <div className="seat"></div>
-                          <div className="seat"></div>
-                        </div>
-                        <p className="seat-status">Còn 15 chỗ trống</p>
-                      </div>
-                    </div>
+              {activeTab === 'tab-now' && (
+                <div id="tab-now" className="tab-panel active">
+                  <div className="movie-grid">
+                    {nowShowingMovies && nowShowingMovies.length > 0 ? (
+                      nowShowingMovies.map((movie: Movie) => (
+                        <MovieCard
+                          key={movie.id}
+                          id={movie.id}
+                          title={movie.title}
+                          poster={movie.posterUrl}
+                          rating={movie.rating}
+                          defaultTime={'19:00'}
+                        />
+                      ))
+                    ) : (
+                      <p className="text-center py-10 text-gray-400">Đang tải danh sách phim...</p>
+                    )}
                   </div>
                 </div>
-              </div>
-              <div id="tab-soon" className="tab-panel">
-                <div className="empty-state">
-                  <p>Các phim sắp chiếu sẽ được cập nhật sớm nhất.</p>
+              )}
+              {activeTab === 'tab-soon' && (
+                <div id="tab-soon" className="tab-panel active">
+                  <div className="movie-grid">
+                    {upcomingMovies && upcomingMovies.length > 0 ? (
+                      upcomingMovies.map((movie: Movie) => (
+                        <MovieCard
+                          key={movie.id}
+                          id={movie.id}
+                          title={movie.title}
+                          poster={movie.posterUrl}
+                          rating={movie.rating}
+                          defaultTime={movie.releaseDate}
+                        />
+                      ))
+                    ) : (
+                      <div className="empty-state">
+                        <p>Các phim sắp chiếu sẽ được cập nhật sớm nhất.</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
+              )}
+              {activeTab === 'tab-special' && (
+                <div id="tab-special" className="tab-panel active">
+                  <div className="empty-state">
+                    <p>Chưa có suất chiếu đặc biệt nào.</p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </section>
@@ -272,84 +341,6 @@ const MovieTickets = (props: any) => {
           </div>
         </section>
         <MovieTicketsSections />
-        <div className="movie-tickets-container2">
-          <div className="movie-tickets-container3">
-            <Script
-              html={`<style>
-        @keyframes slideIn {from {opacity: 0;
-transform: translateX(-40px);}
-to {opacity: 1;
-transform: translateX(0);}}
-        </style> `}
-            ></Script>
-          </div>
-        </div>
-        <div className="movie-tickets-container4">
-          <div className="movie-tickets-container5">
-            <Script
-              html={`<script defer data-name="booking-hub-logic">
-(function(){
-  // Tabs Logic
-  const tabTriggers = document.querySelectorAll(".tab-trigger")
-  const tabPanels = document.querySelectorAll(".tab-panel")
-
-  tabTriggers.forEach((trigger) => {
-    trigger.addEventListener("click", () => {
-      const target = trigger.getAttribute("data-target")
-
-      tabTriggers.forEach((t) => t.classList.remove("active"))
-      tabPanels.forEach((p) => p.classList.remove("active"))
-
-      trigger.classList.add("active")
-      document.getElementById(target).classList.add("active")
-    })
-  })
-
-  // Simple Carousel Logic
-  const track = document.querySelector(".carousel-track")
-  const nextBtn = document.querySelector(".carousel-btn.next")
-  const prevBtn = document.querySelector(".carousel-btn.prev")
-  let index = 0
-
-  function updateCarousel() {
-    const cardWidth = document.querySelector(".testimonial-card").offsetWidth + 24 // width + gap
-    track.style.transform = \`translateX(-\${index * cardWidth}px)\`
-  }
-
-  nextBtn.addEventListener("click", () => {
-    const max = track.children.length - (window.innerWidth > 991 ? 3 : window.innerWidth > 767 ? 2 : 1)
-    if (index < max) {
-      index++
-      updateCarousel()
-    } else {
-      index = 0
-      updateCarousel()
-    }
-  })
-
-  prevBtn.addEventListener("click", () => {
-    if (index > 0) {
-      index--
-      updateCarousel()
-    }
-  })
-
-  window.addEventListener("resize", updateCarousel)
-
-  // Movie Time Selection
-  const timeBtns = document.querySelectorAll(".time-btn")
-  timeBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const parent = btn.closest(".time-slots")
-      parent.querySelectorAll(".time-btn").forEach((b) => b.classList.remove("active"))
-      btn.classList.add("active")
-    })
-  })
-})()
-</script>`}
-            ></Script>
-          </div>
-        </div>
       </div>
       <style jsx>
         {`
@@ -361,17 +352,15 @@ transform: translateX(0);}}
           .movie-tickets-thq-section-title-elm1 {
             text-align: center !important;
           }
-          .movie-tickets-container2 {
-            display: none;
-          }
-          .movie-tickets-container3 {
-            display: contents;
-          }
-          .movie-tickets-container4 {
-            display: none;
-          }
-          .movie-tickets-container5 {
-            display: contents;
+           @keyframes slideIn {
+            from {
+              opacity: 0;
+              transform: translateX(-40px);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(0);
+            }
           }
         `}
       </style>

@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import TestimonialsCarousel from '../components/TestimonialsCarousel'
 
 const MovieTicketsSections = () => {
   const [openIndex, setOpenIndex] = React.useState<number | null>(null)
@@ -252,93 +253,7 @@ const MovieTicketsSections = () => {
           </div>
         </div>
       </section>
-      <section className="testimonials-carousel">
-        <div className="testimonials-container">
-          <h2 className="section-title">Khách Hàng Nói Gì?</h2>
-          <div className="carousel-viewport">
-            <div className="carousel-track">
-              <div className="testimonial-card">
-                <div className="stars">
-                  <span>★★★★★</span>
-                </div>
-                <p className="quote">
-                  &quot;Giao diện đặt vé của Booking Hub cực kỳ mượt mà. Tôi
-                  có thể chọn được ghế ngồi ưng ý chỉ trong chưa đầy 1
-                  phút!&quot;
-                </p>
-                <div className="author">
-                  <div className="author-info">
-                    <span className="name">Nguyễn Minh Anh</span>
-                    <span className="role">Người dùng thân thiết</span>
-                  </div>
-                </div>
-              </div>
-              <div className="testimonial-card">
-                <div className="stars">
-                  <span>★★★★★</span>
-                </div>
-                <p className="quote">
-                  &quot;Hệ thống thanh toán rất an toàn. Tôi hoàn toàn yên tâm
-                  khi sử dụng thẻ tín dụng để đặt vé tại đây.&quot;
-                </p>
-                <div className="author">
-                  <div className="author-info">
-                    <span className="name">Trần Hoàng Nam</span>
-                    <span className="role">Yêu thích điện ảnh</span>
-                  </div>
-                </div>
-              </div>
-              <div className="testimonial-card">
-                <div className="stars">
-                  <span>★★★★★</span>
-                </div>
-                <p className="quote">
-                  &quot;Tốc độ tải trang và cập nhật lịch chiếu rất nhanh. Đây
-                  chắc chắn là ứng dụng đặt vé tốt nhất tôi từng dùng.&quot;
-                </p>
-                <div className="author">
-                  <div className="author-info">
-                    <span className="name">Lê Thị Mai</span>
-                    <span className="role">Khách hàng mới</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="carousel-controls">
-            <button aria-label="Previous" className="carousel-btn prev">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="m15 18-6-6 6-6"></path>
-              </svg>
-            </button>
-            <button aria-label="Next" className="carousel-btn next">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="m9 18 6-6-6-6"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </section>
+      <TestimonialsCarousel />
       <section className="faq-accordion">
         <div className="faq-container">
           <h2 className="section-title">Câu Hỏi Thường Gặp</h2>

@@ -294,4 +294,26 @@ export const modalStyles = `
         flex: 1;
         accent-color: #3B82F6;
     }
+
+    /* Price Input Styles */
+    .price-input-wrapper {
+        position: relative;
+        width: 100%;
+    }
+    .price-input-wrapper .form-input {
+        padding-right: 3.5rem; /* Space for VNĐ */
+        width: 100%;
+    }
+    .price-suffix {
+        position: absolute;
+        top: 50%;
+        right: 1rem;
+        transform: translateY(-50%);
+        color: #6B7280;
+        font-weight: 500;
+        pointer-events: none;
+        font-size: 0.9rem;
+        z-index: 10;
+        line-height: 1;
+    }
 `;

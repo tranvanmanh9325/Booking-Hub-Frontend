@@ -1,52 +1,67 @@
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '../lib/api-client';
-import { MOVIE_RATING } from '../config/constants';
 
-
-/**
- * Interface định nghĩa thông tin phim.
- */
 export interface Movie {
     id: number;
     title: string;
     description: string;
+    genre: string;
+    duration: number;
+    rating: number;
     posterUrl: string;
-    rating?: string;
-    showtimes: string[];
+    trailerUrl: string;
+    releaseDate: string;
 }
 
-const MOCK_MOVIES: Movie[] = [
-    {
-        id: 1,
-        title: 'Hành Trình Vô Tận',
-        description: 'Bom tấn hành động kịch tính nhất năm',
-        posterUrl: 'https://images.pexels.com/photos/7991142/pexels-photo-7991142.jpeg?auto=compress&cs=tinysrgb&w=1500',
-        rating: MOVIE_RATING.T18,
-        showtimes: ['09:30', '12:15', '15:00', '18:45']
-    },
-    {
-        id: 2,
-        title: 'Thế Giới Diệu Kỳ',
-        description: 'Chuyến phiêu lưu kỳ thú',
-        posterUrl: 'https://images.pexels.com/photos/3709371/pexels-photo-3709371.jpeg?auto=compress&cs=tinysrgb&w=1500',
-        rating: MOVIE_RATING.P,
-        showtimes: ['10:00', '14:30', '17:15', '20:00']
-    }
-];
+export interface Showtime {
+    id: number;
+    startTime: string;
+    endTime: string;
+    screenName: string;
+    cinemaName: string;
+}
 
-/**
- * Hook để lấy danh sách phim.
- * @returns React Query result chứa danh sách phim
- */
-export function useMovies() {
+export function useMovies(page = 0, size = 10) {
     return useQuery({
-        queryKey: ['movies', 'list'],
+        queryKey: ['movies', 'list', page, size],
+        queryFn: () => apiClient.get<{ content: Movie[], totalElements: number }>(`/api/v1/movies`, { params: { page, size } }),
+    });
+}
+
+export function useNowShowingMovies() {
+    return useQuery({
+        queryKey: ['movies', 'now-showing'],
+        queryFn: () => apiClient.get<Movie[]>('/api/v1/movies/now-showing'),
+    });
+}
+
+export function useUpcomingMovies() {
+    // Currently backend might not have a dedicated endpoint, filtering or using a separate endpoint if it existed
+    // For now we can fetch all and filter or just use search.
+    // Assuming we might add an endpoint later, or client-side filter
+    return useQuery({
+        queryKey: ['movies', 'upcoming'],
         queryFn: async () => {
-            // In the future: return await apiClient.get<Movie[]>('/movies');
-            // For now, return mock data with a slight delay
-            await new Promise(resolve => setTimeout(resolve, 500));
-            return MOCK_MOVIES;
+            // Temporary: filter from all movies or add specific endpoint
+            const res = await apiClient.get<any>('/api/v1/movies', { params: { page: 0, size: 50 } });
+            const now = new Date();
+            return res.content.filter((m: Movie) => new Date(m.releaseDate) > now);
         },
-        staleTime: 1000 * 60 * 60, // 1 hour
+    });
+}
+
+export function useMovie(id: number) {
+    return useQuery({
+        queryKey: ['movies', 'detail', id],
+        queryFn: () => apiClient.get<Movie>(`/api/v1/movies/${id}`),
+        enabled: !!id,
+    });
+}
+
+export function useShowtimes(movieId: number) {
+    return useQuery({
+        queryKey: ['movies', 'showtimes', movieId],
+        queryFn: () => apiClient.get<Showtime[]>(`/api/v1/movies/${movieId}/showtimes`),
+        enabled: !!movieId,
     });
 }

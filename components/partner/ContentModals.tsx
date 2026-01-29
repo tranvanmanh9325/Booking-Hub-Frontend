@@ -120,19 +120,61 @@ export const ContentFormModal: React.FC<ContentFormModalProps> = ({
                                     value={formData.type}
                                     onChange={e => setFormData({ ...formData, type: e.target.value })}
                                 >
-                                    <option value="Product">Product</option>
-                                    <option value="Ticket">Ticket</option>
-                                    <option value="Promotion">Promotion</option>
+                                    <option value="Product">{t('typeOptions.Product')}</option>
+                                    <option value="Ticket">{t('typeOptions.Ticket')}</option>
+                                    <option value="Promotion">{t('typeOptions.Promotion')}</option>
+                                    <option value="Movie">{t('typeOptions.Movie')}</option>
                                 </select>
                             </div>
                             <div className="form-group">
-                                <label>{t('table.price')}</label>
+                                <label>{t('table.location')}</label>
                                 <input
                                     className="form-input"
-                                    value={formData.price}
-                                    onChange={e => setFormData({ ...formData, price: e.target.value })}
-                                    required
+                                    value={formData.location || ''}
+                                    onChange={e => setFormData({ ...formData, location: e.target.value })}
+                                    placeholder={t('modal.placeholderLocation')}
                                 />
+                            </div>
+                            {formData.type === 'Movie' && (
+                                <>
+                                    <div className="form-group">
+                                        <label>{t('table.duration')} (phút)</label>
+                                        <input
+                                            type="number"
+                                            className="form-input"
+                                            value={formData.duration || ''}
+                                            onChange={e => setFormData({ ...formData, duration: e.target.value })}
+                                            placeholder={t('modal.placeholderDuration')}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>{t('table.releaseDate')}</label>
+                                        <input
+                                            type="date"
+                                            className="form-input"
+                                            value={formData.releaseDate || ''}
+                                            onChange={e => setFormData({ ...formData, releaseDate: e.target.value })}
+                                        />
+                                    </div>
+                                </>
+                            )}
+                            <div className="form-group">
+                                <label>{t('table.price')}</label>
+                                <div className="price-input-wrapper">
+                                    <input
+                                        className="form-input"
+                                        value={formData.price ? new Intl.NumberFormat('en-US').format(Number(formData.price.replace(/\D/g, ''))) : ''}
+                                        onChange={e => {
+                                            const rawValue = e.target.value.replace(/,/g, '');
+                                            if (!isNaN(Number(rawValue))) {
+                                                setFormData({ ...formData, price: rawValue });
+                                            }
+                                        }}
+                                        required
+                                        placeholder="0"
+                                    />
+                                    <span className="price-suffix">VNĐ</span>
+                                </div>
                             </div>
                             <div className="form-group">
                                 <label>{t('table.status')}</label>

@@ -99,7 +99,10 @@
             "edit": "Sửa",
             "delete": "Xóa",
             "active": "Hoạt động",
-            "inactive": "Tạm ngưng"
+            "inactive": "Tạm ngưng",
+            "duration": "Thời lượng",
+            "releaseDate": "Ngày khởi chiếu",
+            "location": "Địa điểm"
         },
         "modal": {
             "save": "Lưu",
@@ -112,7 +115,15 @@
             "editImage": "Chỉnh sửa ảnh",
             "zoom": "Thu phóng",
             "cropAndSave": "Cắt & Lưu",
-            "saving": "Đang lưu..."
+            "saving": "Đang lưu...",
+            "placeholderDuration": "Ví dụ: 120",
+            "placeholderLocation": "Nhập địa điểm"
+        },
+        "typeOptions": {
+            "Product": "Sản phẩm",
+            "Ticket": "Vé",
+            "Promotion": "Khuyến mãi",
+            "Movie": "Phim"
         }
     },
     "Users": {

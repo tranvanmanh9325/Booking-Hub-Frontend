@@ -7,4 +7,7 @@ export interface Content {
     thumbnail?: string;
     images?: string; // JSON string of array
     status: 'active' | 'inactive';
+    duration?: string;
+    releaseDate?: string;
+    location?: string;
 }

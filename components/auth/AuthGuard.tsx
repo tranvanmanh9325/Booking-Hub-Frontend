@@ -35,9 +35,12 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
                         router.replace('/admin/dashboard');
                         return;
                     }
-                    // Admins can access admin routes. 
-                    // Can they access other public routes? User said "tài khoản nào admin thì sẽ không truy cập được vào trang .../"
-                    // I'll assume strictly guarding root for now as requested.
+                } else if (user.role === 'PARTNER') {
+                    // PARTNER cannot access root -> redirect to partner dashboard
+                    if (isRoot) {
+                        router.replace('/partner/dashboard');
+                        return;
+                    }
                 } else {
                     // Non-admin (User)
                     if (isAdminRoute) {
@@ -47,8 +50,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
                 }
             } else {
                 // Not logged in
-                // If trying to access admin route, redirect to login or home?
-                // Standard: redirect to login.
+                // If trying to access admin route, redirect to login.
                 if (isAdminRoute) {
                     router.replace('/auth/login');
                     return;

@@ -32,7 +32,7 @@ const nextConfig = {
     locales: ['en', 'vi', 'ja'],
     defaultLocale: "en",
   },
-
+  output: 'standalone',
 }
 
 module.exports = withSentryConfig(

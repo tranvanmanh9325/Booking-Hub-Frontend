@@ -99,7 +99,8 @@
             "edit": "Edit",
             "delete": "Delete",
             "active": "Active",
-            "inactive": "Inactive"
+            "inactive": "Inactive",
+            "location": "Location"
         },
         "modal": {
             "save": "Save",
@@ -112,7 +113,9 @@
             "editImage": "Edit Image",
             "zoom": "Zoom",
             "cropAndSave": "Crop & Save",
-            "saving": "Saving..."
+            "saving": "Saving...",
+            "placeholderDuration": "Example: 120",
+            "placeholderLocation": "Enter location"
         }
     },
     "Users": {

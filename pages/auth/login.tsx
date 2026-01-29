@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { toast } from 'react-toastify';
 import Script from 'next/script'
@@ -28,6 +28,7 @@ const Login: React.FC = () => {
     register,
     handleSubmit,
     setError,
+    clearErrors,
     formState: { errors },
   } = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
@@ -37,6 +38,63 @@ const Login: React.FC = () => {
       rememberMe: false,
     },
   });
+
+  useEffect(() => {
+    // Safety check for window presence (important for Next.js SSR/environments)
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    // 1. Global handler for ErrorEvent and PromiseRejectionEvent
+    const handleGlobalError = (event: ErrorEvent | PromiseRejectionEvent) => {
+      const errorMsg = event instanceof ErrorEvent ? event.message : event.reason?.message; // reason might be an object
+
+      if (typeof errorMsg === 'string' && (errorMsg.includes('Popup window closed') || errorMsg.includes('popup_closed_by_user'))) {
+        event.preventDefault();
+        event.stopPropagation(); // Stop propagation
+        setIsGoogleLoading(false);
+      }
+    };
+
+    // 2. Intercept console.error to prevent Next.js overlay from showing logs
+    // We bind to the specific console instance to avoid context issues
+    const originalConsoleError = console.error ? console.error.bind(console) : null;
+
+    if (originalConsoleError) {
+      console.error = (...args) => {
+        // Check first argument for the specific error message
+        if (args.length > 0 && typeof args[0] === 'string' &&
+          (args[0].includes('Popup window closed') || args[0].includes('popup_closed_by_user'))) {
+          setIsGoogleLoading(false);
+          return; // Suppress the log
+        }
+        // Also check if the error object is passed as an argument
+        if (args.length > 0 && args[0] instanceof Error &&
+          (args[0].message.includes('Popup window closed') || args[0].message.includes('popup_closed_by_user'))) {
+          setIsGoogleLoading(false);
+          return;
+        }
+
+        originalConsoleError(...args);
+      };
+    }
+
+    // Add event listeners with capture phase for 'error'
+    window.addEventListener('error', handleGlobalError, true);
+    window.addEventListener('unhandledrejection', handleGlobalError);
+
+    return () => {
+      // Restore original console.error
+      if (originalConsoleError) {
+        console.error = originalConsoleError;
+      }
+      // Check window again in cleanup just in case
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('error', handleGlobalError, true);
+        window.removeEventListener('unhandledrejection', handleGlobalError);
+      }
+    };
+  }, []);
 
   const onSubmit = async (data: LoginValues) => {
     setIsLoading(true)
@@ -78,57 +136,7 @@ const Login: React.FC = () => {
     }
   }
 
-  const handleGoogleSignIn = async () => {
-    setIsGoogleLoading(true)
-    // Clear root errors if any
-    setError('root', { message: undefined });
-
-    try {
-      const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
-
-      if (!clientId) {
-        const msg = 'Google Client ID chưa được cấu hình. Vui lòng liên hệ quản trị viên.';
-        setError('root', { message: msg });
-        setIsGoogleLoading(false)
-        return
-      }
-
-      // Wait for Google Identity Services to load (with timeout)
-      let attempts = 0
-      const maxAttempts = 50 // 5 seconds max wait
-
-      while (typeof window !== 'undefined' && !(window as any).google && attempts < maxAttempts) {
-        await new Promise(resolve => setTimeout(resolve, 100))
-        attempts++
-      }
-
-      if (typeof window !== 'undefined' && (window as any).google) {
-        const google = (window as any).google
-
-        // Use OAuth 2.0 flow with popup
-        const client = google.accounts.oauth2.initTokenClient({
-          client_id: clientId,
-          scope: 'email profile',
-          callback: handleGoogleTokenResponse,
-        })
-
-        client.requestAccessToken()
-      } else {
-        // Fallback: redirect to Google OAuth if script didn't load
-        const redirectUri = `${window.location.origin}/auth/google/callback`
-        const scope = 'email profile'
-        const responseType = 'code'
-        const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=${responseType}&scope=${encodeURIComponent(scope)}&access_type=offline&prompt=consent`
-
-        window.location.href = googleAuthUrl
-      }
-    } catch (error) {
-      console.error('Google Sign-In error:', error)
-      setError('root', { message: 'Có lỗi xảy ra khi đăng nhập với Google. Vui lòng thử lại.' });
-      setIsGoogleLoading(false)
-    }
-  }
-
+  // Define the token response handler first so it can be referenced
   const handleGoogleTokenResponse = async (tokenResponse: any) => {
     try {
       if (!tokenResponse || !tokenResponse.access_token) {
@@ -182,6 +190,67 @@ const Login: React.FC = () => {
     } catch (error: any) {
       console.error('Google token response error:', error)
       setError('root', { message: error.message || 'Có lỗi xảy ra khi xử lý đăng nhập Google. Vui lòng thử lại.' });
+      setIsGoogleLoading(false)
+    }
+  }
+
+  const handleGoogleSignIn = async () => {
+    setIsGoogleLoading(true)
+    // Clear root errors if any
+    clearErrors('root');
+
+    try {
+      const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
+
+      if (!clientId) {
+        const msg = 'Google Client ID chưa được cấu hình. Vui lòng liên hệ quản trị viên.';
+        setError('root', { message: msg });
+        setIsGoogleLoading(false)
+        return
+      }
+
+      // Wait for Google Identity Services to load (with timeout)
+      let attempts = 0
+      const maxAttempts = 50 // 5 seconds max wait
+
+      while (typeof window !== 'undefined' && !(window as any).google && attempts < maxAttempts) {
+        await new Promise(resolve => setTimeout(resolve, 100))
+        attempts++
+      }
+
+      if (typeof window !== 'undefined' && (window as any).google) {
+        const google = (window as any).google
+
+        // Use OAuth 2.0 flow with popup
+        const client = google.accounts.oauth2.initTokenClient({
+          client_id: clientId,
+          scope: 'email profile',
+          callback: handleGoogleTokenResponse,
+          error_callback: (error: any) => {
+            // Ignored popup_closed_by_user error and just reset loading state
+            if (error?.type === 'popup_closed_by_user') {
+              setIsGoogleLoading(false);
+              return;
+            }
+
+            console.error('Google Sign-In error callback:', error);
+            setIsGoogleLoading(false);
+          },
+        })
+
+        client.requestAccessToken()
+      } else {
+        // Fallback: redirect to Google OAuth if script didn't load
+        const redirectUri = `${window.location.origin}/auth/google/callback`
+        const scope = 'email profile'
+        const responseType = 'code'
+        const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=${responseType}&scope=${encodeURIComponent(scope)}&access_type=offline&prompt=consent`
+
+        window.location.href = googleAuthUrl
+      }
+    } catch (error) {
+      console.error('Google Sign-In error:', error)
+      setError('root', { message: 'Có lỗi xảy ra khi đăng nhập với Google. Vui lòng thử lại.' });
       setIsGoogleLoading(false)
     }
   }

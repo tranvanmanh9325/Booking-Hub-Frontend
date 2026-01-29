@@ -27,7 +27,10 @@ export default function ContentPage() {
         description: '',
         thumbnail: '',
         images: '[]',
-        status: 'active'
+        status: 'active',
+        duration: '',
+        releaseDate: '',
+        location: ''
     });
 
     const uploadFile = async (file: File) => {
@@ -49,7 +52,18 @@ export default function ContentPage() {
         try {
             await addMutation.mutateAsync(formData);
             setIsAddModalOpen(false);
-            setFormData({ name: '', type: 'Product', price: '', description: '', thumbnail: '', images: '[]', status: 'active' }); // Reset form
+            setFormData({
+                name: '',
+                type: 'Product',
+                price: '',
+                description: '',
+                thumbnail: '',
+                images: '[]',
+                status: 'active',
+                duration: '',
+                releaseDate: '',
+                location: ''
+            }); // Reset form
         } catch (error) {
             console.error("Failed to add content", error);
             // Optionally add error handling UI here
@@ -66,7 +80,10 @@ export default function ContentPage() {
             description: item.description || '',
             thumbnail: item.thumbnail || '',
             images: item.images || '[]',
-            status: item.status
+            status: item.status,
+            duration: item.duration || '',
+            releaseDate: item.releaseDate || '',
+            location: item.location || ''
         });
         setIsEditModalOpen(true);
     };
@@ -118,7 +135,7 @@ export default function ContentPage() {
                     <p className="page-subtitle">{t('subtitle')}</p>
                 </div>
                 <button className="btn-primary" onClick={() => {
-                    setFormData({ name: '', type: 'Product', price: '', status: 'active' });
+                    setFormData({ name: '', type: 'Product', price: '', status: 'active', duration: '', releaseDate: '', location: '' });
                     setIsAddModalOpen(true);
                 }}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="btn-icon" viewBox="0 0 20 20" fill="currentColor">
