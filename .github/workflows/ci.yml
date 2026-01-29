@@ -29,8 +29,12 @@ jobs:
       - name: Run Lint
         run: npm run lint
 
-      - name: Build
+      - name: Build (Next.js)
         run: npm run build
 
       - name: Type Check
         run: npm run type-check
+
+      - name: Build Docker Image
+        run: |
+          docker build -t booking-hub-frontend:latest .
