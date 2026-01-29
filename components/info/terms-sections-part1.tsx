@@ -14,7 +14,7 @@ const TermsSectionsPart1: React.FC<TermsSectionsPart1Props> = ({ sectionRefs }) 
       >
         <h2 className="terms-section-title">1. Chấp Nhận Điều Khoản</h2>
         <p className="terms-text">
-          Chào mừng bạn đến với Booking Hub! Bằng việc truy cập, sử dụng, duyệt, hoặc đăng ký tài khoản trên trang web Booking Hub (sau đây gọi là "Trang web", "Dịch vụ", "Nền tảng" hoặc "Chúng tôi"), bạn xác nhận rằng bạn đã đọc, hiểu, và đồng ý tuân thủ tất cả các điều khoản và điều kiện được nêu trong tài liệu này, cũng như tất cả các chính sách liên quan, bao gồm nhưng không giới hạn ở Chính Sách Bảo Mật và Chính Sách Cookie của chúng tôi.
+          Chào mừng bạn đến với Booking Hub! Bằng việc truy cập, sử dụng, duyệt, hoặc đăng ký tài khoản trên trang web Booking Hub (sau đây gọi là &quot;Trang web&quot;, &quot;Dịch vụ&quot;, &quot;Nền tảng&quot; hoặc &quot;Chúng tôi&quot;), bạn xác nhận rằng bạn đã đọc, hiểu, và đồng ý tuân thủ tất cả các điều khoản và điều kiện được nêu trong tài liệu này, cũng như tất cả các chính sách liên quan, bao gồm nhưng không giới hạn ở Chính Sách Bảo Mật và Chính Sách Cookie của chúng tôi.
         </p>
         <p className="terms-text">
           Các điều khoản này tạo thành một thỏa thuận pháp lý ràng buộc giữa bạn và Booking Hub. Nếu bạn không đồng ý với bất kỳ phần nào của các điều khoản này, bạn không được phép truy cập, sử dụng, hoặc đăng ký tài khoản trên dịch vụ của chúng tôi. Việc bạn tiếp tục sử dụng dịch vụ sau khi các điều khoản này được cập nhật, sửa đổi, hoặc thay đổi được coi là bạn đã đọc, hiểu, và chấp nhận các thay đổi đó.
@@ -211,7 +211,7 @@ const TermsSectionsPart1: React.FC<TermsSectionsPart1Props> = ({ sectionRefs }) 
         </p>
         <h3 className="terms-subtitle">4.6. Hoàn Tiền và Xử Lý Giao Dịch</h3>
         <p className="terms-text">
-          Trong trường hợp giao dịch của bạn bị từ chối, hủy bỏ, hoặc cần được hoàn tiền, chúng tôi sẽ xử lý theo chính sách hoàn tiền được quy định trong phần "Hủy và Hoàn Tiền" của các điều khoản này. Thời gian xử lý hoàn tiền có thể mất từ 7 đến 30 ngày làm việc tùy thuộc vào phương thức thanh toán và ngân hàng của bạn.
+          Trong trường hợp giao dịch của bạn bị từ chối, hủy bỏ, hoặc cần được hoàn tiền, chúng tôi sẽ xử lý theo chính sách hoàn tiền được quy định trong phần &quot;Hủy và Hoàn Tiền&quot; của các điều khoản này. Thời gian xử lý hoàn tiền có thể mất từ 7 đến 30 ngày làm việc tùy thuộc vào phương thức thanh toán và ngân hàng của bạn.
         </p>
       </div>
 
@@ -233,7 +233,7 @@ const TermsSectionsPart1: React.FC<TermsSectionsPart1Props> = ({ sectionRefs }) 
           Để hủy đặt chỗ, bạn có thể thực hiện theo các cách sau:
         </p>
         <ul className="terms-list">
-          <li><strong>Hủy trực tuyến:</strong> Đăng nhập vào tài khoản của bạn trên trang web, truy cập phần "Đặt chỗ của tôi" hoặc "Quản lý đặt chỗ", chọn đặt chỗ cần hủy, và làm theo hướng dẫn để hủy</li>
+          <li><strong>Hủy trực tuyến:</strong> Đăng nhập vào tài khoản của bạn trên trang web, truy cập phần &quot;Đặt chỗ của tôi&quot; hoặc &quot;Quản lý đặt chỗ&quot;, chọn đặt chỗ cần hủy, và làm theo hướng dẫn để hủy</li>
           <li><strong>Hủy qua ứng dụng di động:</strong> Sử dụng ứng dụng Booking Hub (nếu có) để hủy đặt chỗ một cách nhanh chóng và tiện lợi</li>
           <li><strong>Hủy qua email:</strong> Gửi email yêu cầu hủy đến địa chỉ hỗ trợ khách hàng của chúng tôi, bao gồm mã đặt chỗ và thông tin cần thiết</li>
           <li><strong>Hủy qua điện thoại:</strong> Liên hệ trực tiếp với bộ phận hỗ trợ khách hàng của chúng tôi qua số hotline được cung cấp trên trang web</li>
@@ -306,10 +306,10 @@ const TermsSectionsPart1: React.FC<TermsSectionsPart1Props> = ({ sectionRefs }) 
         <h2 className="terms-section-title">6. Quyền Sở Hữu Trí Tuệ</h2>
         <h3 className="terms-subtitle">6.1. Quyền Sở Hữu của Booking Hub</h3>
         <p className="terms-text">
-          Tất cả nội dung trên trang web Booking Hub, bao gồm nhưng không giới hạn ở văn bản, đồ họa, logo, hình ảnh, biểu tượng, phần mềm, mã nguồn, giao diện người dùng, thiết kế, bố cục, cấu trúc, dữ liệu, thông tin, và các tài liệu khác (sau đây gọi chung là "Nội dung"), là tài sản độc quyền của Booking Hub, các đối tác của chúng tôi, hoặc các bên cấp phép của chúng tôi, và được bảo vệ bởi luật bản quyền, nhãn hiệu, bằng sáng chế, bí mật thương mại, và các luật sở hữu trí tuệ khác của Việt Nam và quốc tế.
+          Tất cả nội dung trên trang web Booking Hub, bao gồm nhưng không giới hạn ở văn bản, đồ họa, logo, hình ảnh, biểu tượng, phần mềm, mã nguồn, giao diện người dùng, thiết kế, bố cục, cấu trúc, dữ liệu, thông tin, và các tài liệu khác (sau đây gọi chung là &quot;Nội dung&quot;), là tài sản độc quyền của Booking Hub, các đối tác của chúng tôi, hoặc các bên cấp phép của chúng tôi, và được bảo vệ bởi luật bản quyền, nhãn hiệu, bằng sáng chế, bí mật thương mại, và các luật sở hữu trí tuệ khác của Việt Nam và quốc tế.
         </p>
         <p className="terms-text">
-          Tên "Booking Hub", logo, và tất cả các nhãn hiệu, nhãn hiệu dịch vụ, và tên thương mại khác được sử dụng trên trang web là tài sản của Booking Hub hoặc các bên cấp phép của chúng tôi. Bạn không được sử dụng bất kỳ nhãn hiệu, logo, hoặc tên thương mại nào của Booking Hub mà không có sự đồng ý bằng văn bản trước của chúng tôi.
+          Tên &quot;Booking Hub&quot;, logo, và tất cả các nhãn hiệu, nhãn hiệu dịch vụ, và tên thương mại khác được sử dụng trên trang web là tài sản của Booking Hub hoặc các bên cấp phép của chúng tôi. Bạn không được sử dụng bất kỳ nhãn hiệu, logo, hoặc tên thương mại nào của Booking Hub mà không có sự đồng ý bằng văn bản trước của chúng tôi.
         </p>
         <h3 className="terms-subtitle">6.2. Giấy Phép Sử Dụng Hạn Chế</h3>
         <p className="terms-text">
@@ -333,7 +333,7 @@ const TermsSectionsPart1: React.FC<TermsSectionsPart1Props> = ({ sectionRefs }) 
         </p>
         <h3 className="terms-subtitle">6.3. Nội Dung Người Dùng</h3>
         <p className="terms-text">
-          Bằng việc đăng tải, gửi, chia sẻ, hoặc cung cấp bất kỳ nội dung nào trên hoặc thông qua trang web (bao gồm nhưng không giới hạn ở đánh giá, bình luận, hình ảnh, video, âm thanh, văn bản, dữ liệu, hoặc các tài liệu khác, sau đây gọi là "Nội dung Người dùng"), bạn:
+          Bằng việc đăng tải, gửi, chia sẻ, hoặc cung cấp bất kỳ nội dung nào trên hoặc thông qua trang web (bao gồm nhưng không giới hạn ở đánh giá, bình luận, hình ảnh, video, âm thanh, văn bản, dữ liệu, hoặc các tài liệu khác, sau đây gọi là &quot;Nội dung Người dùng&quot;), bạn:
         </p>
         <ul className="terms-list">
           <li>Xác nhận và đảm bảo rằng bạn sở hữu hoặc có quyền hợp pháp để cấp phép cho Nội dung Người dùng đó</li>
@@ -417,7 +417,7 @@ const TermsSectionsPart1: React.FC<TermsSectionsPart1Props> = ({ sectionRefs }) 
           <li><strong>Quyền rút lại đồng ý:</strong> Nếu việc xử lý thông tin của bạn dựa trên sự đồng ý, bạn có quyền rút lại đồng ý đó bất cứ lúc nào</li>
         </ul>
         <p className="terms-text">
-          Để thực hiện các quyền này, vui lòng liên hệ với chúng tôi thông qua thông tin liên hệ được cung cấp trong phần "Liên Hệ" của các điều khoản này. Chúng tôi sẽ phản hồi yêu cầu của bạn trong thời gian hợp lý và theo quy định của pháp luật hiện hành.
+          Để thực hiện các quyền này, vui lòng liên hệ với chúng tôi thông qua thông tin liên hệ được cung cấp trong phần &quot;Liên Hệ&quot; của các điều khoản này. Chúng tôi sẽ phản hồi yêu cầu của bạn trong thời gian hợp lý và theo quy định của pháp luật hiện hành.
         </p>
       </div>
       <style jsx>{`

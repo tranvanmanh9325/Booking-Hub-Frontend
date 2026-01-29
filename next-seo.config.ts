@@ -1,4 +1,4 @@
-export default {
+const config = {
   title: 'Booking Hub',
   titleTemplate: 'Booking Hub | %s',
   defaultTitle: 'Booking Hub',
@@ -23,3 +23,5 @@ export default {
     cardType: 'summary_large_image',
   },
 };
+
+export default config;

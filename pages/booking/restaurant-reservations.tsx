@@ -353,7 +353,7 @@ const RestaurantReservations: React.FC = () => {
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="star-icon"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="star-icon"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
                 </div>
-                <p className="testimonial-text">"Trải nghiệm đặt bàn cực kỳ nhanh chóng. Tôi chỉ mất chưa đầy 1 phút để tìm thấy bàn trống và nhận được xác nhận ngay lập tức."</p>
+                <p className="testimonial-text">&quot;Trải nghiệm đặt bàn cực kỳ nhanh chóng. Tôi chỉ mất chưa đầy 1 phút để tìm thấy bàn trống và nhận được xác nhận ngay lập tức.&quot;</p>
                 <div className="testimonial-user">
                   <div className="user-avatar">MT</div>
                   <div className="user-info">
@@ -370,7 +370,7 @@ const RestaurantReservations: React.FC = () => {
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="star-icon"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="star-icon"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
                 </div>
-                <p className="testimonial-text">"Hệ thống đối tác rất đa dạng, từ nhà hàng sang trọng đến quán ăn gia đình. Giao diện mượt mà và rất dễ sử dụng."</p>
+                <p className="testimonial-text">&quot;Hệ thống đối tác rất đa dạng, từ nhà hàng sang trọng đến quán ăn gia đình. Giao diện mượt mà và rất dễ sử dụng.&quot;</p>
                 <div className="testimonial-user">
                   <div className="user-avatar">LA</div>
                   <div className="user-info">
@@ -387,7 +387,7 @@ const RestaurantReservations: React.FC = () => {
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="star-icon"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="star-icon"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>
                 </div>
-                <p className="testimonial-text">"Tôi rất thích tính năng tích điểm. Vừa ăn ngon vừa được giảm giá cho những lần sau, thật là tuyệt vời!"</p>
+                <p className="testimonial-text">&quot;Tôi rất thích tính năng tích điểm. Vừa ăn ngon vừa được giảm giá cho những lần sau, thật là tuyệt vời!&quot;</p>
                 <div className="testimonial-user">
                   <div className="user-avatar">HD</div>
                   <div className="user-info">

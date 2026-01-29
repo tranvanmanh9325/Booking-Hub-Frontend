@@ -59,7 +59,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
 
             setAuthorized(true);
         }
-    }, [user, loading, router.pathname]);
+    }, [user, loading, router.pathname, router]);
 
     if (loading) {
         return (

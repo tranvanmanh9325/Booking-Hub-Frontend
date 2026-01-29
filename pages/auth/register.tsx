@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
+import Link from 'next/link'
 import Script from 'next/script'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
@@ -502,13 +503,13 @@ const Register: React.FC = () => {
                     />
                     <span className="register-checkbox-label">
                       Tôi đồng ý với{' '}
-                      <a href="/info/terms" target="_blank" className="register-link">
+                      <Link href="/info/terms" target="_blank" className="register-link">
                         Điều khoản sử dụng
-                      </a>{' '}
+                      </Link>{' '}
                       và{' '}
-                      <a href="/info/privacy" target="_blank" className="register-link">
+                      <Link href="/info/privacy" target="_blank" className="register-link">
                         Chính sách bảo mật
-                      </a>
+                      </Link>
                     </span>
                   </label>
                   {errors.agreeToTerms && (
@@ -575,9 +576,9 @@ const Register: React.FC = () => {
               <div className="register-footer">
                 <span className="register-footer-text">
                   Đã có tài khoản?{' '}
-                  <a href="/auth/login" className="register-footer-link">
+                  <Link href="/auth/login" className="register-footer-link">
                     Đăng nhập ngay
-                  </a>
+                  </Link>
                 </span>
               </div>
             </div>

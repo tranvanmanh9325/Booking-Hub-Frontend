@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
+import Link from 'next/link'
 import { toast } from 'react-toastify';
 import Script from 'next/script'
 import { useRouter } from 'next/router'
@@ -429,9 +430,9 @@ const Login: React.FC = () => {
                     />
                     <span className="login-checkbox-label">Ghi nhớ đăng nhập</span>
                   </label>
-                  <a href="/auth/forgot-password" className="login-forgot-link">
+                  <Link href="/auth/forgot-password" className="login-forgot-link">
                     Quên mật khẩu?
-                  </a>
+                  </Link>
                 </div>
 
                 <Button
@@ -494,9 +495,9 @@ const Login: React.FC = () => {
               <div className="login-footer">
                 <span className="login-footer-text">
                   Chưa có tài khoản?{' '}
-                  <a href="/auth/register" className="login-footer-link">
+                  <Link href="/auth/register" className="login-footer-link">
                     Đăng ký ngay
-                  </a>
+                  </Link>
                 </span>
               </div>
             </Card>

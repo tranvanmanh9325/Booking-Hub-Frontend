@@ -57,9 +57,9 @@ const TermsSectionsPart2: React.FC<TermsSectionsPart2Props> = ({ sectionRefs }) 
         className="terms-section"
       >
         <h2 className="terms-section-title">9. Giới Hạn Trách Nhiệm</h2>
-        <h3 className="terms-subtitle">9.1. Dịch Vụ "Như Hiện Có"</h3>
+        <h3 className="terms-subtitle">9.1. Dịch Vụ &quot;Như Hiện Có&quot;</h3>
         <p className="terms-text">
-          Dịch vụ được cung cấp "như hiện có" (AS IS) và "như có sẵn" (AS AVAILABLE) mà không có bất kỳ bảo đảm, tuyên bố, hoặc cam kết nào, dù là rõ ràng hay ngụ ý, bao gồm nhưng không giới hạn ở các bảo đảm về tính thương mại, tính phù hợp cho một mục đích cụ thể, tính không vi phạm, tính chính xác, tính đầy đủ, hoặc tính liên tục của dịch vụ.
+          Dịch vụ được cung cấp &quot;như hiện có&quot; (AS IS) và &quot;như có sẵn&quot; (AS AVAILABLE) mà không có bất kỳ bảo đảm, tuyên bố, hoặc cam kết nào, dù là rõ ràng hay ngụ ý, bao gồm nhưng không giới hạn ở các bảo đảm về tính thương mại, tính phù hợp cho một mục đích cụ thể, tính không vi phạm, tính chính xác, tính đầy đủ, hoặc tính liên tục của dịch vụ.
         </p>
         <p className="terms-text">
           Booking Hub không đảm bảo, cam kết, hoặc tuyên bố rằng:
@@ -74,7 +74,7 @@ const TermsSectionsPart2: React.FC<TermsSectionsPart2Props> = ({ sectionRefs }) 
         </ul>
         <h3 className="terms-subtitle">9.2. Giới Hạn Trách Nhiệm</h3>
         <p className="terms-text">
-          Trong phạm vi tối đa được phép bởi pháp luật hiện hành, Booking Hub, các công ty liên kết, đối tác, giám đốc, nhân viên, đại lý, nhà thầu, hoặc các bên liên quan khác của chúng tôi (sau đây gọi chung là "Các Bên Liên Quan") không chịu trách nhiệm, và bạn đồng ý miễn trừ Các Bên Liên Quan khỏi bất kỳ trách nhiệm nào, cho bất kỳ thiệt hại trực tiếp, gián tiếp, ngẫu nhiên, đặc biệt, hậu quả, hoặc hình phạt nào, bao gồm nhưng không giới hạn ở:
+          Trong phạm vi tối đa được phép bởi pháp luật hiện hành, Booking Hub, các công ty liên kết, đối tác, giám đốc, nhân viên, đại lý, nhà thầu, hoặc các bên liên quan khác của chúng tôi (sau đây gọi chung là &quot;Các Bên Liên Quan&quot;) không chịu trách nhiệm, và bạn đồng ý miễn trừ Các Bên Liên Quan khỏi bất kỳ trách nhiệm nào, cho bất kỳ thiệt hại trực tiếp, gián tiếp, ngẫu nhiên, đặc biệt, hậu quả, hoặc hình phạt nào, bao gồm nhưng không giới hạn ở:
         </p>
         <ul className="terms-list">
           <li><strong>Thiệt hại do sử dụng dịch vụ:</strong> Thiệt hại phát sinh từ việc sử dụng hoặc không thể sử dụng dịch vụ, bao gồm mất lợi nhuận, mất cơ hội kinh doanh, mất dữ liệu, hoặc thiệt hại khác</li>
@@ -115,7 +115,7 @@ const TermsSectionsPart2: React.FC<TermsSectionsPart2Props> = ({ sectionRefs }) 
       >
         <h2 className="terms-section-title">10. Bồi Thường</h2>
         <p className="terms-text">
-          Bạn đồng ý bồi thường, bảo vệ, và giữ cho Booking Hub, các công ty mẹ, công ty con, công ty liên kết, đối tác, giám đốc, nhân viên, đại lý, nhà thầu, nhà cung cấp dịch vụ, và các bên được cấp phép của chúng tôi (sau đây gọi chung là "Các Bên Được Bảo Vệ") không bị thiệt hại khỏi bất kỳ khiếu nại, yêu cầu, kiện tụng, thủ tục, thiệt hại, nghĩa vụ, tổn thất, chi phí, và chi phí pháp lý (bao gồm nhưng không giới hạn ở phí luật sư, phí tư vấn pháp lý, và các chi phí liên quan khác) phát sinh từ hoặc liên quan đến:
+          Bạn đồng ý bồi thường, bảo vệ, và giữ cho Booking Hub, các công ty mẹ, công ty con, công ty liên kết, đối tác, giám đốc, nhân viên, đại lý, nhà thầu, nhà cung cấp dịch vụ, và các bên được cấp phép của chúng tôi (sau đây gọi chung là &quot;Các Bên Được Bảo Vệ&quot;) không bị thiệt hại khỏi bất kỳ khiếu nại, yêu cầu, kiện tụng, thủ tục, thiệt hại, nghĩa vụ, tổn thất, chi phí, và chi phí pháp lý (bao gồm nhưng không giới hạn ở phí luật sư, phí tư vấn pháp lý, và các chi phí liên quan khác) phát sinh từ hoặc liên quan đến:
         </p>
         <ul className="terms-list">
           <li><strong>Sử dụng dịch vụ:</strong> Việc bạn sử dụng, lạm dụng, hoặc không thể sử dụng dịch vụ, bao gồm việc bạn truy cập hoặc sử dụng dịch vụ một cách trái phép hoặc vi phạm các điều khoản này</li>
@@ -277,7 +277,7 @@ const TermsSectionsPart2: React.FC<TermsSectionsPart2Props> = ({ sectionRefs }) 
         </ul>
         <h3 className="terms-subtitle">13.2. Thẩm Quyền Tòa Án</h3>
         <p className="terms-text">
-          Trong trường hợp tranh chấp không thể được giải quyết thông qua thương lượng, hòa giải, hoặc trọng tài (theo quy định trong phần "Giải Quyết Tranh Chấp"), hoặc trong các trường hợp mà pháp luật quy định phải được giải quyết bởi tòa án, bạn và Booking Hub đồng ý rằng bất kỳ vụ kiện, thủ tục pháp lý, hoặc hành động nào phát sinh từ hoặc liên quan đến các điều khoản này hoặc dịch vụ sẽ được đệ trình và giải quyết độc quyền bởi các tòa án có thẩm quyền tại Hà Nội, Việt Nam.
+          Trong trường hợp tranh chấp không thể được giải quyết thông qua thương lượng, hòa giải, hoặc trọng tài (theo quy định trong phần &quot;Giải Quyết Tranh Chấp&quot;), hoặc trong các trường hợp mà pháp luật quy định phải được giải quyết bởi tòa án, bạn và Booking Hub đồng ý rằng bất kỳ vụ kiện, thủ tục pháp lý, hoặc hành động nào phát sinh từ hoặc liên quan đến các điều khoản này hoặc dịch vụ sẽ được đệ trình và giải quyết độc quyền bởi các tòa án có thẩm quyền tại Hà Nội, Việt Nam.
         </p>
         <p className="terms-text">
           Bạn đồng ý từ bỏ bất kỳ phản đối nào về thẩm quyền hoặc địa điểm của các tòa án này và đồng ý không khởi kiện hoặc tham gia vào bất kỳ vụ kiện tập thể nào chống lại Booking Hub.
@@ -321,7 +321,7 @@ const TermsSectionsPart2: React.FC<TermsSectionsPart2Props> = ({ sectionRefs }) 
           <li><strong>Hộp thư phản hồi trên trang web:</strong> Sử dụng biểu mẫu liên hệ trên trang web của chúng tôi để gửi câu hỏi hoặc phản hồi</li>
           <li><strong>Ứng dụng di động:</strong> Nếu bạn sử dụng ứng dụng di động của Booking Hub, bạn có thể sử dụng tính năng hỗ trợ trong ứng dụng</li>
           <li><strong>Mạng xã hội:</strong> Theo dõi và liên hệ với chúng tôi qua các trang mạng xã hội chính thức của Booking Hub (nếu có)</li>
-          <li><strong>Trung tâm hỗ trợ:</strong> Truy cập phần "Trung tâm Trợ giúp" hoặc "FAQ" trên trang web để tìm câu trả lời cho các câu hỏi thường gặp</li>
+          <li><strong>Trung tâm hỗ trợ:</strong> Truy cập phần &quot;Trung tâm Trợ giúp&quot; hoặc &quot;FAQ&quot; trên trang web để tìm câu trả lời cho các câu hỏi thường gặp</li>
         </ul>
         <h3 className="terms-subtitle">14.2. Thời Gian Phản Hồi</h3>
         <p className="terms-text">

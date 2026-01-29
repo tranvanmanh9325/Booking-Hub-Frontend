@@ -39,7 +39,7 @@ const PrivacySectionsPart2: React.FC<PrivacySectionsPart2Props> = ({ sectionRefs
         </p>
         <h3 className="privacy-subtitle">6.7. Cách Thực Hiện Quyền</h3>
         <p className="privacy-text">
-          Để thực hiện các quyền này, vui lòng liên hệ với chúng tôi thông qua thông tin liên hệ được cung cấp trong phần "Liên Hệ" của chính sách này. Chúng tôi sẽ phản hồi yêu cầu của bạn trong thời gian hợp lý và theo quy định của pháp luật hiện hành.
+          Để thực hiện các quyền này, vui lòng liên hệ với chúng tôi thông qua thông tin liên hệ được cung cấp trong phần &quot;Liên Hệ&quot; của chính sách này. Chúng tôi sẽ phản hồi yêu cầu của bạn trong thời gian hợp lý và theo quy định của pháp luật hiện hành.
         </p>
       </div>
 
@@ -91,7 +91,7 @@ const PrivacySectionsPart2: React.FC<PrivacySectionsPart2Props> = ({ sectionRefs
         <h2 className="privacy-section-title">9. Thay Đổi Chính Sách</h2>
         <h3 className="privacy-subtitle">9.1. Quyền Thay Đổi</h3>
         <p className="privacy-text">
-          Chúng tôi có thể cập nhật chính sách bảo mật này từ time to time để phản ánh các thay đổi trong thực tiễn của chúng tôi, công nghệ, yêu cầu pháp lý, hoặc vì các lý do khác. Chúng tôi sẽ thông báo cho bạn về bất kỳ thay đổi quan trọng nào bằng cách đăng chính sách mới trên trang web và cập nhật ngày "Cập nhật lần cuối" ở đầu chính sách này.
+          Chúng tôi có thể cập nhật chính sách bảo mật này từ time to time để phản ánh các thay đổi trong thực tiễn của chúng tôi, công nghệ, yêu cầu pháp lý, hoặc vì các lý do khác. Chúng tôi sẽ thông báo cho bạn về bất kỳ thay đổi quan trọng nào bằng cách đăng chính sách mới trên trang web và cập nhật ngày &quot;Cập nhật lần cuối&quot; ở đầu chính sách này.
         </p>
         <h3 className="privacy-subtitle">9.2. Thông Báo Thay Đổi</h3>
         <p className="privacy-text">

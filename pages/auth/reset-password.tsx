@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import Navigation from '../../components/navigation'
@@ -311,9 +312,9 @@ const ResetPassword: React.FC = () => {
                             <div className="login-footer">
                                 <span className="login-footer-text">
                                     Nhớ mật khẩu?{' '}
-                                    <a href="/auth/login" className="login-footer-link">
+                                    <Link href="/auth/login" className="login-footer-link">
                                         Đăng nhập
-                                    </a>
+                                    </Link>
                                 </span>
                             </div>
                         </div>
