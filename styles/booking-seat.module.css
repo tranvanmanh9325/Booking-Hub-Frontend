@@ -3,7 +3,8 @@
   background-color: #0f172a;
   color: #f1f5f9;
   font-family: 'Inter', sans-serif;
-  padding-bottom: 120px; /* Space for fixed bottom bar */
+  padding-bottom: 120px;
+  /* Space for fixed bottom bar */
 }
 
 /* Header */
@@ -76,14 +77,46 @@
   border-bottom: 1px solid #334155;
 }
 
-.datesScroll {
+.dateSelectorWrapper {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 20px;
+}
+
+.datesScroll {
+  flex: 1;
+  display: flex;
   gap: 15px;
   overflow-x: auto;
-  padding: 0 20px;
+  padding: 0 5px;
+  /* Reduced side padding as wrapper has it */
   scrollbar-width: none;
+  scroll-behavior: smooth;
+  /* Native smooth scroll */
+}
+
+.scrollButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid #334155;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.scrollButton:hover {
+  background: #334155;
+  color: #f1f5f9;
+  border-color: #475569;
 }
 
 .dateItem {
@@ -114,9 +147,11 @@
   font-size: 0.85rem;
   color: #94a3b8;
 }
+
 .dateItem.active .day {
   color: rgba(255, 255, 255, 0.8);
 }
+
 .date {
   font-size: 1.2rem;
   font-weight: 700;
@@ -218,7 +253,8 @@
 }
 
 .seat.couple {
-  width: 72px; /* Double width + gap */
+  width: 72px;
+  /* Double width + gap */
   background-color: #ec4899;
 }
 
@@ -345,7 +381,7 @@
   .mainContent {
     grid-template-columns: 1fr;
   }
-  
+
   .sidePanel {
     position: fixed;
     bottom: 0;
@@ -356,4 +392,45 @@
     margin: 0;
     box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
   }
+}
+
+/* Time Selector */
+.timeSelector {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 0 20px 30px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.timeButton {
+  background: #1e293b;
+  color: #94a3b8;
+  border: 1px solid #334155;
+  padding: 10px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  min-width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timeButton:hover {
+  background: #334155;
+  color: #f1f5f9;
+  border-color: #475569;
+  transform: translateY(-2px);
+}
+
+.timeButton.active {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5);
 }

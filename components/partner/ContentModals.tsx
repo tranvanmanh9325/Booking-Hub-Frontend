@@ -2,7 +2,12 @@ import React, { useState, useCallback } from 'react';
 import { Content } from '../../types/content';
 import Cropper from 'react-easy-crop';
 import getCroppedImg from '../../utils/cropImage';
+import { ShowtimeManager } from './ShowtimeManager';
+import { ScreenSeatManager } from './ScreenSeatManager';
 import { modalStyles } from './ContentModalStyles';
+
+import { CinemaManager } from './CinemaManager';
+import { ScreenManager } from './ScreenManager';
 
 interface ContentFormModalProps {
     isOpen: boolean;
@@ -14,10 +19,11 @@ interface ContentFormModalProps {
     isPending: boolean;
     t: any;
     mode: 'add' | 'edit';
+    contentId?: number; // Added contentId
 }
 
 export const ContentFormModal: React.FC<ContentFormModalProps> = ({
-    isOpen, onClose, onSubmit, formData, setFormData, uploadFile, isPending, t, mode
+    isOpen, onClose, onSubmit, formData, setFormData, uploadFile, isPending, t, mode, contentId
 }) => {
     // Crop State
     const [cropImage, setCropImage] = useState<string | null>(null);
@@ -28,6 +34,9 @@ export const ContentFormModal: React.FC<ContentFormModalProps> = ({
     const [currentFileType, setCurrentFileType] = useState<'thumbnail' | 'detail'>('thumbnail');
     const [isSavingCrop, setIsSavingCrop] = useState(false);
     const [aspectRatio, setAspectRatio] = useState(4 / 3);
+
+    // Tab State
+    const [activeTab, setActiveTab] = useState<'info' | 'cinemas' | 'screens' | 'showtimes' | 'seats'>('info');
 
     // Image Preview State
     const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -101,245 +110,282 @@ export const ContentFormModal: React.FC<ContentFormModalProps> = ({
         <div className="modal-overlay">
             <div className="modal-content">
                 <h3>{mode === 'add' ? t('addNew') : t('table.edit')}</h3>
-                <form onSubmit={onSubmit}>
-                    <div className="form-layout">
-                        <div className="form-col-left">
-                            <div className="form-group">
-                                <label>{t('table.name')}</label>
-                                <input
-                                    className="form-input"
-                                    value={formData.name}
-                                    onChange={e => setFormData({ ...formData, name: e.target.value })}
-                                    required
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>{t('table.type')}</label>
-                                <select
-                                    className="form-input"
-                                    value={formData.type}
-                                    onChange={e => setFormData({ ...formData, type: e.target.value })}
-                                >
-                                    <option value="Product">{t('typeOptions.Product')}</option>
-                                    <option value="Ticket">{t('typeOptions.Ticket')}</option>
-                                    <option value="Promotion">{t('typeOptions.Promotion')}</option>
-                                    <option value="Movie">{t('typeOptions.Movie')}</option>
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label>{t('table.location')}</label>
-                                <input
-                                    className="form-input"
-                                    value={formData.location || ''}
-                                    onChange={e => setFormData({ ...formData, location: e.target.value })}
-                                    placeholder={t('modal.placeholderLocation')}
-                                />
-                            </div>
-                            {formData.type === 'Movie' && (
-                                <>
-                                    <div className="form-group">
-                                        <label>{t('table.duration')} (phút)</label>
-                                        <input
-                                            type="number"
-                                            className="form-input"
-                                            value={formData.duration || ''}
-                                            onChange={e => setFormData({ ...formData, duration: e.target.value })}
-                                            placeholder={t('modal.placeholderDuration')}
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label>{t('table.releaseDate')}</label>
-                                        <input
-                                            type="date"
-                                            className="form-input"
-                                            value={formData.releaseDate || ''}
-                                            onChange={e => setFormData({ ...formData, releaseDate: e.target.value })}
-                                        />
-                                    </div>
-                                </>
-                            )}
-                            <div className="form-group">
-                                <label>{t('table.price')}</label>
-                                <div className="price-input-wrapper">
+                {mode === 'edit' && formData.type === 'Movie' && (
+                    <div className="modal-tabs">
+                        <button
+                            type="button"
+                            className={`tab-btn ${activeTab === 'info' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('info')}
+                        >
+                            {t('table.info')}
+                        </button>
+                        <button
+                            type="button"
+                            className={`tab-btn ${activeTab === 'cinemas' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('cinemas')}
+                        >
+                            Quản lý Rạp chiếu
+                        </button>
+                        <button
+                            type="button"
+                            className={`tab-btn ${activeTab === 'screens' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('screens')}
+                        >
+                            Quản lý Phòng chiếu
+                        </button>
+                        <button
+                            type="button"
+                            className={`tab-btn ${activeTab === 'showtimes' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('showtimes')}
+                        >
+                            Quản lý Suất chiếu
+                        </button>
+                        <button
+                            type="button"
+                            className={`tab-btn ${activeTab === 'seats' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('seats')}
+                        >
+                            Quản lý Ghế
+                        </button>
+                    </div>
+                )}
+
+                {activeTab === 'info' ? (
+                    <form onSubmit={onSubmit}>
+                        <div className="form-layout">
+                            <div className="form-col-left">
+                                <div className="form-group">
+                                    <label>{t('table.name')}</label>
                                     <input
                                         className="form-input"
-                                        value={formData.price ? new Intl.NumberFormat('en-US').format(Number(formData.price.replace(/\D/g, ''))) : ''}
-                                        onChange={e => {
-                                            const rawValue = e.target.value.replace(/,/g, '');
-                                            if (!isNaN(Number(rawValue))) {
-                                                setFormData({ ...formData, price: rawValue });
-                                            }
-                                        }}
+                                        value={formData.name}
+                                        onChange={e => setFormData({ ...formData, name: e.target.value })}
                                         required
-                                        placeholder="0"
                                     />
-                                    <span className="price-suffix">VNĐ</span>
                                 </div>
-                            </div>
-                            <div className="form-group">
-                                <label>{t('table.status')}</label>
-                                <select
-                                    className="form-input"
-                                    value={formData.status}
-                                    onChange={e => setFormData({ ...formData, status: e.target.value as 'active' | 'inactive' })}
-                                >
-                                    <option value="active">{t('table.active')}</option>
-                                    <option value="inactive">{t('table.inactive')}</option>
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label>{t('table.thumbnail')}</label>
-                                <div className="file-upload-wrapper">
-                                    <label className="btn-upload">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" style={{ marginRight: '8px' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                                        </svg>
-                                        {t('modal.upload')}
-                                        <input
-                                            type="file"
-                                            hidden
-                                            accept="image/*"
-                                            onChange={(e) => handleFileChange(e, 'thumbnail')}
-                                        />
-                                    </label>
+                                <div className="form-group">
+                                    <label>{t('table.type')}</label>
+                                    <select
+                                        className="form-input"
+                                        value={formData.type}
+                                        onChange={e => setFormData({ ...formData, type: e.target.value })}
+                                    >
+                                        <option value="Product">{t('typeOptions.Product')}</option>
+                                        <option value="Ticket">{t('typeOptions.Ticket')}</option>
+                                        <option value="Promotion">{t('typeOptions.Promotion')}</option>
+                                        <option value="Movie">{t('typeOptions.Movie')}</option>
+                                    </select>
                                 </div>
-                                {formData.thumbnail && (
-                                    <div className="image-preview-container" onClick={() => setPreviewImage(formData.thumbnail?.startsWith('http') ? formData.thumbnail : `http://localhost:8080${formData.thumbnail}`)}>
-                                        <img
-                                            src={formData.thumbnail?.startsWith('http') ? formData.thumbnail : `http://localhost:8080${formData.thumbnail}`}
-                                            alt="Thumbnail"
-                                            className="image-preview"
-                                        />
-                                        <button
-                                            type="button"
-                                            className="btn-remove-image"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleRemoveImage('thumbnail');
-                                            }}
-                                        >
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                            </svg>
-                                        </button>
-                                    </div>
+
+                                {formData.type === 'Movie' && (
+                                    <>
+                                        <div className="form-group">
+                                            <label>{t('table.duration')} (phút)</label>
+                                            <input
+                                                type="number"
+                                                className="form-input"
+                                                value={formData.duration || ''}
+                                                onChange={e => setFormData({ ...formData, duration: e.target.value })}
+                                                placeholder={t('modal.placeholderDuration')}
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>{t('table.releaseDate')}</label>
+                                            <input
+                                                type="date"
+                                                className="form-input"
+                                                value={formData.releaseDate || ''}
+                                                onChange={e => setFormData({ ...formData, releaseDate: e.target.value })}
+                                            />
+                                        </div>
+                                    </>
                                 )}
-                            </div>
-                        </div>
-                        <div className="form-col-right">
-                            <div className="form-group">
-                                <label>{t('table.images')}</label>
-                                <div className="file-upload-wrapper">
-                                    <label className="btn-upload">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" style={{ marginRight: '8px' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                                        </svg>
-                                        {t('modal.upload')}
-                                        <input
-                                            type="file"
-                                            hidden
-                                            accept="image/*"
-                                            multiple
-                                            onChange={(e) => handleFileChange(e, 'detail')}
-                                        />
-                                    </label>
+
+                                <div className="form-group">
+                                    <label>{t('table.status')}</label>
+                                    <select
+                                        className="form-input"
+                                        value={formData.status}
+                                        onChange={e => setFormData({ ...formData, status: e.target.value as 'active' | 'inactive' })}
+                                    >
+                                        <option value="active">{t('table.active')}</option>
+                                        <option value="inactive">{t('table.inactive')}</option>
+                                    </select>
                                 </div>
-                                <div className="detail-images-grid">
-                                    {JSON.parse(formData.images || '[]').map((url: string, index: number) => (
-                                        <div key={index} className="detail-image-wrapper" onClick={() => setPreviewImage(url.startsWith('http') ? url : `http://localhost:8080${url}`)}>
+                                <div className="form-group">
+                                    <label>{t('table.thumbnail')}</label>
+                                    <div className="file-upload-wrapper">
+                                        <label className="btn-upload">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" style={{ marginRight: '8px' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                                            </svg>
+                                            {t('modal.upload')}
+                                            <input
+                                                type="file"
+                                                hidden
+                                                accept="image/*"
+                                                onChange={(e) => handleFileChange(e, 'thumbnail')}
+                                            />
+                                        </label>
+                                    </div>
+                                    {formData.thumbnail && (
+                                        <div className="image-preview-container" onClick={() => setPreviewImage(formData.thumbnail?.startsWith('http') ? formData.thumbnail : `http://localhost:8080${formData.thumbnail}`)}>
                                             <img
-                                                src={url.startsWith('http') ? url : `http://localhost:8080${url}`}
-                                                alt={`Detail ${index}`}
-                                                className="detail-image-preview"
+                                                src={formData.thumbnail?.startsWith('http') ? formData.thumbnail : `http://localhost:8080${formData.thumbnail}`}
+                                                alt="Thumbnail"
+                                                className="image-preview"
                                             />
                                             <button
                                                 type="button"
-                                                className="btn-remove-image small"
+                                                className="btn-remove-image"
                                                 onClick={(e) => {
                                                     e.stopPropagation();
-                                                    handleRemoveImage('detail', index);
+                                                    handleRemoveImage('thumbnail');
                                                 }}
                                             >
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                                 </svg>
                                             </button>
                                         </div>
-                                    ))}
+                                    )}
                                 </div>
                             </div>
-                            <div className="form-group">
-                                <label>{t('table.description')}</label>
-                                <textarea
-                                    className="form-input"
-                                    value={formData.description}
-                                    onChange={e => setFormData({ ...formData, description: e.target.value })}
-                                    placeholder={t('table.description')}
-                                />
+                            <div className="form-col-right">
+                                <div className="form-group">
+                                    <label>{t('table.images')}</label>
+                                    <div className="file-upload-wrapper">
+                                        <label className="btn-upload">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" style={{ marginRight: '8px' }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                                            </svg>
+                                            {t('modal.upload')}
+                                            <input
+                                                type="file"
+                                                hidden
+                                                accept="image/*"
+                                                multiple
+                                                onChange={(e) => handleFileChange(e, 'detail')}
+                                            />
+                                        </label>
+                                    </div>
+                                    <div className="detail-images-grid">
+                                        {JSON.parse(formData.images || '[]').map((url: string, index: number) => (
+                                            <div key={index} className="detail-image-wrapper" onClick={() => setPreviewImage(url.startsWith('http') ? url : `http://localhost:8080${url}`)}>
+                                                <img
+                                                    src={url.startsWith('http') ? url : `http://localhost:8080${url}`}
+                                                    alt={`Detail ${index}`}
+                                                    className="detail-image-preview"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    className="btn-remove-image small"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleRemoveImage('detail', index);
+                                                    }}
+                                                >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label>{t('table.description')}</label>
+                                    <textarea
+                                        className="form-input"
+                                        value={formData.description}
+                                        onChange={e => setFormData({ ...formData, description: e.target.value })}
+                                        placeholder={t('table.description')}
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="modal-actions">
-                        <button type="button" className="btn-cancel" onClick={onClose}>{t('modal.cancel')}</button>
-                        <button type="submit" className="btn-save" disabled={isPending}>{isPending ? t('modal.save') + '...' : t('modal.save')}</button>
-                    </div>
-                </form>
+                        <div className="modal-actions">
+                            <button type="button" className="btn-cancel" onClick={onClose}>{t('modal.cancel')}</button>
+                            <button type="submit" className="btn-save" disabled={isPending}>{isPending ? t('modal.save') + '...' : t('modal.save')}</button>
+                        </div>
+                    </form>
+                ) : (
+                    mode === 'edit' && formData.type === 'Movie' && contentId ? (
+                        activeTab === 'cinemas' ? (
+                            <CinemaManager t={t} />
+                        ) : activeTab === 'screens' ? (
+                            <ScreenManager t={t} />
+                        ) : activeTab === 'showtimes' ? (
+                            <ShowtimeManager contentId={contentId} t={t} />
+                        ) : activeTab === 'seats' ? (
+                            <ScreenSeatManager t={t} />
+                        ) : null
+                    ) : (
+                        <div style={{ padding: '20px', textAlign: 'center' }}>
+                            <p>Vui lòng lưu nội dung trước khi quản lý suất chiếu.</p>
+                        </div>
+                    )
+                )}
             </div>
 
             {/* Crop Modal */}
-            {isCropModalOpen && (
-                <div className="crop-modal-overlay">
-                    <div className="crop-modal-content">
-                        <h3>{t('modal.editImage')}</h3>
-                        <div className="crop-container">
-                            <Cropper
-                                image={cropImage || ''}
-                                crop={crop}
-                                zoom={zoom}
-                                aspect={aspectRatio}
-                                onCropChange={setCrop}
-                                onCropComplete={onCropComplete}
-                                onZoomChange={setZoom}
-                            />
-                        </div>
-                        <div className="zoom-controls">
-                            <label>{t('modal.zoom')}</label>
-                            <input
-                                type="range"
-                                value={zoom}
-                                min={1}
-                                max={3}
-                                step={0.1}
-                                aria-labelledby="Zoom"
-                                onChange={(e) => setZoom(Number(e.target.value))}
-                                className="zoom-range"
-                            />
-                        </div>
-                        <div className="modal-actions">
-                            <button type="button" className="btn-cancel" onClick={() => setIsCropModalOpen(false)} disabled={isSavingCrop}>
-                                {t('modal.cancel')}
-                            </button>
-                            <button type="button" className="btn-save" onClick={handleCropSave} disabled={isSavingCrop}>
-                                {isSavingCrop ? t('modal.saving') : t('modal.cropAndSave')}
-                            </button>
+            {
+                isCropModalOpen && (
+                    <div className="crop-modal-overlay">
+                        <div className="crop-modal-content">
+                            <h3>{t('modal.editImage')}</h3>
+                            <div className="crop-container">
+                                <Cropper
+                                    image={cropImage || ''}
+                                    crop={crop}
+                                    zoom={zoom}
+                                    aspect={aspectRatio}
+                                    onCropChange={setCrop}
+                                    onCropComplete={onCropComplete}
+                                    onZoomChange={setZoom}
+                                />
+                            </div>
+                            <div className="zoom-controls">
+                                <label>{t('modal.zoom')}</label>
+                                <input
+                                    type="range"
+                                    value={zoom}
+                                    min={1}
+                                    max={3}
+                                    step={0.1}
+                                    aria-labelledby="Zoom"
+                                    onChange={(e) => setZoom(Number(e.target.value))}
+                                    className="zoom-range"
+                                />
+                            </div>
+                            <div className="modal-actions">
+                                <button type="button" className="btn-cancel" onClick={() => setIsCropModalOpen(false)} disabled={isSavingCrop}>
+                                    {t('modal.cancel')}
+                                </button>
+                                <button type="button" className="btn-save" onClick={handleCropSave} disabled={isSavingCrop}>
+                                    {isSavingCrop ? t('modal.saving') : t('modal.cropAndSave')}
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )
+            }
 
             {/* Image Preview Modal (Lightbox) */}
-            {previewImage && (
-                <div className="lightbox-overlay" onClick={() => setPreviewImage(null)}>
-                    <div className="lightbox-content" onClick={e => e.stopPropagation()}>
-                        <img src={previewImage} alt="Preview" className="lightbox-image" />
-                        <button className="btn-close-lightbox" onClick={() => setPreviewImage(null)}>
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
+            {
+                previewImage && (
+                    <div className="lightbox-overlay" onClick={() => setPreviewImage(null)}>
+                        <div className="lightbox-content" onClick={e => e.stopPropagation()}>
+                            <img src={previewImage} alt="Preview" className="lightbox-image" />
+                            <button className="btn-close-lightbox" onClick={() => setPreviewImage(null)}>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
-                </div>
-            )}
+                )
+            }
 
             <style jsx>{modalStyles}</style>
         </div >

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
 import { User } from '../../types/auth';
 import { Select } from '../ui/Select';
@@ -27,9 +27,10 @@ export const UserEditModal: React.FC<UserEditModalProps> = ({
   isLoading = false
 }) => {
   const t = useTranslations('Users');
-  const { register, handleSubmit, reset, setValue, watch } = useForm<FormData>();
+  const { register, handleSubmit, reset, setValue, control } = useForm<FormData>();
 
-  const role = watch('role');
+  const role = useWatch({ control, name: 'role' });
+  const partnerType = useWatch({ control, name: 'partnerType' });
 
   useEffect(() => {
     if (user) {
@@ -90,7 +91,7 @@ export const UserEditModal: React.FC<UserEditModalProps> = ({
             <div className="form-group">
               <Select
                 label={t('editModal.partnerType') || "Loại hình đối tác"}
-                value={watch('partnerType')}
+                value={partnerType}
                 onChange={(value) => setValue('partnerType', value)}
                 options={[
                   { value: 'HOTEL', label: 'Partner Khách sạn' },

@@ -6,6 +6,108 @@ import { apiClient } from '../../lib/api-client'
 import { PartnershipRequest, PartnershipResponse } from '../../types/partnership'
 import { useSubmitPartnership } from '../../hooks/use-partnership'
 
+// Custom SVG Icons Components
+const HotelIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+    {/* Building base */}
+    <rect x="8" y="20" width="32" height="24" fill="#ff6b9d" rx="2" />
+    {/* Roof */}
+    <path d="M 4 20 L 24 8 L 44 20 Z" fill="#e63946" />
+    {/* Windows */}
+    <rect x="12" y="26" width="6" height="6" fill="#4a90e2" rx="1" />
+    <rect x="22" y="26" width="6" height="6" fill="#4a90e2" rx="1" />
+    <rect x="32" y="26" width="6" height="6" fill="#4a90e2" rx="1" />
+    <rect x="12" y="36" width="6" height="6" fill="#4a90e2" rx="1" />
+    <rect x="22" y="36" width="6" height="6" fill="#4a90e2" rx="1" />
+    <rect x="32" y="36" width="6" height="6" fill="#4a90e2" rx="1" />
+    {/* Door */}
+    <rect x="19" y="36" width="10" height="8" fill="#2c3e50" rx="1" />
+    {/* Letter H */}
+    <text x="24" y="42" fontSize="12" fontWeight="bold" fill="#e63946" textAnchor="middle" fontFamily="Arial, sans-serif">H</text>
+  </svg>
+)
+
+const CinemaIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+    {/* Clapperboard body */}
+    <path d="M 8 12 L 8 36 L 40 36 L 40 20 L 20 20 L 8 12 Z" fill="#9b59b6" />
+    {/* Diagonal stripes */}
+    <line x1="12" y1="16" x2="36" y2="28" stroke="#7d3c98" strokeWidth="2" />
+    <line x1="12" y1="20" x2="36" y2="32" stroke="#7d3c98" strokeWidth="2" />
+    <line x1="12" y1="24" x2="36" y2="36" stroke="#7d3c98" strokeWidth="2" />
+    {/* Handle */}
+    <rect x="6" y="10" width="4" height="4" fill="#7d3c98" rx="1" />
+  </svg>
+)
+
+const RestaurantIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+    {/* Plate */}
+    <ellipse cx="24" cy="28" rx="18" ry="12" fill="#a78bfa" />
+    <ellipse cx="24" cy="28" rx="16" ry="10" fill="#c4b5fd" />
+    {/* Fork */}
+    <g transform="translate(12, 8)">
+      <rect x="0" y="0" width="2" height="20" fill="#6b7280" />
+      <rect x="-2" y="0" width="6" height="3" fill="#6b7280" rx="1" />
+      <rect x="-1" y="3" width="4" height="2" fill="#6b7280" rx="1" />
+    </g>
+    {/* Knife */}
+    <g transform="translate(34, 8)">
+      <rect x="0" y="0" width="2" height="20" fill="#6b7280" />
+      <path d="M 0 0 L 4 0 L 2 4 Z" fill="#6b7280" />
+    </g>
+  </svg>
+)
+
+const AttractionIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+    {/* Track */}
+    <path d="M 4 24 Q 12 12, 24 12 Q 36 12, 44 24" stroke="#9ca3af" strokeWidth="3" fill="none" strokeLinecap="round" />
+    <path d="M 4 28 Q 12 16, 24 16 Q 36 16, 44 28" stroke="#9ca3af" strokeWidth="3" fill="none" strokeLinecap="round" />
+    {/* Track supports */}
+    <line x1="12" y1="12" x2="12" y2="40" stroke="#9ca3af" strokeWidth="2" />
+    <line x1="24" y1="12" x2="24" y2="40" stroke="#9ca3af" strokeWidth="2" />
+    <line x1="36" y1="12" x2="36" y2="40" stroke="#9ca3af" strokeWidth="2" />
+    {/* Roller coaster car */}
+    <g transform="translate(18, 8)">
+      <rect x="0" y="0" width="12" height="8" fill="#f97316" rx="2" />
+      <circle cx="2" cy="10" r="2" fill="#1f2937" />
+      <circle cx="10" cy="10" r="2" fill="#1f2937" />
+      <rect x="1" y="2" width="10" height="4" fill="#fb923c" />
+    </g>
+  </svg>
+)
+
+const TravelIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+    {/* Airplane body */}
+    <ellipse cx="24" cy="24" rx="12" ry="6" fill="#60a5fa" />
+    {/* Wings */}
+    <path d="M 12 24 L 4 16 L 8 20 L 12 24 Z" fill="#3b82f6" />
+    <path d="M 36 24 L 44 16 L 40 20 L 36 24 Z" fill="#3b82f6" />
+    {/* Tail fin */}
+    <path d="M 24 18 L 24 12 L 20 16 Z" fill="#2563eb" />
+    {/* Windows */}
+    <circle cx="20" cy="24" r="2" fill="#93c5fd" />
+    <circle cx="28" cy="24" r="2" fill="#93c5fd" />
+  </svg>
+)
+
+const OtherPartnersIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+    {/* Left hand */}
+    <path d="M 8 20 Q 8 12, 16 12 Q 20 12, 20 16 L 20 24 Q 20 28, 16 28 Q 12 28, 12 24 L 12 20 Z" fill="#fbbf24" />
+    <ellipse cx="14" cy="18" rx="2" ry="3" fill="#f59e0b" />
+    <ellipse cx="16" cy="22" rx="2" ry="3" fill="#f59e0b" />
+    {/* Right hand */}
+    <path d="M 28 20 Q 28 12, 36 12 Q 40 12, 40 16 L 40 24 Q 40 28, 36 28 Q 32 28, 32 24 L 32 20 Z" fill="#fbbf24" />
+    <ellipse cx="34" cy="18" rx="2" ry="3" fill="#f59e0b" />
+    <ellipse cx="36" cy="22" rx="2" ry="3" fill="#f59e0b" />
+    {/* Handshake connection */}
+    <path d="M 20 24 Q 24 24, 28 24" stroke="#f59e0b" strokeWidth="3" strokeLinecap="round" fill="none" />
+  </svg>
+)
+
 const Partnership: React.FC = () => {
   const [formData, setFormData] = useState<PartnershipRequest>({
     name: '',
@@ -15,108 +117,6 @@ const Partnership: React.FC = () => {
     partnershipType: '',
     message: ''
   })
-
-  // Custom SVG Icons Components
-  const HotelIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-      {/* Building base */}
-      <rect x="8" y="20" width="32" height="24" fill="#ff6b9d" rx="2" />
-      {/* Roof */}
-      <path d="M 4 20 L 24 8 L 44 20 Z" fill="#e63946" />
-      {/* Windows */}
-      <rect x="12" y="26" width="6" height="6" fill="#4a90e2" rx="1" />
-      <rect x="22" y="26" width="6" height="6" fill="#4a90e2" rx="1" />
-      <rect x="32" y="26" width="6" height="6" fill="#4a90e2" rx="1" />
-      <rect x="12" y="36" width="6" height="6" fill="#4a90e2" rx="1" />
-      <rect x="22" y="36" width="6" height="6" fill="#4a90e2" rx="1" />
-      <rect x="32" y="36" width="6" height="6" fill="#4a90e2" rx="1" />
-      {/* Door */}
-      <rect x="19" y="36" width="10" height="8" fill="#2c3e50" rx="1" />
-      {/* Letter H */}
-      <text x="24" y="42" fontSize="12" fontWeight="bold" fill="#e63946" textAnchor="middle" fontFamily="Arial, sans-serif">H</text>
-    </svg>
-  )
-
-  const CinemaIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-      {/* Clapperboard body */}
-      <path d="M 8 12 L 8 36 L 40 36 L 40 20 L 20 20 L 8 12 Z" fill="#9b59b6" />
-      {/* Diagonal stripes */}
-      <line x1="12" y1="16" x2="36" y2="28" stroke="#7d3c98" strokeWidth="2" />
-      <line x1="12" y1="20" x2="36" y2="32" stroke="#7d3c98" strokeWidth="2" />
-      <line x1="12" y1="24" x2="36" y2="36" stroke="#7d3c98" strokeWidth="2" />
-      {/* Handle */}
-      <rect x="6" y="10" width="4" height="4" fill="#7d3c98" rx="1" />
-    </svg>
-  )
-
-  const RestaurantIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-      {/* Plate */}
-      <ellipse cx="24" cy="28" rx="18" ry="12" fill="#a78bfa" />
-      <ellipse cx="24" cy="28" rx="16" ry="10" fill="#c4b5fd" />
-      {/* Fork */}
-      <g transform="translate(12, 8)">
-        <rect x="0" y="0" width="2" height="20" fill="#6b7280" />
-        <rect x="-2" y="0" width="6" height="3" fill="#6b7280" rx="1" />
-        <rect x="-1" y="3" width="4" height="2" fill="#6b7280" rx="1" />
-      </g>
-      {/* Knife */}
-      <g transform="translate(34, 8)">
-        <rect x="0" y="0" width="2" height="20" fill="#6b7280" />
-        <path d="M 0 0 L 4 0 L 2 4 Z" fill="#6b7280" />
-      </g>
-    </svg>
-  )
-
-  const AttractionIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-      {/* Track */}
-      <path d="M 4 24 Q 12 12, 24 12 Q 36 12, 44 24" stroke="#9ca3af" strokeWidth="3" fill="none" strokeLinecap="round" />
-      <path d="M 4 28 Q 12 16, 24 16 Q 36 16, 44 28" stroke="#9ca3af" strokeWidth="3" fill="none" strokeLinecap="round" />
-      {/* Track supports */}
-      <line x1="12" y1="12" x2="12" y2="40" stroke="#9ca3af" strokeWidth="2" />
-      <line x1="24" y1="12" x2="24" y2="40" stroke="#9ca3af" strokeWidth="2" />
-      <line x1="36" y1="12" x2="36" y2="40" stroke="#9ca3af" strokeWidth="2" />
-      {/* Roller coaster car */}
-      <g transform="translate(18, 8)">
-        <rect x="0" y="0" width="12" height="8" fill="#f97316" rx="2" />
-        <circle cx="2" cy="10" r="2" fill="#1f2937" />
-        <circle cx="10" cy="10" r="2" fill="#1f2937" />
-        <rect x="1" y="2" width="10" height="4" fill="#fb923c" />
-      </g>
-    </svg>
-  )
-
-  const TravelIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-      {/* Airplane body */}
-      <ellipse cx="24" cy="24" rx="12" ry="6" fill="#60a5fa" />
-      {/* Wings */}
-      <path d="M 12 24 L 4 16 L 8 20 L 12 24 Z" fill="#3b82f6" />
-      <path d="M 36 24 L 44 16 L 40 20 L 36 24 Z" fill="#3b82f6" />
-      {/* Tail fin */}
-      <path d="M 24 18 L 24 12 L 20 16 Z" fill="#2563eb" />
-      {/* Windows */}
-      <circle cx="20" cy="24" r="2" fill="#93c5fd" />
-      <circle cx="28" cy="24" r="2" fill="#93c5fd" />
-    </svg>
-  )
-
-  const OtherPartnersIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-      {/* Left hand */}
-      <path d="M 8 20 Q 8 12, 16 12 Q 20 12, 20 16 L 20 24 Q 20 28, 16 28 Q 12 28, 12 24 L 12 20 Z" fill="#fbbf24" />
-      <ellipse cx="14" cy="18" rx="2" ry="3" fill="#f59e0b" />
-      <ellipse cx="16" cy="22" rx="2" ry="3" fill="#f59e0b" />
-      {/* Right hand */}
-      <path d="M 28 20 Q 28 12, 36 12 Q 40 12, 40 16 L 40 24 Q 40 28, 36 28 Q 32 28, 32 24 L 32 20 Z" fill="#fbbf24" />
-      <ellipse cx="34" cy="18" rx="2" ry="3" fill="#f59e0b" />
-      <ellipse cx="36" cy="22" rx="2" ry="3" fill="#f59e0b" />
-      {/* Handshake connection */}
-      <path d="M 20 24 Q 24 24, 28 24" stroke="#f59e0b" strokeWidth="3" strokeLinecap="round" fill="none" />
-    </svg>
-  )
 
   const partnershipTypes = [
     { id: 'hotel', name: 'Khách Sạn & Resort', icon: <HotelIcon /> },

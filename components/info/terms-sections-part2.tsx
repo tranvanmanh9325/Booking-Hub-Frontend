@@ -9,6 +9,7 @@ const TermsSectionsPart2: React.FC<TermsSectionsPart2Props> = ({ sectionRefs }) 
     <>
       <div
         id="section-8"
+        // eslint-disable-next-line react-hooks/immutability
         ref={(el) => { sectionRefs.current['section-8'] = el }}
         className="terms-section"
       >
@@ -53,6 +54,7 @@ const TermsSectionsPart2: React.FC<TermsSectionsPart2Props> = ({ sectionRefs }) 
 
       <div
         id="section-9"
+        // eslint-disable-next-line react-hooks/immutability
         ref={(el) => { sectionRefs.current['section-9'] = el }}
         className="terms-section"
       >
@@ -110,6 +112,7 @@ const TermsSectionsPart2: React.FC<TermsSectionsPart2Props> = ({ sectionRefs }) 
 
       <div
         id="section-10"
+        // eslint-disable-next-line react-hooks/immutability
         ref={(el) => { sectionRefs.current['section-10'] = el }}
         className="terms-section"
       >
@@ -137,6 +140,7 @@ const TermsSectionsPart2: React.FC<TermsSectionsPart2Props> = ({ sectionRefs }) 
 
       <div
         id="section-11"
+        // eslint-disable-next-line react-hooks/immutability
         ref={(el) => { sectionRefs.current['section-11'] = el }}
         className="terms-section"
       >
@@ -197,6 +201,7 @@ const TermsSectionsPart2: React.FC<TermsSectionsPart2Props> = ({ sectionRefs }) 
 
       <div
         id="section-12"
+        // eslint-disable-next-line react-hooks/immutability
         ref={(el) => { sectionRefs.current['section-12'] = el }}
         className="terms-section"
       >
@@ -256,6 +261,7 @@ const TermsSectionsPart2: React.FC<TermsSectionsPart2Props> = ({ sectionRefs }) 
 
       <div
         id="section-13"
+        // eslint-disable-next-line react-hooks/immutability
         ref={(el) => { sectionRefs.current['section-13'] = el }}
         className="terms-section"
       >
@@ -300,6 +306,7 @@ const TermsSectionsPart2: React.FC<TermsSectionsPart2Props> = ({ sectionRefs }) 
 
       <div
         id="section-14"
+        // eslint-disable-next-line react-hooks/immutability
         ref={(el) => { sectionRefs.current['section-14'] = el }}
         className="terms-section"
       >

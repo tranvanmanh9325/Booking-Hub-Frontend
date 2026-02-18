@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { NextSeo } from 'next-seo'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useMovie, useShowtimes } from '../../hooks/use-movies'
+import { useMovie, useShowtimes, useSeats } from '../../hooks/use-movies'
+import { addDays, format, isSameDay, startOfDay } from 'date-fns'
+import { vi } from 'date-fns/locale'
 import styles from '../../styles/booking-seat.module.css'
 
 // Custom Icons
@@ -20,47 +22,17 @@ const Clock = ({ size = 24, color = "currentColor" }) => (
     </svg>
 )
 
-const ROWS = 10
-const COLS = 12
-const PRICES: Record<string, number> = {
-    standard: 85000,
-    vip: 110000,
-    couple: 190000
-}
+const ChevronLeft = ({ size = 24, color = "currentColor" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+)
 
-interface SeatState {
-    id: string
-    row: string
-    col: number
-    type: 'standard' | 'vip' | 'couple'
-    status: 'available' | 'occupied' | 'selected'
-}
-
-// Generate Initial Seats
-const generateSeats = (): SeatState[] => {
-    const seats: SeatState[] = []
-    const rows = 'ABCDEFGHIJ'.split('')
-
-    rows.forEach((row, rowIndex) => {
-        for (let c = 1; c <= COLS; c++) {
-            let type: 'standard' | 'vip' | 'couple' = 'standard'
-            if (rowIndex >= 5 && rowIndex <= 7) type = 'vip'
-            if (rowIndex >= 8) type = 'couple'
-
-            // Random occupied for demo
-            const isOccupied = Math.random() < 0.2
-
-            seats.push({
-                id: `${row}${c}`,
-                row,
-                col: c,
-                type,
-                status: isOccupied ? 'occupied' : 'available'
-            })
-        }
-    })
-    return seats
-}
+const ChevronRight = ({ size = 24, color = "currentColor" }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+)
 
 const SeatSelectionPage = () => {
     const router = useRouter()
@@ -74,61 +46,90 @@ const SeatSelectionPage = () => {
 
     const [activeDateIndex, setActiveDateIndex] = useState(0)
     const [activeShowtimeId, setActiveShowtimeId] = useState<number | null>(null)
-    const [seats, setSeats] = useState<SeatState[]>([])
+    const [selectedSeatIds, setSelectedSeatIds] = useState<number[]>([]) // Store selected seat IDs
+    const scrollRef = useRef<HTMLDivElement>(null)
+
+    // Generate 2-year date range
+    const dates = useMemo(() => {
+        const today = startOfDay(new Date())
+        return Array.from({ length: 730 }, (_, i) => addDays(today, i))
+    }, [])
 
     // Group showtimes by Date
-    const showtimesByDate = React.useMemo(() => {
-        if (!showtimes) return []
+    const showtimesByDate = useMemo(() => {
+        return dates.map(date => {
+            const dayShowtimes = showtimes ? showtimes.filter((show: any) =>
+                isSameDay(new Date(show.startTime), date)
+            ).sort((a: any, b: any) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime()) : []
 
-        const groups: { date: string, day: string, rawDate: Date, showtimes: any[] }[] = []
+            const dayStr = format(date, 'EEE', { locale: vi }) // "Th 2", "CN"
+            // Normalize "Th 2" to "T2", "Chủ Nhật" to "CN"
+            const formattedDay = dayStr.replace('Th ', 'T').replace('Chủ Nhật', 'CN')
 
-        showtimes.forEach((show: any) => {
-            const dateObj = new Date(show.startTime)
-            const dateStr = dateObj.getDate().toString() // "20"
-            const dayStr = dateObj.toLocaleDateString('vi-VN', { weekday: 'short' }) // "T2" or "Th 2"
-
-            // Normalize "Th 2" to "T2" style if needed, or just use locale default
-            // Let's use simple check or just standard format
-
-            let group = groups.find(g => g.rawDate.toDateString() === dateObj.toDateString())
-            if (!group) {
-                group = {
-                    date: dateStr,
-                    day: dayStr.replace('Th ', 'T').replace('Chủ Nhật', 'CN'),
-                    rawDate: dateObj,
-                    showtimes: []
-                }
-                groups.push(group)
+            return {
+                date: format(date, 'dd/MM'),
+                day: formattedDay,
+                rawDate: date,
+                showtimes: dayShowtimes,
+                hasShowtimes: dayShowtimes.length > 0
             }
-            group.showtimes.push(show)
         })
-
-        return groups.sort((a, b) => a.rawDate.getTime() - b.rawDate.getTime())
-    }, [showtimes])
+    }, [showtimes, dates])
 
     useEffect(() => {
         if (showtimesByDate.length > 0 && activeDateIndex < showtimesByDate.length) {
-            const firstShow = showtimesByDate[activeDateIndex].showtimes[0]
-            if (firstShow) setActiveShowtimeId(firstShow.id)
+            const currentDayData = showtimesByDate[activeDateIndex]
+            if (currentDayData.hasShowtimes && currentDayData.showtimes.length > 0) {
+                // Only set active showtime if not already set or invalid
+                const isValid = currentDayData.showtimes.find(s => s.id === activeShowtimeId)
+                if (!isValid) {
+                    // eslint-disable-next-line react-hooks/set-state-in-effect
+                    setActiveShowtimeId(currentDayData.showtimes[0].id)
+                }
+            } else {
+                setActiveShowtimeId(null)
+            }
         }
-    }, [showtimesByDate, activeDateIndex])
+    }, [showtimesByDate, activeDateIndex, activeShowtimeId])
 
-    // Reset seats when showtime changes (User would expect refreshed seats)
-    useEffect(() => {
-        if (activeShowtimeId) {
-            // Ideally fetch real seats here: useSeats(activeShowtimeId)
-            // For now, use the random generator to simulate freshness
-            setSeats(generateSeats())
-        }
-    }, [activeShowtimeId])
+    const currentShowtime = showtimes?.find((s: any) => s.id === activeShowtimeId)
 
-    const handleSeatClick = (seatId: string) => {
-        setSeats(prev => prev.map(seat => {
-            if (seat.id !== seatId || seat.status === 'occupied') return seat
+    // Fetch seats for valid showtime
+    const { data: seatsData } = useSeats(activeShowtimeId, currentShowtime?.screenId || null)
 
-            const newStatus = seat.status === 'selected' ? 'available' : 'selected'
-            return { ...seat, status: newStatus }
-        }))
+    // Helper to group seats by row for rendering
+    const seatsByRow = useMemo(() => {
+        if (!seatsData) return {}
+        const rows: Record<string, typeof seatsData> = {}
+        seatsData.forEach(seat => {
+            if (!rows[seat.row]) rows[seat.row] = []
+            rows[seat.row].push(seat)
+        })
+        // Sort seats within row
+        Object.keys(rows).forEach(key => {
+            rows[key].sort((a, b) => a.number - b.number)
+        })
+        return rows
+    }, [seatsData])
+
+    const rowLabels = Object.keys(seatsByRow).sort()
+
+    // Reset selected seats when showtime changes
+    // Updated to move side-effect to event handler
+    // useEffect(() => {
+    //    setSelectedSeatIds([])
+    // }, [activeShowtimeId])
+
+    const handleSeatClick = (seat: any) => {
+        if (seat.isBooked) return
+
+        setSelectedSeatIds(prev => {
+            if (prev.includes(seat.id)) {
+                return prev.filter(id => id !== seat.id)
+            } else {
+                return [...prev, seat.id]
+            }
+        })
     }
 
     if (loadingMovie || loadingShowtimes) {
@@ -154,9 +155,27 @@ const SeatSelectionPage = () => {
         )
     }
 
-    const currentShowtime = showtimes?.find((s: any) => s.id === activeShowtimeId)
-    const selectedSeats = seats.filter(s => s.status === 'selected')
-    const totalPrice = selectedSeats.reduce((sum, seat) => sum + PRICES[seat.type], 0)
+    // Map backend seat types to frontend visual styles
+    const getSeatTypeClass = (seatType: string) => {
+        switch (seatType?.toUpperCase()) {
+            case 'VIP': return 'vip'
+            case 'COUPLE': return 'couple'
+            default: return 'standard'
+        }
+    }
+
+    // Calculate price based on selected seats
+    const getSeatPrice = (seatType: string) => {
+        const basePrice = currentShowtime?.price || 85000
+        switch (seatType?.toUpperCase()) {
+            case 'VIP': return basePrice + 20000
+            case 'COUPLE': return basePrice * 2
+            default: return basePrice
+        }
+    }
+
+    const selectedSeats = seatsData ? seatsData.filter(s => selectedSeatIds.includes(s.id)) : []
+    const totalPrice = selectedSeats.reduce((sum, seat) => sum + getSeatPrice(seat.seatType), 0)
 
     // Format helpers
     const formatTime = (isoString?: string) => {
@@ -169,10 +188,23 @@ const SeatSelectionPage = () => {
             alert("Vui lòng chọn suất chiếu!")
             return
         }
-        alert(`Đặt vé thành công!\nPhim: ${movie.title}\nSuất: ${formatTime(currentShowtime.startTime)}\nGhế: ${selectedSeats.map(s => s.id).join(', ')}\nTổng: ${totalPrice.toLocaleString()} đ`)
+        alert(`Đặt vé thành công!\nPhim: ${movie.title}\nSuất: ${formatTime(currentShowtime.startTime)}\nGhế: ${selectedSeats.map(s => `${s.row}${s.number}`).join(', ')}\nTổng: ${totalPrice.toLocaleString()} đ`)
         // Navigate custom or home
         router.push('/')
     }
+
+    const scroll = (direction: 'left' | 'right') => {
+        if (scrollRef.current) {
+            const { current } = scrollRef
+            const scrollAmount = 300
+            current.scrollBy({
+                left: direction === 'left' ? -scrollAmount : scrollAmount,
+                behavior: 'smooth'
+            })
+        }
+    }
+
+
 
     return (
         <>
@@ -212,38 +244,53 @@ const SeatSelectionPage = () => {
 
                 {/* Date Selector */}
                 <div className={styles.dateSelector}>
-                    <div className={styles.datesScroll}>
-                        {showtimesByDate.map((d, i) => (
-                            <div
-                                key={d.date}
-                                className={`${styles.dateItem} ${activeDateIndex === i ? styles.active : ''}`}
-                                onClick={() => setActiveDateIndex(i)}
-                            >
-                                <span className={styles.day}>{d.day}</span>
-                                <span className={styles.date}>{d.date}</span>
-                            </div>
-                        ))}
-                        {showtimesByDate.length === 0 && (
-                            <div style={{ color: '#94a3b8', padding: '10px 20px' }}>Chưa có lịch chiếu</div>
-                        )}
+                    <div className={styles.dateSelectorWrapper}>
+                        <button
+                            className={styles.scrollButton}
+                            onClick={() => scroll('left')}
+                            aria-label="Scroll Left"
+                        >
+                            <ChevronLeft size={24} />
+                        </button>
+
+                        <div className={styles.datesScroll} ref={scrollRef}>
+                            {showtimesByDate.map((d, i) => (
+                                <div
+                                    key={d.date}
+                                    className={`${styles.dateItem} ${activeDateIndex === i ? styles.active : ''}`}
+                                    onClick={() => setActiveDateIndex(i)}
+                                >
+                                    <span className={styles.day}>{d.day}</span>
+                                    <span className={styles.date}>{d.date}</span>
+                                </div>
+                            ))}
+                            {showtimesByDate.length === 0 && (
+                                <div style={{ color: '#94a3b8', padding: '10px 20px' }}>Chưa có lịch chiếu</div>
+                            )}
+                        </div>
+
+                        <button
+                            className={styles.scrollButton}
+                            onClick={() => scroll('right')}
+                            aria-label="Scroll Right"
+                        >
+                            <ChevronRight size={24} />
+                        </button>
                     </div>
                 </div>
 
-                {/* Time Selector (Optional if multiple showtimes per day) */}
-                {showtimesByDate[activeDateIndex]?.showtimes.length > 0 && (
-                    <div style={{ display: 'flex', gap: 10, padding: '0 20px 20px', overflowX: 'auto' }}>
+                {/* Time Selector */}
+                {/* Time Selector */}
+                {showtimesByDate[activeDateIndex]?.hasShowtimes && (
+                    <div className={styles.timeSelector}>
                         {showtimesByDate[activeDateIndex].showtimes.map((show: any) => (
                             <button
                                 key={show.id}
-                                onClick={() => setActiveShowtimeId(show.id)}
-                                style={{
-                                    background: activeShowtimeId === show.id ? '#3b82f6' : '#1e293b',
-                                    color: 'white',
-                                    border: 'none',
-                                    padding: '8px 16px',
-                                    borderRadius: 6,
-                                    cursor: 'pointer'
+                                onClick={() => {
+                                    setActiveShowtimeId(show.id);
+                                    setSelectedSeatIds([]);
                                 }}
+                                className={`${styles.timeButton} ${activeShowtimeId === show.id ? styles.active : ''}`}
                             >
                                 {formatTime(show.startTime)}
                             </button>
@@ -253,109 +300,128 @@ const SeatSelectionPage = () => {
 
 
                 {/* Main Content */}
-                <main className={styles.mainContent}>
-                    {/* Seat Map Section */}
-                    <div>
-                        <div className={styles.screenSection}>
-                            <div className={styles.screen}><span style={{ display: 'block', textAlign: 'center', paddingTop: 10, opacity: 0.5 }}>MÀN HÌNH</span></div>
-                        </div>
+                {showtimesByDate[activeDateIndex]?.hasShowtimes ? (
+                    <main className={styles.mainContent}>
+                        {/* Seat Map Section */}
+                        <div>
+                            <div className={styles.screenSection}>
+                                <div className={styles.screen}><span style={{ display: 'block', textAlign: 'center', paddingTop: 10, opacity: 0.5 }}>MÀN HÌNH</span></div>
+                            </div>
 
-                        <div className={styles.seatMap}>
-                            {'ABCDEFGHIJ'.split('').map(row => (
-                                <div key={row} className={styles.row}>
-                                    <span className={styles.rowLabel}>{row}</span>
-                                    {seats.filter(s => s.row === row).map(seat => (
-                                        <div
-                                            key={seat.id}
-                                            className={`
-                                        ${styles.seat} 
-                                        ${styles[seat.type]} 
-                                        ${styles[seat.status]}
-                                    `}
-                                            onClick={() => handleSeatClick(seat.id)}
-                                            title={`${seat.id} - ${seat.type.toUpperCase()} - ${PRICES[seat.type].toLocaleString()}đ`}
-                                        ></div>
-                                    ))}
+                            <div className={styles.seatMap}>
+                                {rowLabels.length > 0 ? rowLabels.map(row => (
+                                    <div key={row} className={styles.row}>
+                                        <span className={styles.rowLabel}>{row}</span>
+                                        {seatsByRow[row].map(seat => (
+                                            <div
+                                                key={seat.id}
+                                                className={`
+                                            ${styles.seat} 
+                                            ${styles[getSeatTypeClass(seat.seatType)]} 
+                                            ${seat.isBooked ? styles.occupied : ''}
+                                            ${selectedSeatIds.includes(seat.id) ? styles.selected : ''}
+                                        `}
+                                                onClick={() => handleSeatClick(seat)}
+                                                title={`${row}${seat.number} - ${seat.seatType} - ${getSeatPrice(seat.seatType).toLocaleString()}đ`}
+                                            ></div>
+                                        ))}
+                                    </div>
+                                )) : (
+                                    <div style={{ color: '#94a3b8', padding: 20 }}>Không tìm thấy dữ liệu ghế cho rạp này.</div>
+                                )}
+                            </div>
+
+                            {/* Legend */}
+                            <div className={styles.legend}>
+                                <div className={styles.legendItem}>
+                                    <div className={`${styles.legendBox} ${styles.seat}`} style={{ cursor: 'default' }}></div>
+                                    <span>Thường</span>
                                 </div>
-                            ))}
-                        </div>
-
-                        {/* Legend */}
-                        <div className={styles.legend}>
-                            <div className={styles.legendItem}>
-                                <div className={`${styles.legendBox} ${styles.seat}`} style={{ cursor: 'default' }}></div>
-                                <span>Thường</span>
-                            </div>
-                            <div className={styles.legendItem}>
-                                <div className={`${styles.legendBox} ${styles.seat} ${styles.vip}`} style={{ cursor: 'default' }}></div>
-                                <span>VIP</span>
-                            </div>
-                            <div className={styles.legendItem}>
-                                <div className={`${styles.legendBox} ${styles.seat} ${styles.couple}`} style={{ width: 40, cursor: 'default' }}></div>
-                                <span>Couple</span>
-                            </div>
-                            <div className={styles.legendItem}>
-                                <div className={`${styles.legendBox} ${styles.seat} ${styles.occupied}`} style={{ cursor: 'default' }}></div>
-                                <span>Đã đặt</span>
-                            </div>
-                            <div className={styles.legendItem}>
-                                <div className={`${styles.legendBox} ${styles.seat} ${styles.selected}`} style={{ cursor: 'default' }}></div>
-                                <span>Đang chọn</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Side Panel (Booking Summary) */}
-                    <aside>
-                        <div className={styles.sidePanel}>
-                            <h3 className={styles.summaryTitle}>Thông tin đặt vé</h3>
-
-                            <div className={styles.summaryRow}>
-                                <span className={styles.label}>Phim</span>
-                                <span className={styles.value} style={{ textAlign: 'right' }}>{movie.title}</span>
-                            </div>
-                            <div className={styles.summaryRow}>
-                                <span className={styles.label}>Suất chiếu</span>
-                                <span className={styles.value}>
-                                    {currentShowtime ? `${formatTime(currentShowtime.startTime)}, ${new Date(currentShowtime.startTime).toLocaleDateString('vi-VN')}` : 'Chưa chọn'}
-                                </span>
-                            </div>
-                            <div className={styles.summaryRow}>
-                                <span className={styles.label}>Rạp</span>
-                                <span className={styles.value}>{currentShowtime?.cinemaName || 'Booking Hub Center'}</span>
-                            </div>
-
-                            <div className={styles.summaryRow}>
-                                <span className={styles.label}>Ghế</span>
-                                <div className={styles.seatsList}>
-                                    {selectedSeats.length > 0 ? (
-                                        selectedSeats.map(s => (
-                                            <span key={s.id} style={{ color: '#faaf00' }}>{s.id}</span>
-                                        ))
-                                    ) : (
-                                        <span className={styles.value}>Chưa chọn</span>
-                                    )}
+                                <div className={styles.legendItem}>
+                                    <div className={`${styles.legendBox} ${styles.seat} ${styles.vip}`} style={{ cursor: 'default' }}></div>
+                                    <span>VIP</span>
+                                </div>
+                                <div className={styles.legendItem}>
+                                    <div className={`${styles.legendBox} ${styles.seat} ${styles.couple}`} style={{ width: 40, cursor: 'default' }}></div>
+                                    <span>Couple</span>
+                                </div>
+                                <div className={styles.legendItem}>
+                                    <div className={`${styles.legendBox} ${styles.seat} ${styles.occupied}`} style={{ cursor: 'default' }}></div>
+                                    <span>Đã đặt</span>
+                                </div>
+                                <div className={styles.legendItem}>
+                                    <div className={`${styles.legendBox} ${styles.seat} ${styles.selected}`} style={{ cursor: 'default' }}></div>
+                                    <span>Đang chọn</span>
                                 </div>
                             </div>
+                        </div>
 
-                            <div className={styles.totalSection}>
+                        {/* Side Panel (Booking Summary) */}
+                        <aside>
+                            <div className={styles.sidePanel}>
+                                <h3 className={styles.summaryTitle}>Thông tin đặt vé</h3>
+
                                 <div className={styles.summaryRow}>
-                                    <span className={styles.label}>Tổng cộng</span>
-                                    <span className={styles.totalPrice}>
-                                        {totalPrice.toLocaleString()} đ
+                                    <span className={styles.label}>Phim</span>
+                                    <span className={styles.value} style={{ textAlign: 'right' }}>{movie.title}</span>
+                                </div>
+                                <div className={styles.summaryRow}>
+                                    <span className={styles.label}>Suất chiếu</span>
+                                    <span className={styles.value}>
+                                        {currentShowtime ? `${formatTime(currentShowtime.startTime)}, ${new Date(currentShowtime.startTime).toLocaleDateString('vi-VN')}` : 'Chưa chọn'}
                                     </span>
                                 </div>
-                                <button
-                                    className={styles.btnBook}
-                                    disabled={selectedSeats.length === 0}
-                                    onClick={handleBooking}
-                                >
-                                    Đặt Vé Ngay
-                                </button>
+                                <div className={styles.summaryRow}>
+                                    <span className={styles.label}>Rạp</span>
+                                    <span className={styles.value}>{currentShowtime?.cinemaName || 'Booking Hub Center'}</span>
+                                </div>
+
+                                <div className={styles.summaryRow}>
+                                    <span className={styles.label}>Ghế</span>
+                                    <div className={styles.seatsList}>
+                                        {selectedSeats.length > 0 ? (
+                                            selectedSeats.map(s => (
+                                                <span key={s.id} style={{ color: '#faaf00' }}>{s.row}{s.number}</span>
+                                            ))
+                                        ) : (
+                                            <span className={styles.value}>Chưa chọn</span>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className={styles.totalSection}>
+                                    <div className={styles.summaryRow}>
+                                        <span className={styles.label}>Tổng cộng</span>
+                                        <span className={styles.totalPrice}>
+                                            {totalPrice.toLocaleString()} đ
+                                        </span>
+                                    </div>
+                                    <button
+                                        className={styles.btnBook}
+                                        disabled={selectedSeats.length === 0}
+                                        onClick={handleBooking}
+                                    >
+                                        Đặt Vé Ngay
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </aside>
-                </main>
+                        </aside>
+                    </main>
+                ) : (
+                    <div style={{
+                        minHeight: '400px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#64748b',
+                        gap: '16px'
+                    }}>
+                        <div style={{ fontSize: '4rem', opacity: 0.2 }}>🎬</div>
+                        <h2 style={{ fontSize: '1.5rem', fontWeight: 600, color: '#94a3b8' }}>Không có lịch chiếu</h2>
+                        <p style={{ color: '#64748b' }}>Vui lòng chọn ngày khác để tiếp tục đặt vé</p>
+                    </div>
+                )}
             </div>
         </>
     )

@@ -2,6 +2,7 @@ import '../styles/style.css'
 import '../styles/attractions.css'
 import '../styles/loading-styles.css'
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-datepicker/dist/react-datepicker.css';
 import { Analytics } from '@vercel/analytics/react';
 import Head from 'next/head'
 import { useRouter } from 'next/router'

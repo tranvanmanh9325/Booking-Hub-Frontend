@@ -316,4 +316,40 @@ export const modalStyles = `
         z-index: 10;
         line-height: 1;
     }
+
+    /* Modal Tabs */
+    .modal-tabs {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid #E5E7EB;
+    }
+    .tab-btn {
+        padding: 0.75rem 1rem;
+        border: none;
+        background: none;
+        font-weight: 500;
+        color: #6B7280;
+        cursor: pointer;
+        position: relative;
+        font-size: 0.95rem;
+    }
+    .tab-btn.active {
+        color: #3B82F6;
+        font-weight: 600;
+    }
+    .tab-btn.active::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: #3B82F6;
+    }
+    .tab-btn:hover:not(.active) {
+        color: #111827;
+        background-color: #F9FAFB;
+        border-radius: 4px 4px 0 0;
+    }
 `;

@@ -87,10 +87,13 @@ const ShowcaseSection: React.FC = () => {
                 >
                     <div className="carousel-track">
                         <div className="showcase-card">
-                            <div className="card-media">
-                                <img
-                                    src="https://images.pexels.com/photos/14021955/pexels-photo-14021955.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+                            <div className="card-media" style={{ position: 'relative', height: '200px' }}>
+                                <Image
+                                    src="https://images.pexels.com/photos/14021955/pexels-photo-14021955.jpeg?auto=compress&cs=tinysrgb&w=1500"
                                     alt="Hotel 1"
+                                    fill
+                                    className="object-cover"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 />
                                 <span className="card-badge">Khách Sạn</span>
                             </div>
@@ -106,11 +109,13 @@ const ShowcaseSection: React.FC = () => {
                             </div>
                         </div>
                         <div className="showcase-card">
-                            <div className="card-media">
-                                <img
-                                    src="https://images.pexels.com/photos/4062524/pexels-photo-4062524.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+                            <div className="card-media" style={{ position: 'relative', height: '200px' }}>
+                                <Image
+                                    src="https://images.pexels.com/photos/4062524/pexels-photo-4062524.jpeg?auto=compress&cs=tinysrgb&w=1500"
                                     alt="Cinema 1"
+                                    fill
                                     className="object-cover"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 />
                                 <span className="card-badge">Phim Ảnh</span>
                             </div>
@@ -126,10 +131,13 @@ const ShowcaseSection: React.FC = () => {
                             </div>
                         </div>
                         <div className="showcase-card">
-                            <div className="card-media">
-                                <img
-                                    src="https://images.pexels.com/photos/5461582/pexels-photo-5461582.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+                            <div className="card-media" style={{ position: 'relative', height: '200px' }}>
+                                <Image
+                                    src="https://images.pexels.com/photos/5461582/pexels-photo-5461582.jpeg?auto=compress&cs=tinysrgb&w=1500"
                                     alt="Hotel 2"
+                                    fill
+                                    className="object-cover"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 />
                                 <span className="card-badge">Khách Sạn</span>
                             </div>
@@ -145,10 +153,13 @@ const ShowcaseSection: React.FC = () => {
                             </div>
                         </div>
                         <div className="showcase-card">
-                            <div className="card-media">
-                                <img
-                                    src="https://images.pexels.com/photos/19169811/pexels-photo-19169811.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1500"
+                            <div className="card-media" style={{ position: 'relative', height: '200px' }}>
+                                <Image
+                                    src="https://images.pexels.com/photos/19169811/pexels-photo-19169811.jpeg?auto=compress&cs=tinysrgb&w=1500"
                                     alt="Cinema 2"
+                                    fill
+                                    className="object-cover"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 />
                                 <span className="card-badge">Phim Ảnh</span>
                             </div>

@@ -8,9 +8,9 @@ const HelpCenter: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')
   const [expandedFaq, setExpandedFaq] = useState<string | null>(null)
-  const [filteredFaqs, setFilteredFaqs] = useState<FAQ[]>([])
+  // const [filteredFaqs, setFilteredFaqs] = useState<FAQ[]>([]) // DERIVED STATE
 
-  useEffect(() => {
+  const filteredFaqs = React.useMemo(() => {
     let filtered = allFaqs
 
     // Filter by category
@@ -27,9 +27,8 @@ const HelpCenter: React.FC = () => {
           faq.answer.toLowerCase().includes(query)
       )
     }
-
-    setFilteredFaqs(filtered)
-  }, [searchQuery, activeCategory])
+    return filtered
+  }, [activeCategory, searchQuery])
 
   const toggleFaq = (faqId: string) => {
     setExpandedFaq(expandedFaq === faqId ? null : faqId)

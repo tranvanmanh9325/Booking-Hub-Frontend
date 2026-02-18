@@ -9,7 +9,8 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, leftIcon, rightElement, className = '', id, ...props }, ref) => {
-    const inputId = id || props.name || Math.random().toString(36).substr(2, 9)
+    const generatedId = React.useId()
+    const inputId = id || props.name || generatedId
 
     return (
       <div className="input-group">

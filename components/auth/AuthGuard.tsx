@@ -24,6 +24,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
             // Allow auth pages (login/register) to be accessible always, or handle redirect if logged in
             const isAuthPage = router.pathname.startsWith('/auth');
             if (isAuthPage) {
+                // eslint-disable-next-line react-hooks/set-state-in-effect
                 setAuthorized(true);
                 return;
             }

@@ -87,6 +87,7 @@
         "addNew": "Add New",
         "searchPlaceholder": "Search content...",
         "table": {
+            "info": "Info",
             "id": "ID",
             "name": "Content Name",
             "thumbnail": "Thumbnail",

@@ -17,8 +17,19 @@ export interface Showtime {
     id: number;
     startTime: string;
     endTime: string;
+    screenId: number;
     screenName: string;
     cinemaName: string;
+    price: number;
+}
+
+export interface Seat {
+    id: number;
+    screenId: number;
+    row: string;
+    number: number;
+    seatType: string;
+    isBooked: boolean;
 }
 
 export function useMovies(page = 0, size = 10) {
@@ -63,5 +74,13 @@ export function useShowtimes(movieId: number) {
         queryKey: ['movies', 'showtimes', movieId],
         queryFn: () => apiClient.get<Showtime[]>(`/api/v1/movies/${movieId}/showtimes`),
         enabled: !!movieId,
+    });
+}
+
+export function useSeats(showtimeId: number | null, screenId: number | null) {
+    return useQuery({
+        queryKey: ['seats', showtimeId, screenId],
+        queryFn: () => apiClient.get<Seat[]>(`/api/v1/movies/showtimes/${showtimeId}/seats`, { params: { screenId } }),
+        enabled: !!showtimeId && !!screenId,
     });
 }

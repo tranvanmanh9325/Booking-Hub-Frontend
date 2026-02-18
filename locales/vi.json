@@ -87,6 +87,7 @@
         "addNew": "Thêm mới",
         "searchPlaceholder": "Tìm kiếm nội dung...",
         "table": {
+            "info": "Thông tin",
             "id": "ID",
             "name": "Tên nội dung",
             "thumbnail": "Ảnh đại diện",

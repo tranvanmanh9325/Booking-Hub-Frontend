@@ -9,6 +9,7 @@ const PrivacySectionsPart1: React.FC<PrivacySectionsPart1Props> = ({ sectionRefs
     <>
       <div
         id="section-1"
+        // eslint-disable-next-line react-hooks/immutability
         ref={(el) => { sectionRefs.current['section-1'] = el }}
         className="privacy-section"
       >
@@ -26,6 +27,7 @@ const PrivacySectionsPart1: React.FC<PrivacySectionsPart1Props> = ({ sectionRefs
 
       <div
         id="section-2"
+        // eslint-disable-next-line react-hooks/immutability
         ref={(el) => { sectionRefs.current['section-2'] = el }}
         className="privacy-section"
       >
@@ -66,6 +68,7 @@ const PrivacySectionsPart1: React.FC<PrivacySectionsPart1Props> = ({ sectionRefs
 
       <div
         id="section-3"
+        // eslint-disable-next-line react-hooks/immutability
         ref={(el) => { sectionRefs.current['section-3'] = el }}
         className="privacy-section"
       >
@@ -97,6 +100,7 @@ const PrivacySectionsPart1: React.FC<PrivacySectionsPart1Props> = ({ sectionRefs
 
       <div
         id="section-4"
+        // eslint-disable-next-line react-hooks/immutability
         ref={(el) => { sectionRefs.current['section-4'] = el }}
         className="privacy-section"
       >
@@ -143,6 +147,7 @@ const PrivacySectionsPart1: React.FC<PrivacySectionsPart1Props> = ({ sectionRefs
 
       <div
         id="section-5"
+        // eslint-disable-next-line react-hooks/immutability
         ref={(el) => { sectionRefs.current['section-5'] = el }}
         className="privacy-section"
       >

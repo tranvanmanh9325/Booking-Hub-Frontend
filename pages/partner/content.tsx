@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useContent, useAddContent, useUpdateContent, useDeleteContent } from '../../hooks/use-content';
 import { Content } from '../../types/content';
 import { ContentFormModal, DeleteContentModal } from '../../components/partner/ContentModals';
+import { formatDateForInput } from '../../utils/format';
 
 export default function ContentPage() {
     const t = useTranslations('Content');
@@ -23,7 +24,7 @@ export default function ContentPage() {
     const [formData, setFormData] = useState<Omit<Content, 'id'>>({
         name: '',
         type: 'Product',
-        price: '',
+        price: '0',
         description: '',
         thumbnail: '',
         images: '[]',
@@ -50,12 +51,15 @@ export default function ContentPage() {
     const handleSaveAdd = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await addMutation.mutateAsync(formData);
+            await addMutation.mutateAsync({
+                ...formData,
+                releaseDate: formatDateForInput(formData.releaseDate)
+            });
             setIsAddModalOpen(false);
             setFormData({
                 name: '',
                 type: 'Product',
-                price: '',
+                price: '0',
                 description: '',
                 thumbnail: '',
                 images: '[]',
@@ -82,7 +86,7 @@ export default function ContentPage() {
             images: item.images || '[]',
             status: item.status,
             duration: item.duration || '',
-            releaseDate: item.releaseDate || '',
+            releaseDate: formatDateForInput(item.releaseDate),
             location: item.location || ''
         });
         setIsEditModalOpen(true);
@@ -95,7 +99,10 @@ export default function ContentPage() {
         try {
             await updateMutation.mutateAsync({
                 id: selectedItem.id,
-                data: formData
+                data: {
+                    ...formData,
+                    releaseDate: formatDateForInput(formData.releaseDate)
+                }
             });
             setIsEditModalOpen(false);
             setSelectedItem(null);
@@ -135,7 +142,7 @@ export default function ContentPage() {
                     <p className="page-subtitle">{t('subtitle')}</p>
                 </div>
                 <button className="btn-primary" onClick={() => {
-                    setFormData({ name: '', type: 'Product', price: '', status: 'active', duration: '', releaseDate: '', location: '' });
+                    setFormData({ name: '', type: 'Product', price: '0', status: 'active', duration: '', releaseDate: '', location: '' });
                     setIsAddModalOpen(true);
                 }}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="btn-icon" viewBox="0 0 20 20" fill="currentColor">
@@ -162,7 +169,7 @@ export default function ContentPage() {
                                 <th>{t('table.id')}</th>
                                 <th>{t('table.name')}</th>
                                 <th>{t('table.type')}</th>
-                                <th>{t('table.price')}</th>
+
                                 <th>{t('table.status')}</th>
                                 <th>{t('table.actions')}</th>
                             </tr>
@@ -175,7 +182,7 @@ export default function ContentPage() {
                                         <span className="font-medium">{item.name}</span>
                                     </td>
                                     <td>{item.type}</td>
-                                    <td>{item.price}</td>
+
                                     <td>
                                         <span className={`status-badge status-${item.status}`}>
                                             {item.status === 'active' ? t('table.active') : t('table.inactive')}
@@ -222,6 +229,7 @@ export default function ContentPage() {
                 isPending={updateMutation.isPending}
                 t={t}
                 mode="edit"
+                contentId={selectedItem?.id ? Number(selectedItem.id) : undefined}
             />
 
             {/* Delete Modal */}
