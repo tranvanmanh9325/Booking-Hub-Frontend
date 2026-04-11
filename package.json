@@ -30,7 +30,7 @@
     "dangerous-html": "0.1.13",
     "date-fns": "^4.1.0",
     "jwt-decode": "^4.0.0",
-    "next": "^16.1.6",
+    "next": "^16.2.3",
     "next-intl": "^4.7.0",
     "next-seo": "^6.6.0",
     "react": "^19.2.3",
